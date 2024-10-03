@@ -1,7 +1,7 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 const schema = a
   .schema({
-    promptTemplate: a.model({
+    prompt: a.model({
       id: a.id(),
       instruction: a.string().required(),
     }),
