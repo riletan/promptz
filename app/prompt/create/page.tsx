@@ -1,11 +1,13 @@
 "use client";
 import {
+  BreadcrumbGroup,
   Button,
   Container,
   ContentLayout,
   Form,
   FormField,
   Header,
+  Input,
   Link,
   SpaceBetween,
   Textarea,
@@ -14,7 +16,7 @@ import { generateClient } from "aws-amplify/api";
 import type { Schema } from "../../../amplify/data/resource"; // Path to your backend resource definition
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useFormStatus } from "react-dom";
+import { fetchUserAttributes } from "aws-amplify/auth";
 
 const client = generateClient<Schema>();
 
@@ -23,14 +25,31 @@ export default function CreatePrompt() {
 
   const [loading, setLoading] = useState(false);
   const [instruction, setInstruction] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
-  function createPrompt() {
+  async function createPrompt() {
     setLoading(true);
+    const userAttributes = await fetchUserAttributes();
     const prompt = {
-      instruction: instruction,
+      name: name,
+      description: description,
+      createdBy: userAttributes.preferred_username
+        ? userAttributes.preferred_username
+        : "unknown",
     };
-    client.models.prompt.create(prompt);
-    router.push("/");
+    const newPrompt = await client.models.prompt.create(prompt);
+
+    if (newPrompt.data?.id) {
+      const version = {
+        promptId: newPrompt.data.id,
+        number: 1,
+        instruction: instruction,
+      };
+
+      await client.models.promptVersion.create(version);
+      router.push("/");
+    }
   }
 
   return (
@@ -38,11 +57,21 @@ export default function CreatePrompt() {
       defaultPadding
       headerVariant="high-contrast"
       maxContentWidth={1024}
+      breadcrumbs={
+        <BreadcrumbGroup
+          items={[
+            { text: "Promptz", href: "/" },
+            { text: "Prompts & Prompt Templates", href: "/prompt" },
+            { text: "Create", href: "#" },
+          ]}
+          ariaLabel="Breadcrumbs"
+        />
+      }
       header={
         <Header
           variant="h1"
           info={<Link variant="info">Info</Link>}
-          description="Create a new prompt"
+          description="Create a new prompt or prompt template"
         >
           New Prompt
         </Header>
@@ -72,6 +101,30 @@ export default function CreatePrompt() {
         >
           <Container>
             <SpaceBetween direction="vertical" size="l">
+              <FormField
+                stretch
+                description="A catchy name for your prompt."
+                label="Name"
+              >
+                <Input
+                  value={name}
+                  onChange={({ detail }) => setName(detail.value)}
+                />
+              </FormField>
+              <FormField
+                stretch
+                description="Describe the essence of your prompt in a few words."
+                label={
+                  <span>
+                    Description <i>- optional</i>{" "}
+                  </span>
+                }
+              >
+                <Input
+                  value={description}
+                  onChange={({ detail }) => setDescription(detail.value)}
+                />
+              </FormField>
               <FormField
                 label="Instruction"
                 description="The specific task you want Amazon Q Developer to perform."

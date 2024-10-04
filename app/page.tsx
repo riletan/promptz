@@ -51,7 +51,7 @@ export default function App() {
         <Header
           variant="h1"
           info={<Link variant="info">Info</Link>}
-          description="Discover the latest created prompts for Amazon Q Developer"
+          description="Discover the latest created prompts and prompt templates for Amazon Q Developer."
           actions={
             <Button
               variant="primary"
@@ -73,13 +73,18 @@ export default function App() {
         cardDefinition={{
           header: (item) => (
             <Link href="#" fontSize="heading-m">
-              {item.id}
+              {item.name}
             </Link>
           ),
           sections: [
             {
-              id: "instruction",
-              content: (item) => item.instruction,
+              id: "description",
+              content: (item) => item.description,
+            },
+            {
+              id: "createdBy",
+              header: "Created by",
+              content: (item) => item.createdBy,
             },
           ],
         }}

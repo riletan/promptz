@@ -3,6 +3,16 @@ const schema = a
   .schema({
     prompt: a.model({
       id: a.id(),
+      name: a.string().required(),
+      description: a.string(),
+      createdBy: a.string().required(),
+      versions: a.hasMany("promptVersion", "promptId"),
+    }),
+
+    promptVersion: a.model({
+      number: a.integer(),
+      promptId: a.id(),
+      prompt: a.belongsTo("prompt", "promptId"),
       instruction: a.string().required(),
     }),
   })
