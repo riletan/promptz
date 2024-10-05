@@ -3,26 +3,19 @@
 "use client";
 
 import {
-  Form,
   SpaceBetween,
   Button,
   Container,
-  FormField,
-  Input,
-  Textarea,
   Header,
   Box,
   CopyToClipboard,
-  KeyValuePairs,
-  Link,
-  ProgressBar,
-  StatusIndicator,
+  Spinner,
 } from "@cloudscape-design/components";
 import { generateClient } from "aws-amplify/api";
 import type { Schema } from "../amplify/data/resource";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { fetchUserAttributes } from "aws-amplify/auth";
+import { getCurrentUser } from "aws-amplify/auth";
 
 interface PromptProps {
   promptId: string;
@@ -34,17 +27,30 @@ export default function PromptEngineering(props: PromptProps) {
   const router = useRouter();
 
   const [prompt, setPrompt] = useState<Schema["prompt"]["type"]>();
-
+  const [isOwnedByCurrentUser, setOwnedByCurrentUser] = useState(false);
   useEffect(() => {
     loadPrompt(props.promptId);
   });
 
   const loadPrompt = async (promptId: string) => {
+    const { userId } = await getCurrentUser();
     const { data: prompt } = await client.models.prompt.get({ id: promptId });
     if (prompt) {
       setPrompt(prompt);
+      userId === prompt.owner
+        ? setOwnedByCurrentUser(true)
+        : setOwnedByCurrentUser(false);
     }
   };
+
+  if (!prompt)
+    return (
+      <Container>
+        <Box textAlign="center">
+          <Spinner size="large" />
+        </Box>
+      </Container>
+    );
 
   return (
     <Container
@@ -52,12 +58,21 @@ export default function PromptEngineering(props: PromptProps) {
         <Header
           variant="h2"
           description={prompt?.description}
-          // actions={
-          //   <SpaceBetween direction="horizontal" size="xs">
-          //     <Button>Share</Button>
-          //     <Button>Rate</Button>
-          //   </SpaceBetween>
-          // }
+          actions={
+            <SpaceBetween direction="horizontal" size="xs">
+              <CopyToClipboard
+                copyButtonText="Copy"
+                copyErrorText="Prompt failed to copy"
+                copySuccessText=" Prompt copied. Now, go build!"
+                textToCopy={prompt?.instruction}
+              />
+              {isOwnedByCurrentUser ? (
+                <Button variant="primary">Edit</Button>
+              ) : (
+                ""
+              )}
+            </SpaceBetween>
+          }
         >
           {prompt?.name}{" "}
           <small>

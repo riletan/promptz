@@ -23,15 +23,6 @@ export default function ViewPrompt({ params }: { params: { id: string } }) {
           ariaLabel="Breadcrumbs"
         />
       }
-      //   header={
-      //     <Header
-      //       variant="h1"
-      //       info={<Link variant="info">Info</Link>}
-      //       description="Engineer your prompts"
-      //     >
-      //       Edit your Prompt
-      //     </Header>
-      //   }
     >
       <Prompt promptId={params.id} />
     </ContentLayout>
