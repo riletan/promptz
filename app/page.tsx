@@ -72,7 +72,7 @@ export default function App() {
         }}
         cardDefinition={{
           header: (item) => (
-            <Link href="#" fontSize="heading-m">
+            <Link href={`/prompt/${item.id}`} fontSize="heading-m">
               {item.name}
             </Link>
           ),

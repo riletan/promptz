@@ -122,7 +122,7 @@ export default function PromptEngineering(props: PromptEngineeringProps) {
               description="Describe the essence of your prompt in a few words."
               label={
                 <span>
-                  Description <i>- optional</i>{" "}
+                  Description <i>- optional</i>
                 </span>
               }
             >
