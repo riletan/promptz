@@ -84,7 +84,7 @@ export default function App() {
             {
               id: "createdBy",
               header: "Created by",
-              content: (item) => item.createdBy,
+              content: (item) => item.owner_username,
             },
           ],
         }}

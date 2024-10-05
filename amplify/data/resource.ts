@@ -2,21 +2,17 @@ import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 const schema = a
   .schema({
     prompt: a.model({
-      id: a.id(),
+      id: a.id().required(),
       name: a.string().required(),
       description: a.string(),
-      createdBy: a.string().required(),
-      versions: a.hasMany("promptVersion", "promptId"),
-    }),
-
-    promptVersion: a.model({
-      number: a.integer(),
-      promptId: a.id(),
-      prompt: a.belongsTo("prompt", "promptId"),
       instruction: a.string().required(),
+      owner_username: a.string(),
     }),
   })
-  .authorization((allow) => [allow.authenticated()]);
+  .authorization((allow) => [
+    allow.owner().to(["create", "update", "delete"]),
+    allow.authenticated().to(["read"]),
+  ]);
 
 export type Schema = ClientSchema<typeof schema>;
 

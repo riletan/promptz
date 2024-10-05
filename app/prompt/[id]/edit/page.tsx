@@ -5,10 +5,9 @@ import {
   Header,
   Link,
 } from "@cloudscape-design/components";
-
 import PromptEngineering from "@/components/PromptEngineering";
 
-export default function CreatePrompt() {
+export default function EditPrompt({ params }: { params: { id: string } }) {
   return (
     <ContentLayout
       defaultPadding
@@ -19,7 +18,8 @@ export default function CreatePrompt() {
           items={[
             { text: "Promptz", href: "/" },
             { text: "Prompts & Prompt Templates", href: "/prompt" },
-            { text: "Create", href: "#" },
+            { text: `${params.id.substring(0, 7)}...`, href: `/${params.id}` },
+            { text: "Edit", href: "#" },
           ]}
           ariaLabel="Breadcrumbs"
         />
@@ -28,13 +28,13 @@ export default function CreatePrompt() {
         <Header
           variant="h1"
           info={<Link variant="info">Info</Link>}
-          description="Create a new prompt or prompt template"
+          description="Engineer your prompts"
         >
-          New Prompt
+          Edit your Prompt
         </Header>
       }
     >
-      <PromptEngineering />
+      <PromptEngineering promptId={params.id} />
     </ContentLayout>
   );
 }
