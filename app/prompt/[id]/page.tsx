@@ -1,11 +1,6 @@
 "use client";
 import Prompt from "@/components/Prompt";
-import {
-  BreadcrumbGroup,
-  ContentLayout,
-  Header,
-  Link,
-} from "@cloudscape-design/components";
+import { BreadcrumbGroup, ContentLayout } from "@cloudscape-design/components";
 
 export default function ViewPrompt({ params }: { params: { id: string } }) {
   return (

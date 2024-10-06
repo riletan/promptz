@@ -22,6 +22,11 @@ export default function TopNav() {
       utilities={[
         {
           type: "button",
+          text: "Browse",
+          href: "/browse",
+        },
+        {
+          type: "button",
           text: "Sign Out",
           ariaLabel: "Sign out current user",
           onClick: async () => {

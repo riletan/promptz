@@ -23,7 +23,7 @@ interface PromptProps {
 
 const client = generateClient<Schema>();
 
-export default function PromptEngineering(props: PromptProps) {
+export default function Prompt(props: PromptProps) {
   const router = useRouter();
 
   const [prompt, setPrompt] = useState<Schema["prompt"]["type"]>();
