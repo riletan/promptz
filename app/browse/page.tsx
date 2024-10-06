@@ -13,7 +13,7 @@ import {
   Header,
   Link,
 } from "@cloudscape-design/components";
-import PromptTable from "@/components/PromptTable";
+import PromptTable from "@/components/PromptCollection";
 import header from "@cloudscape-design/components/header";
 
 Amplify.configure(outputs);
