@@ -14,6 +14,7 @@ const schema = a
         "DEPLOY",
         "MAINTAIN",
       ]),
+      category: a.enum(["CHAT", "DEV_AGENT", "INLINE"]),
       instruction: a.string().required(),
       owner_username: a.string(),
     }),

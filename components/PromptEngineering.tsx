@@ -11,6 +11,7 @@ import {
   Input,
   Textarea,
   Tiles,
+  RadioGroup,
 } from "@cloudscape-design/components";
 import { generateClient } from "aws-amplify/api";
 import type { Schema } from "../amplify/data/resource";
@@ -27,6 +28,8 @@ type SdlcPhase =
   | "DEPLOY"
   | "MAINTAIN";
 
+type Category = "CHAT" | "INLINE" | "DEV_AGENT";
+
 interface PromptEngineeringProps {
   promptId?: string;
 }
@@ -37,6 +40,7 @@ interface PromptData {
   description: string;
   instruction: string;
   sdlc_phase: SdlcPhase;
+  category: Category;
 }
 
 const client = generateClient<Schema>();
@@ -62,6 +66,7 @@ export default function PromptEngineering(props: PromptEngineeringProps) {
         description: prompt.description ? prompt.description : "",
         instruction: prompt.instruction,
         sdlc_phase: prompt.sdlc_phase as SdlcPhase,
+        category: prompt.category as Category,
       });
     }
   };
@@ -204,7 +209,26 @@ export default function PromptEngineering(props: PromptEngineeringProps) {
                 ]}
               />
             </FormField>
-
+            <FormField
+              label="Prompt Category"
+              description="Is this prompt related to Amazon Q Developer Chat, Dev Agent, or inline code completion?"
+              stretch
+            >
+              <RadioGroup
+                onChange={({ detail }) =>
+                  setPromptData({
+                    ...promptData,
+                    category: detail.value as Category,
+                  })
+                }
+                value={promptData.category}
+                items={[
+                  { value: "CHAT", label: "Chat" },
+                  { value: "DEV_AGENT", label: "Dev Agent" },
+                  { value: "INLINE", label: "Inline Code Completion" },
+                ]}
+              />
+            </FormField>
             <FormField
               label="Instruction"
               description="The specific task you want Amazon Q Developer to perform."
