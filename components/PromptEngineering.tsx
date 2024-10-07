@@ -10,12 +10,22 @@ import {
   FormField,
   Input,
   Textarea,
+  Tiles,
 } from "@cloudscape-design/components";
 import { generateClient } from "aws-amplify/api";
 import type { Schema } from "../amplify/data/resource";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchUserAttributes } from "aws-amplify/auth";
+
+type SdlcPhase =
+  | "PLAN"
+  | "REQ"
+  | "DESIGN"
+  | "IMPLEMENT"
+  | "TEST"
+  | "DEPLOY"
+  | "MAINTAIN";
 
 interface PromptEngineeringProps {
   promptId?: string;
@@ -26,6 +36,7 @@ interface PromptData {
   name: string;
   description: string;
   instruction: string;
+  sdlc_phase: SdlcPhase;
 }
 
 const client = generateClient<Schema>();
@@ -50,6 +61,7 @@ export default function PromptEngineering(props: PromptEngineeringProps) {
         name: prompt.name,
         description: prompt.description ? prompt.description : "",
         instruction: prompt.instruction,
+        sdlc_phase: prompt.sdlc_phase as SdlcPhase,
       });
     }
   };
@@ -119,7 +131,7 @@ export default function PromptEngineering(props: PromptEngineeringProps) {
             </FormField>
             <FormField
               stretch
-              description="Describe the essence of your prompt in a few words."
+              description="Describe the essence of your prompt in a few words to help others understand the meaning of this prompt."
               label={
                 <span>
                   Description <i>- optional</i>
@@ -133,6 +145,66 @@ export default function PromptEngineering(props: PromptEngineeringProps) {
                 }
               />
             </FormField>
+            <FormField
+              label="Software Development Lifecycle (SDLC) Phase"
+              description="Which phase of the SDLC does this prompt relate to?"
+              stretch
+            >
+              <Tiles
+                onChange={({ detail }) =>
+                  setPromptData({
+                    ...promptData,
+                    sdlc_phase: detail.value as SdlcPhase,
+                  })
+                }
+                value={promptData.sdlc_phase}
+                items={[
+                  {
+                    label: "Plan",
+                    description:
+                      "Define project scope, objectives, and feasibility while estimating resources and timelines.",
+                    value: "PLAN",
+                  },
+                  {
+                    label: "Requirements Analysis",
+                    description:
+                      "Gather, analyze, and document detailed software requirements.",
+                    value: "REQ",
+                  },
+                  {
+                    label: "Design",
+                    description:
+                      "Create the software architecture, user interface, and system design based on the requirements.",
+                    value: "DESIGN",
+                  },
+                  {
+                    label: "Implement",
+                    description:
+                      "Write, refactor, fix and review the actual code for the software according to design specifications.",
+                    value: "IMPLEMENT",
+                  },
+                  {
+                    label: "Test",
+                    description:
+                      "Conduct various types of testing to identify and fix bugs, ensuring the software meets quality standards and requirements.",
+                    value: "TEST",
+                  },
+                  {
+                    label: "Deploy",
+                    description:
+                      "Release the software to the production environment, including installation, configuration, and user training.",
+                    value: "DEPLOY",
+                  },
+                  {
+                    label: "Maintain",
+                    description:
+                      "Monitor, update, and support the software post-deployment, addressing issues and implementing new features as needed.",
+                    value: "MAINTAIN",
+                  },
+                ]}
+              />
+            </FormField>
+
             <FormField
               label="Instruction"
               description="The specific task you want Amazon Q Developer to perform."
