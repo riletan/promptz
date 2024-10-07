@@ -4,7 +4,7 @@ const schema = a
     prompt: a.model({
       id: a.id().required(),
       name: a.string().required(),
-      description: a.string(),
+      description: a.string().required(),
       sdlc_phase: a.enum([
         "PLAN",
         "REQ",

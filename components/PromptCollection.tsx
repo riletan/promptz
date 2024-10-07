@@ -1,5 +1,3 @@
-// components/Logout.tsx
-
 "use client";
 
 import {
@@ -10,17 +8,25 @@ import {
   Spinner,
   Link,
   Cards,
+  CardsProps,
+  Badge,
+  Icon,
 } from "@cloudscape-design/components";
 import { generateClient } from "aws-amplify/api";
 import type { Schema } from "../amplify/data/resource";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import router from "next/router";
+import { truncateString } from "@/utils/render-utils";
 
-interface PromptProps {}
+interface PromptCollectionProps {
+  limit?: number;
+  promptsPerRow?: CardsProps.CardsLayout[];
+}
 
 const client = generateClient<Schema>();
 
-export default function PromptTable(props: PromptProps) {
+export default function PromptCollection(props: PromptCollectionProps) {
   const router = useRouter();
 
   const [prompts, setPrompts] = useState<Array<Schema["prompt"]["type"]>>([]);
@@ -29,7 +35,9 @@ export default function PromptTable(props: PromptProps) {
   });
 
   const loadPrompts = async () => {
-    const { data: prompts } = await client.models.prompt.list();
+    const { data: prompts } = await client.models.prompt.list({
+      limit: props.limit ?? 0,
+    });
     if (prompts) {
       setPrompts(prompts);
     }
@@ -46,26 +54,34 @@ export default function PromptTable(props: PromptProps) {
 
   return (
     <Cards
-      variant="full-page"
+      variant="container"
       cardDefinition={{
         header: (item) => (
-          <Link href={`/prompt/${item.id}`} fontSize="heading-m">
-            {item.name}
-          </Link>
+          <SpaceBetween size="xs">
+            <SpaceBetween size="xs" direction="horizontal">
+              <Badge color="blue">{item.sdlc_phase?.toLocaleUpperCase()}</Badge>
+              <Link href={`/prompt/${item.id}`} fontSize="heading-s">
+                {item.name}
+              </Link>
+            </SpaceBetween>
+          </SpaceBetween>
         ),
         sections: [
+          {
+            id: "owner_username",
+            content: (item) => (
+              <Box>
+                <Icon name="user-profile" /> created by {item.owner_username}
+              </Box>
+            ),
+          },
           {
             id: "description",
             content: (item) => item.description,
           },
-          {
-            id: "createdBy",
-            header: "Created by",
-            content: (item) => item.owner_username,
-          },
         ],
       }}
-      cardsPerRow={[{ cards: 1 }]}
+      cardsPerRow={props.promptsPerRow ?? [{ cards: 1 }]}
       items={prompts}
       loadingText="Loading resources"
       empty={

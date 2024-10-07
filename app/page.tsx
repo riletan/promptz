@@ -7,16 +7,12 @@ import outputs from "@/amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
 import { useRouter } from "next/navigation";
 import {
-  Box,
   Button,
-  Cards,
-  Container,
   ContentLayout,
   Header,
   Link,
-  SpaceBetween,
 } from "@cloudscape-design/components";
-import { useEffect, useState } from "react";
+import PromptCollection from "@/components/PromptCollection";
 
 Amplify.configure(outputs);
 
@@ -24,23 +20,6 @@ const client = generateClient<Schema>();
 
 export default function App() {
   const router = useRouter();
-
-  const [prompts, setPrompts] = useState<Array<Schema["prompt"]["type"]>>([]);
-
-  useEffect(() => {
-    fetchLatestPrompts();
-  }, []);
-
-  async function fetchLatestPrompts() {
-    try {
-      const { data } = await client.models.prompt.list({
-        limit: 3,
-      });
-      setPrompts(data);
-    } catch (error) {
-      console.error("Error fetching prompts:", error);
-    }
-  }
 
   return (
     <ContentLayout
@@ -65,44 +44,9 @@ export default function App() {
         </Header>
       }
     >
-      <Cards
-        ariaLabels={{
-          itemSelectionLabel: (e, t) => `select ${t.id}`,
-          selectionGroupLabel: "Item selection",
-        }}
-        cardDefinition={{
-          header: (item) => (
-            <Link href={`/prompt/${item.id}`} fontSize="heading-m">
-              {item.name}
-            </Link>
-          ),
-          sections: [
-            {
-              id: "description",
-              content: (item) => item.description,
-            },
-            {
-              id: "createdBy",
-              header: "Created by",
-              content: (item) => item.owner_username,
-            },
-          ],
-        }}
-        cardsPerRow={[{ cards: 1 }, { minWidth: 500, cards: 3 }]}
-        items={prompts}
-        loadingText="Loading resources"
-        empty={
-          <Container>
-            <Box margin={{ vertical: "xs" }} textAlign="center" color="inherit">
-              <SpaceBetween size="m">
-                <b>No prompts created yet</b>
-                <Button onClick={() => router.push("/prompt/create")}>
-                  Be the first. Create a prompt.
-                </Button>
-              </SpaceBetween>
-            </Box>
-          </Container>
-        }
+      <PromptCollection
+        limit={3}
+        promptsPerRow={[{ cards: 1 }, { minWidth: 500, cards: 3 }]}
       />
     </ContentLayout>
   );

@@ -63,7 +63,7 @@ export default function PromptEngineering(props: PromptEngineeringProps) {
       setPromptData({
         id: prompt.id,
         name: prompt.name,
-        description: prompt.description ? prompt.description : "",
+        description: prompt.description,
         instruction: prompt.instruction,
         sdlc_phase: prompt.sdlc_phase as SdlcPhase,
         category: prompt.category as Category,
@@ -137,11 +137,6 @@ export default function PromptEngineering(props: PromptEngineeringProps) {
             <FormField
               stretch
               description="Describe the essence of your prompt in a few words to help others understand the meaning of this prompt."
-              label={
-                <span>
-                  Description <i>- optional</i>
-                </span>
-              }
             >
               <Input
                 value={promptData.description}
