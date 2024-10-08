@@ -29,7 +29,7 @@ const client = generateClient<Schema>();
 export default function PromptCollection(props: PromptCollectionProps) {
   const router = useRouter();
 
-  const [prompts, setPrompts] = useState<Array<Schema["prompt"]["type"]>>([]);
+  const [prompts, setPrompts] = useState<Array<Schema["prompt"]["type"]>>();
   useEffect(() => {
     loadPrompts();
   }, []);
@@ -43,7 +43,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
     }
   };
 
-  if (prompts.length === 0)
+  if (!prompts)
     return (
       <Container>
         <Box textAlign="center">
