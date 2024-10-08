@@ -10,6 +10,9 @@ import {
   Box,
   CopyToClipboard,
   Spinner,
+  Badge,
+  Link,
+  Icon,
 } from "@cloudscape-design/components";
 import { generateClient } from "aws-amplify/api";
 import type { Schema } from "../amplify/data/resource";
@@ -79,14 +82,24 @@ export default function Prompt(props: PromptProps) {
             </SpaceBetween>
           }
         >
-          {prompt?.name}{" "}
-          <small>
-            by {prompt?.owner_username ? prompt?.owner_username : "unknown"}
-          </small>
+          <SpaceBetween size="xs" direction="horizontal">
+            <Badge color="blue">{prompt.sdlc_phase?.toLocaleUpperCase()}</Badge>
+            <Badge>{prompt.category}</Badge>
+            <Link href={`/prompt/${prompt.id}`} fontSize="heading-s">
+              {prompt.name}
+            </Link>
+          </SpaceBetween>
         </Header>
       }
+      footer={
+        <SpaceBetween size="xs" direction="horizontal">
+          <Box float="left">
+            <Icon name="user-profile" /> created by {prompt.owner_username}
+          </Box>
+        </SpaceBetween>
+      }
     >
-      {prompt?.instruction}
+      <pre className="wrap">{prompt.instruction}</pre>
     </Container>
   );
 }

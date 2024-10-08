@@ -60,10 +60,11 @@ export default function PromptCollection(props: PromptCollectionProps) {
           <SpaceBetween size="xs">
             <SpaceBetween size="xs" direction="horizontal">
               <Badge color="blue">{item.sdlc_phase?.toLocaleUpperCase()}</Badge>
-              <Link href={`/prompt/${item.id}`} fontSize="heading-s">
-                {item.name}
-              </Link>
+              <Badge color="grey">{item.category?.toLocaleUpperCase()}</Badge>
             </SpaceBetween>
+            <Link href={`/prompt/${item.id}`} fontSize="heading-s">
+              {item.name}
+            </Link>
           </SpaceBetween>
         ),
         sections: [

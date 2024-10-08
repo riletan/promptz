@@ -1,6 +1,7 @@
 import ConfigureAmplifyClientSide from "@/components/ConfigureAmplify";
 import type { Metadata, Viewport } from "next";
 import "@cloudscape-design/global-styles/index.css";
+import "./globals.css";
 import TopNav from "@/components/TopNav";
 
 export const metadata: Metadata = {
