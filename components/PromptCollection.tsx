@@ -32,7 +32,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
   const [prompts, setPrompts] = useState<Array<Schema["prompt"]["type"]>>([]);
   useEffect(() => {
     loadPrompts();
-  });
+  }, []);
 
   const loadPrompts = async () => {
     const { data: prompts } = await client.models.prompt.list({

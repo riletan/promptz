@@ -17,7 +17,7 @@ export default function EditPrompt({ params }: { params: { id: string } }) {
         <BreadcrumbGroup
           items={[
             { text: "Promptz", href: "/" },
-            { text: "Prompts & Prompt Templates", href: "/prompt" },
+            { text: "Prompts & Prompt Templates", href: "/browse" },
             { text: `${params.id.substring(0, 7)}...`, href: `/${params.id}` },
             { text: "Edit", href: "#" },
           ]}

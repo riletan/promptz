@@ -12,6 +12,8 @@ import {
   Textarea,
   Tiles,
   RadioGroup,
+  Flashbar,
+  Alert,
 } from "@cloudscape-design/components";
 import { generateClient } from "aws-amplify/api";
 import type { Schema } from "../amplify/data/resource";
@@ -50,6 +52,7 @@ export default function PromptEngineering(props: PromptEngineeringProps) {
 
   const [loading, setLoading] = useState(false);
   const [promptData, setPromptData] = useState({} as PromptData);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (props.promptId) {
@@ -72,35 +75,61 @@ export default function PromptEngineering(props: PromptEngineeringProps) {
   };
 
   const handleSubmit = async () => {
-    const userAttributes = await fetchUserAttributes();
+    try {
+      const userAttributes = await fetchUserAttributes();
 
-    if (promptData.id) {
-      await client.models.prompt.update(
-        { ...promptData, owner_username: userAttributes.preferred_username },
-        {
-          authMode: "userPool",
+      if (promptData.id) {
+        const { errors } = await client.models.prompt.update(
+          {
+            ...promptData,
+            owner_username: userAttributes.preferred_username,
+          },
+          {
+            authMode: "userPool",
+          }
+        );
+        if (errors && errors.length > 0) {
+          console.error(errors);
+          setErrorMessage(
+            "An error occurred while updating the prompt. Please try again."
+          );
+        } else {
+          router.back();
         }
-      );
-    } else {
-      await client.models.prompt.create(
-        {
-          ...promptData,
-          owner_username: userAttributes.preferred_username,
-        },
-        {
-          authMode: "userPool",
+      } else {
+        const { errors } = await client.models.prompt.create(
+          {
+            ...promptData,
+            owner_username: userAttributes.preferred_username,
+          },
+          {
+            authMode: "userPool",
+          }
+        );
+        if (errors && errors.length > 0) {
+          setErrorMessage(
+            "An error occurred while creating the prompt. Please try again."
+          );
+        } else {
+          router.back();
         }
+      }
+
+      //router.back();
+    } catch (error) {
+      console.error("Error creating/updating prompt:", error);
+      setErrorMessage(
+        "An error occurred while saving the prompt. Please try again."
       );
     }
-    router.back();
   };
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
         setLoading(true);
-        handleSubmit();
+        await handleSubmit();
         setLoading(false);
       }}
     >
@@ -136,7 +165,8 @@ export default function PromptEngineering(props: PromptEngineeringProps) {
             </FormField>
             <FormField
               stretch
-              description="Describe the essence of your prompt in a few words to help others understand the meaning of this prompt."
+              description="What is this prompt doing? What is the goal?"
+              label="Description"
             >
               <Input
                 value={promptData.description}
@@ -241,6 +271,11 @@ export default function PromptEngineering(props: PromptEngineeringProps) {
                 rows={10}
               />
             </FormField>
+            {errorMessage && (
+              <Alert statusIconAriaLabel="Info" type="error" header="API Error">
+                {errorMessage}
+              </Alert>
+            )}
           </SpaceBetween>
         </Container>
       </Form>

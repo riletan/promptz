@@ -30,7 +30,7 @@ export default function Prompt(props: PromptProps) {
   const [isOwnedByCurrentUser, setOwnedByCurrentUser] = useState(false);
   useEffect(() => {
     loadPrompt(props.promptId);
-  });
+  }, []);
 
   const loadPrompt = async (promptId: string) => {
     const { userId } = await getCurrentUser();
@@ -67,14 +67,19 @@ export default function Prompt(props: PromptProps) {
                 textToCopy={prompt?.instruction}
               />
               {isOwnedByCurrentUser ? (
-                <Button variant="primary">Edit</Button>
+                <Button
+                  variant="primary"
+                  onClick={() => router.push(`/prompt/${prompt.id}/edit`)}
+                >
+                  Edit
+                </Button>
               ) : (
                 ""
               )}
             </SpaceBetween>
           }
         >
-          {prompt?.name}{" "}
+          {prompt?.name}
           <small>
             by {prompt?.owner_username ? prompt?.owner_username : "unknown"}
           </small>
