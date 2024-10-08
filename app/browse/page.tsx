@@ -40,7 +40,6 @@ export default function Browse() {
       header={
         <Header
           variant="h1"
-          info={<Link variant="info">Info</Link>}
           description="Discover the prompt community-driven prompt library for Amazon Q Developer."
           actions={
             <Button

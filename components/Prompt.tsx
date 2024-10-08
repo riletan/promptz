@@ -79,7 +79,7 @@ export default function Prompt(props: PromptProps) {
             </SpaceBetween>
           }
         >
-          {prompt?.name}
+          {prompt?.name}{" "}
           <small>
             by {prompt?.owner_username ? prompt?.owner_username : "unknown"}
           </small>

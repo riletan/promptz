@@ -25,11 +25,7 @@ export default function EditPrompt({ params }: { params: { id: string } }) {
         />
       }
       header={
-        <Header
-          variant="h1"
-          info={<Link variant="info">Info</Link>}
-          description="Engineer your prompts"
-        >
+        <Header variant="h1" description="Engineer your prompts">
           Edit your Prompt
         </Header>
       }

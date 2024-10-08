@@ -27,7 +27,6 @@ export default function CreatePrompt() {
       header={
         <Header
           variant="h1"
-          info={<Link variant="info">Info</Link>}
           description="Create a new prompt or prompt template"
         >
           New Prompt
