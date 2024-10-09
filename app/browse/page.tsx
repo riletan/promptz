@@ -1,7 +1,5 @@
 "use client";
 
-import { generateClient } from "aws-amplify/data";
-import type { Schema } from "@/amplify/data/resource";
 import { Amplify } from "aws-amplify";
 import outputs from "@/amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
@@ -11,14 +9,10 @@ import {
   Button,
   ContentLayout,
   Header,
-  Link,
 } from "@cloudscape-design/components";
-import PromptTable from "@/components/PromptCollection";
-import header from "@cloudscape-design/components/header";
+import PromptCollection from "@/components/PromptCollection";
 
 Amplify.configure(outputs);
-
-const client = generateClient<Schema>();
 
 export default function Browse() {
   const router = useRouter();
@@ -54,7 +48,7 @@ export default function Browse() {
         </Header>
       }
     >
-      <PromptTable />
+      <PromptCollection />
     </ContentLayout>
   );
 }

@@ -16,8 +16,6 @@ import { generateClient } from "aws-amplify/api";
 import type { Schema } from "../amplify/data/resource";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import router from "next/router";
-import { truncateString } from "@/utils/render-utils";
 
 interface PromptCollectionProps {
   limit?: number;

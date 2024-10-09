@@ -11,7 +11,6 @@ import {
   Container,
   ContentLayout,
   Header,
-  Link,
   SpaceBetween,
 } from "@cloudscape-design/components";
 import PromptCollection from "@/components/PromptCollection";
