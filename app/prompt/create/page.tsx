@@ -1,13 +1,13 @@
 "use client";
-import {
-  BreadcrumbGroup,
-  ContentLayout,
-  Header,
-} from "@cloudscape-design/components";
+import { BreadcrumbGroup, ContentLayout, Header } from "@cloudscape-design/components";
 
-import PromptEngineering from "@/components/PromptEngineering";
+import PromptForm from "@/components/PromptForm";
+import { PromptViewModel } from "@/models/PromptViewModel";
+import { useUser } from "@/hooks/useUser";
 
 export default function CreatePrompt() {
+  const { userViewModel } = useUser();
+
   return (
     <ContentLayout
       defaultPadding
@@ -17,22 +17,19 @@ export default function CreatePrompt() {
         <BreadcrumbGroup
           items={[
             { text: "Promptz", href: "/" },
-            { text: "Prompts & Prompt Templates", href: "/prompt" },
+            { text: "Prompts & Prompt Templates", href: "/browse" },
             { text: "Create", href: "#" },
           ]}
           ariaLabel="Breadcrumbs"
         />
       }
       header={
-        <Header
-          variant="h1"
-          description="Create a new prompt or prompt template"
-        >
+        <Header variant="h1" description="Create a new prompt or prompt template">
           New Prompt
         </Header>
       }
     >
-      <PromptEngineering />
+      <PromptForm prompt={new PromptViewModel()} user={userViewModel!} />
     </ContentLayout>
   );
 }

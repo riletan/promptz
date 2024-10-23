@@ -1,12 +1,22 @@
 "use client";
 import {
+  Alert,
+  Box,
   BreadcrumbGroup,
+  Container,
   ContentLayout,
   Header,
+  SpaceBetween,
+  Spinner,
 } from "@cloudscape-design/components";
-import PromptEngineering from "@/components/PromptEngineering";
+import PromptForm from "@/components/PromptForm";
+import { usePrompt } from "@/hooks/usePrompt";
+import { useUser } from "@/hooks/useUser";
 
 export default function EditPrompt({ params }: { params: { id: string } }) {
+  const { promptViewModel, error, loading } = usePrompt(params.id);
+  const { userViewModel } = useUser();
+
   return (
     <ContentLayout
       defaultPadding
@@ -29,7 +39,23 @@ export default function EditPrompt({ params }: { params: { id: string } }) {
         </Header>
       }
     >
-      <PromptEngineering promptId={params.id} />
+      {loading && (
+        <Container data-testing="loading">
+          <Box textAlign="center">
+            <Spinner size="large" />
+          </Box>
+        </Container>
+      )}
+
+      {error && (
+        <SpaceBetween size="l" data-testing="error">
+          <Alert statusIconAriaLabel="Error" type="error" header={error.name} data-testing="error">
+            {error.message}
+          </Alert>
+        </SpaceBetween>
+      )}
+
+      {promptViewModel && userViewModel && <PromptForm prompt={promptViewModel} user={userViewModel} />}
     </ContentLayout>
   );
 }

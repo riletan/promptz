@@ -5,18 +5,10 @@ const schema = a
       id: a.id().required(),
       name: a.string().required(),
       description: a.string().required(),
-      sdlc_phase: a.enum([
-        "PLAN",
-        "REQ",
-        "DESIGN",
-        "IMPLEMENT",
-        "TEST",
-        "DEPLOY",
-        "MAINTAIN",
-      ]),
-      category: a.enum(["CHAT", "DEV_AGENT", "INLINE"]),
+      sdlc_phase: a.string().required(),
+      category: a.string().required(),
       instruction: a.string().required(),
-      owner_username: a.string(),
+      owner_username: a.string().required(),
     }),
   })
   .authorization((allow) => [

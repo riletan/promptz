@@ -5,49 +5,30 @@ import {
   Button,
   Container,
   Box,
-  Spinner,
   Link,
   Cards,
   CardsProps,
   Badge,
   Icon,
+  Alert,
 } from "@cloudscape-design/components";
-import { generateClient } from "aws-amplify/api";
-import type { Schema } from "../amplify/data/resource";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePromptCollection } from "../hooks/usePromptCollection";
 
 interface PromptCollectionProps {
   limit?: number;
   promptsPerRow?: CardsProps.CardsLayout[];
 }
 
-const client = generateClient<Schema>();
-
 export default function PromptCollection(props: PromptCollectionProps) {
   const router = useRouter();
+  const { prompts, error, loading } = usePromptCollection(props.limit);
 
-  const [prompts, setPrompts] = useState<Array<Schema["prompt"]["type"]>>();
-  useEffect(() => {
-    loadPrompts();
-  }, []);
-
-  const loadPrompts = async () => {
-    const { data: prompts } = await client.models.prompt.list({
-      limit: props.limit ?? 0,
-    });
-    if (prompts) {
-      setPrompts(prompts);
-    }
-  };
-
-  if (!prompts)
+  if (error)
     return (
-      <Container>
-        <Box textAlign="center">
-          <Spinner size="large" />
-        </Box>
-      </Container>
+      <Alert statusIconAriaLabel="Error" type="error" header={error.name} data-testing="error">
+        {error.message}
+      </Alert>
     );
 
   return (
@@ -57,8 +38,8 @@ export default function PromptCollection(props: PromptCollectionProps) {
         header: (item) => (
           <SpaceBetween size="xs">
             <SpaceBetween size="xs" direction="horizontal">
-              <Badge color="blue">{item.sdlc_phase?.toLocaleUpperCase()}</Badge>
-              <Badge color="grey">{item.category?.toLocaleUpperCase()}</Badge>
+              <Badge color="blue">{item.sdlcPhase}</Badge>
+              <Badge color="grey">{item.category}</Badge>
             </SpaceBetween>
             <Link href={`/prompt/${item.id}`} fontSize="heading-s">
               {item.name}
@@ -70,7 +51,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
             id: "owner_username",
             content: (item) => (
               <Box>
-                <Icon name="user-profile" /> created by {item.owner_username}
+                <Icon name="user-profile" /> {item.createdBy()}
               </Box>
             ),
           },
@@ -82,15 +63,14 @@ export default function PromptCollection(props: PromptCollectionProps) {
       }}
       cardsPerRow={props.promptsPerRow ?? [{ cards: 1 }]}
       items={prompts}
-      loadingText="Loading resources"
+      loading={loading}
+      loadingText="Loading a world of prompts"
       empty={
         <Container>
           <Box margin={{ vertical: "xs" }} textAlign="center" color="inherit">
             <SpaceBetween size="m">
               <b>No prompts created yet</b>
-              <Button onClick={() => router.push("/prompt/create")}>
-                Be the first. Create a prompt.
-              </Button>
+              <Button onClick={() => router.push("/prompt/create")}>Be the first. Create a prompt.</Button>
             </SpaceBetween>
           </Box>
         </Container>
