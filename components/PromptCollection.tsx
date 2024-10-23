@@ -14,6 +14,7 @@ import {
 } from "@cloudscape-design/components";
 import { useRouter } from "next/navigation";
 import { usePromptCollection } from "../hooks/usePromptCollection";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface PromptCollectionProps {
   limit?: number;
@@ -21,6 +22,7 @@ interface PromptCollectionProps {
 }
 
 export default function PromptCollection(props: PromptCollectionProps) {
+  const { user } = useAuth();
   const router = useRouter();
   const { prompts, error, loading } = usePromptCollection(props.limit);
 
@@ -70,7 +72,11 @@ export default function PromptCollection(props: PromptCollectionProps) {
           <Box margin={{ vertical: "xs" }} textAlign="center" color="inherit">
             <SpaceBetween size="m">
               <b>No prompts created yet</b>
-              <Button onClick={() => router.push("/prompt/create")}>Be the first. Create a prompt.</Button>
+              {user && !user.guest ? (
+  <Button onClick={() => router.push("/prompt/create")}>Be the first. Create a prompt.</Button>
+) : (
+  <Button onClick={() => router.push("/login")}>Sign in to create a prompt</Button>
+)}
             </SpaceBetween>
           </Box>
         </Container>

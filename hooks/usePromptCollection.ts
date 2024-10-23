@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import { generateClient } from "aws-amplify/api";
-import type { Schema } from "../amplify/data/resource";
 import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
 import { PromptViewModel } from "@/models/PromptViewModel";
 

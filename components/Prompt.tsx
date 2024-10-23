@@ -16,7 +16,7 @@ import {
   Alert,
 } from "@cloudscape-design/components";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/hooks/useUser";
+import { useAuth } from "@/contexts/AuthContext";
 import { usePrompt } from "@/hooks/usePrompt";
 
 interface PromptProps {
@@ -26,7 +26,7 @@ interface PromptProps {
 export default function Prompt(props: PromptProps) {
   const router = useRouter();
   const { promptViewModel, error, loading } = usePrompt(props.promptId);
-  const { userViewModel } = useUser();
+  const { user } = useAuth();
 
   if (loading)
     return (
@@ -59,7 +59,7 @@ export default function Prompt(props: PromptProps) {
                   copySuccessText=" Prompt copied. Now, go build!"
                   textToCopy={promptViewModel.instruction}
                 />
-                {userViewModel && promptViewModel.isOwnedBy(userViewModel) ? (
+                {user && !user.guest && promptViewModel.isOwnedBy(user) ? (
                   <Button variant="primary" onClick={() => router.push(`/prompt/${promptViewModel.id}/edit`)}>
                     Edit
                   </Button>

@@ -2,14 +2,14 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { usePrompt } from "@/hooks/usePrompt";
 import Prompt from "@/components/Prompt";
-import { useUser } from "@/hooks/useUser";
+import { useAuth } from "@/contexts/AuthContext";
 import "@testing-library/jest-dom/vitest";
 import { SdlcPhase, PromptCategory, PromptViewModel } from "@/models/PromptViewModel";
 import { UserViewModel } from "@/models/UserViewModel";
 
 // Mock the hooks
 vi.mock("@/hooks/usePrompt");
-vi.mock("@/hooks/useUser");
+vi.mock("@/contexts/AuthContext");
 
 // Mock next/navigation
 vi.mock("next/navigation", () => ({
@@ -34,7 +34,11 @@ const promptViewModel = PromptViewModel.fromSchema({
 describe("Prompt component", () => {
   it("renders loading state", () => {
     vi.mocked(usePrompt).mockReturnValue({ loading: true, error: null, promptViewModel: null });
-    vi.mocked(useUser).mockReturnValue({ userViewModel: null, error: null, loading: false });
+    vi.mocked(useAuth).mockReturnValue({
+      user: new UserViewModel("guest", "guest"),
+      logout: vi.fn(),
+      fetchUser: vi.fn(),
+    });
 
     render(<Prompt promptId="test-id" />);
     expect(screen.getByTestId("loading")).toBeInTheDocument();
@@ -42,7 +46,11 @@ describe("Prompt component", () => {
 
   it("renders error state", () => {
     vi.mocked(usePrompt).mockReturnValue({ loading: false, error: new Error("Test error"), promptViewModel: null });
-    vi.mocked(useUser).mockReturnValue({ userViewModel: null, error: null, loading: false });
+    vi.mocked(useAuth).mockReturnValue({
+      user: new UserViewModel("guest", "guest"),
+      logout: vi.fn(),
+      fetchUser: vi.fn(),
+    });
     render(<Prompt promptId="test-id" />);
     expect(screen.getByTestId("error")).toBeInTheDocument();
     expect(screen.getByTestId("error")).toHaveTextContent("Test error");
@@ -50,8 +58,11 @@ describe("Prompt component", () => {
 
   it("renders prompt data", () => {
     vi.mocked(usePrompt).mockReturnValue({ loading: false, error: null, promptViewModel: promptViewModel });
-    vi.mocked(useUser).mockReturnValue({ userViewModel: null, error: null, loading: false });
-
+    vi.mocked(useAuth).mockReturnValue({
+      user: new UserViewModel("guest", "guest"),
+      logout: vi.fn(),
+      fetchUser: vi.fn(),
+    });
     render(<Prompt promptId="test-id" />);
     expect(screen.getByText(promptViewModel.name)).toBeInTheDocument();
     expect(screen.getByText(promptViewModel.instruction)).toBeInTheDocument();
@@ -62,10 +73,10 @@ describe("Prompt component", () => {
 
   it("renders edit button for owner", () => {
     vi.mocked(usePrompt).mockReturnValue({ loading: false, error: null, promptViewModel: promptViewModel });
-    vi.mocked(useUser).mockReturnValue({
-      userViewModel: new UserViewModel("user123", "test"),
-      error: null,
-      loading: false,
+    vi.mocked(useAuth).mockReturnValue({
+      user: new UserViewModel("user123", "Test User", false),
+      logout: vi.fn(),
+      fetchUser: vi.fn(),
     });
 
     render(<Prompt promptId="test-id" />);
@@ -74,10 +85,22 @@ describe("Prompt component", () => {
 
   it("does not render edit button for non-owner", () => {
     vi.mocked(usePrompt).mockReturnValue({ loading: false, error: null, promptViewModel: promptViewModel });
-    vi.mocked(useUser).mockReturnValue({
-      userViewModel: new UserViewModel("user1456", "test"),
-      error: null,
-      loading: false,
+    vi.mocked(useAuth).mockReturnValue({
+      user: new UserViewModel("user1234", "Test User"),
+      logout: vi.fn(),
+      fetchUser: vi.fn(),
+    });
+
+    render(<Prompt promptId="test-id" />);
+    expect(screen.queryByRole("button", { name: "Edit" })).not.toBeInTheDocument();
+  });
+
+  it("does not render edit button for guest user", () => {
+    vi.mocked(usePrompt).mockReturnValue({ loading: false, error: null, promptViewModel: promptViewModel });
+    vi.mocked(useAuth).mockReturnValue({
+      user: new UserViewModel("user123", "Test User", true),
+      logout: vi.fn(),
+      fetchUser: vi.fn(),
     });
 
     render(<Prompt promptId="test-id" />);
@@ -86,10 +109,10 @@ describe("Prompt component", () => {
 
   it("renders copy button", () => {
     vi.mocked(usePrompt).mockReturnValue({ loading: false, error: null, promptViewModel: promptViewModel });
-    vi.mocked(useUser).mockReturnValue({
-      userViewModel: new UserViewModel("user123", "test"),
-      error: null,
-      loading: false,
+    vi.mocked(useAuth).mockReturnValue({
+      user: new UserViewModel("user123", "Test User"),
+      logout: vi.fn(),
+      fetchUser: vi.fn(),
     });
 
     render(<Prompt promptId="test-id" />);

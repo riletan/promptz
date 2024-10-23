@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "@cloudscape-design/global-styles/index.css";
 import "./globals.css";
 import TopNav from "@/components/TopNav";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export const metadata: Metadata = {
   title: "Promptz",
@@ -23,8 +24,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ConfigureAmplifyClientSide />
-        <TopNav />
-        {children}
+        <AuthProvider>
+          <TopNav />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

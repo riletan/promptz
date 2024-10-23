@@ -19,12 +19,11 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
-import { UserViewModel } from "@/models/UserViewModel";
+import { useAuth } from "@/contexts/AuthContext";
 import { PromptCategory, PromptViewModel, SdlcPhase } from "@/models/PromptViewModel";
 
 interface PromptFormProps {
   prompt: PromptViewModel;
-  user: UserViewModel;
 }
 
 interface FormData {
@@ -39,6 +38,7 @@ interface FormData {
 const repository = new PromptGraphQLRepository();
 
 export default function PromptForm(props: PromptFormProps) {
+  const { user } = useAuth();
   const router = useRouter();
 
   const [formError, setFormError] = useState("");
@@ -62,7 +62,7 @@ export default function PromptForm(props: PromptFormProps) {
       editedPrompt.sdlcPhase = formData.sdlcPhase as SdlcPhase;
       editedPrompt.category = formData.category as PromptCategory;
       editedPrompt.id === ""
-        ? await repository.createPrompt(editedPrompt, props.user!)
+        ? await repository.createPrompt(editedPrompt, user!)
         : await repository.updatePrompt(editedPrompt);
 
       router.back();
@@ -185,7 +185,6 @@ export default function PromptForm(props: PromptFormProps) {
                 onChange={({ detail }) => setFormData({ ...formData, instruction: detail.value })}
                 value={formData.instruction}
                 ariaRequired
-                autoFocus
                 placeholder=""
                 spellcheck
                 rows={10}

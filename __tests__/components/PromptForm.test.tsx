@@ -5,9 +5,11 @@ import { PromptViewModel } from "@/models/PromptViewModel";
 import { UserViewModel } from "@/models/UserViewModel";
 import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
 import PromptForm from "@/components/PromptForm";
+import { useAuth } from "@/contexts/AuthContext";
 
 // Mock the PromptGraphQLRepository
 vi.mock("@/repositories/PromptRepository");
+vi.mock("@/contexts/AuthContext");
 
 // Mock next/navigation
 const mockBack = vi.fn();
@@ -24,10 +26,15 @@ describe("PromptForm component", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(useAuth).mockReturnValue({
+      user: new UserViewModel("user123", "testuser", false),
+      logout: vi.fn(),
+      fetchUser: vi.fn(),
+    });
   });
 
   it("renders form fields correctly", () => {
-    render(<PromptForm prompt={mockPrompt} user={mockUser} />);
+    render(<PromptForm prompt={mockPrompt} />);
 
     expect(screen.getByLabelText("Name")).toBeInTheDocument();
     expect(screen.getByLabelText("Description")).toBeInTheDocument();
@@ -37,7 +44,7 @@ describe("PromptForm component", () => {
   });
 
   it("updates form data when input changes", () => {
-    render(<PromptForm prompt={mockPrompt} user={mockUser} />);
+    render(<PromptForm prompt={mockPrompt} />);
 
     const nameInput = screen.getByLabelText("Name");
     fireEvent.change(nameInput, { target: { value: "Updated Name" } });
@@ -53,7 +60,7 @@ describe("PromptForm component", () => {
   });
 
   it("calls createPrompt when submitting a new prompt", async () => {
-    render(<PromptForm prompt={new PromptViewModel()} user={mockUser} />);
+    render(<PromptForm prompt={new PromptViewModel()} />);
 
     fireEvent.change(screen.getByLabelText("Name"), { target: { value: "New Prompt" } });
     fireEvent.change(screen.getByLabelText("Description"), { target: { value: "New Description" } });
@@ -80,7 +87,7 @@ describe("PromptForm component", () => {
       createdAt: "",
       updatedAt: "",
     });
-    render(<PromptForm prompt={existingPrompt} user={mockUser} />);
+    render(<PromptForm prompt={existingPrompt} />);
 
     fireEvent.change(screen.getByLabelText("Name"), { target: { value: "Updated Prompt" } });
     fireEvent.click(screen.getByText("Save prompt"));
@@ -98,7 +105,7 @@ describe("PromptForm component", () => {
   });
 
   it("navigates back when cancel button is clicked", () => {
-    render(<PromptForm prompt={mockPrompt} user={mockUser} />);
+    render(<PromptForm prompt={mockPrompt} />);
 
     fireEvent.click(screen.getByText("Cancel"));
 

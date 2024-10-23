@@ -11,11 +11,9 @@ import {
 } from "@cloudscape-design/components";
 import PromptForm from "@/components/PromptForm";
 import { usePrompt } from "@/hooks/usePrompt";
-import { useUser } from "@/hooks/useUser";
 
 export default function EditPrompt({ params }: { params: { id: string } }) {
   const { promptViewModel, error, loading } = usePrompt(params.id);
-  const { userViewModel } = useUser();
 
   return (
     <ContentLayout
@@ -55,7 +53,7 @@ export default function EditPrompt({ params }: { params: { id: string } }) {
         </SpaceBetween>
       )}
 
-      {promptViewModel && userViewModel && <PromptForm prompt={promptViewModel} user={userViewModel} />}
+      {promptViewModel && <PromptForm prompt={promptViewModel} />}
     </ContentLayout>
   );
 }
