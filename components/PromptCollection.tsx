@@ -11,7 +11,6 @@ import {
   Badge,
   Icon,
   Alert,
-  Pagination,
 } from "@cloudscape-design/components";
 import { useRouter } from "next/navigation";
 import { usePromptCollection } from "../hooks/usePromptCollection";

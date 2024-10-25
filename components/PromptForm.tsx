@@ -12,9 +12,6 @@ import {
   Textarea,
   Tiles,
   RadioGroup,
-  Alert,
-  Box,
-  Spinner,
 } from "@cloudscape-design/components";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -65,9 +62,11 @@ export default function PromptForm(props: PromptFormProps) {
       editedPrompt.instruction = formData.instruction;
       editedPrompt.sdlcPhase = formData.sdlcPhase as SdlcPhase;
       editedPrompt.category = formData.category as PromptCategory;
-      editedPrompt.id === ""
-        ? await repository.createPrompt(editedPrompt, user!)
-        : await repository.updatePrompt(editedPrompt);
+      if (editedPrompt.id === "") {
+        await repository.createPrompt(editedPrompt, user!);
+      } else {
+        await repository.updatePrompt(editedPrompt);
+      }
 
       router.back();
     } catch (error) {
