@@ -42,11 +42,17 @@ export default function App() {
       }
     >
       <SpaceBetween size="s">
+        <h2>Discover the latest prompts</h2>
+        <PromptCollection
+          limit={3}
+          promptsPerRow={[{ cards: 1 }, { minWidth: 500, cards: 3 }]}
+          showLoadMore={false}
+        />
         <Grid
           gridDefinition={[
-            { colspan: { xxs: 12, xs: 12, s: 4, default: 4, m: 4, xl: 4 } },
-            { colspan: { xxs: 12, xs: 12, s: 4, default: 4, m: 4, xl: 4 } },
-            { colspan: { xxs: 12, xs: 12, s: 4, default: 4, m: 4, xl: 4 } },
+            { colspan: { xxs: 12, xs: 12, s: 4, m: 4, xl: 4 } },
+            { colspan: { xxs: 12, xs: 12, s: 4, m: 4, xl: 4 } },
+            { colspan: { xxs: 12, xs: 12, s: 4, m: 4, xl: 4 } },
           ]}
         >
           <div>
@@ -76,12 +82,6 @@ export default function App() {
           </div>
         </Grid>
       </SpaceBetween>
-      <h2>Discover the latest prompts</h2>
-      <PromptCollection
-        limit={3}
-        promptsPerRow={[{ cards: 1 }, { minWidth: 500, cards: 3 }]}
-        showLoadMore={false}
-      />
     </ContentLayout>
   );
 }
