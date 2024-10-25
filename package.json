@@ -1,7 +1,15 @@
 {
   "name": "promptz",
   "version": "0.1.0",
-  "private": true,
+  "description": "Promptz is the ultimate prompting hub for Amazon Q Developer, designed to help you discover, create, and perfect your prompts for every step of the software development lifecycle.",
+  "author": {
+    "name": "Christian Bonzelet",
+    "email": "christian.bonzelet@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cremich/promptz"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
