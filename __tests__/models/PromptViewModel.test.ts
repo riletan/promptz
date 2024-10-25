@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { PromptViewModel, SdlcPhase, PromptCategory } from "../../models/PromptViewModel";
+import {
+  PromptViewModel,
+  SdlcPhase,
+  PromptCategory,
+} from "../../models/PromptViewModel";
 import { UserViewModel } from "../../models/UserViewModel";
 
 const schemaPrompt = {
@@ -40,7 +44,9 @@ describe("PromptViewModel", () => {
       updatedAt: "",
     };
 
-    expect(() => PromptViewModel.fromSchema(schemaPrompt)).toThrow("Prompt has no owner");
+    expect(() => PromptViewModel.fromSchema(schemaPrompt)).toThrow(
+      "Prompt has no owner",
+    );
   });
 
   it("should return true if the user is the owner of the prompt", () => {

@@ -8,7 +8,8 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
-export const onCreatePromptTemplate = /* GraphQL */ `subscription OnCreatePromptTemplate(
+export const onCreatePromptTemplate =
+  /* GraphQL */ `subscription OnCreatePromptTemplate(
   $filter: ModelSubscriptionPromptTemplateFilterInput
 ) {
   onCreatePromptTemplate(filter: $filter) {
@@ -20,10 +21,11 @@ export const onCreatePromptTemplate = /* GraphQL */ `subscription OnCreatePrompt
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnCreatePromptTemplateSubscriptionVariables,
-  APITypes.OnCreatePromptTemplateSubscription
->;
-export const onDeletePromptTemplate = /* GraphQL */ `subscription OnDeletePromptTemplate(
+    APITypes.OnCreatePromptTemplateSubscriptionVariables,
+    APITypes.OnCreatePromptTemplateSubscription
+  >;
+export const onDeletePromptTemplate =
+  /* GraphQL */ `subscription OnDeletePromptTemplate(
   $filter: ModelSubscriptionPromptTemplateFilterInput
 ) {
   onDeletePromptTemplate(filter: $filter) {
@@ -35,10 +37,11 @@ export const onDeletePromptTemplate = /* GraphQL */ `subscription OnDeletePrompt
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnDeletePromptTemplateSubscriptionVariables,
-  APITypes.OnDeletePromptTemplateSubscription
->;
-export const onUpdatePromptTemplate = /* GraphQL */ `subscription OnUpdatePromptTemplate(
+    APITypes.OnDeletePromptTemplateSubscriptionVariables,
+    APITypes.OnDeletePromptTemplateSubscription
+  >;
+export const onUpdatePromptTemplate =
+  /* GraphQL */ `subscription OnUpdatePromptTemplate(
   $filter: ModelSubscriptionPromptTemplateFilterInput
 ) {
   onUpdatePromptTemplate(filter: $filter) {
@@ -50,6 +53,6 @@ export const onUpdatePromptTemplate = /* GraphQL */ `subscription OnUpdatePrompt
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnUpdatePromptTemplateSubscriptionVariables,
-  APITypes.OnUpdatePromptTemplateSubscription
->;
+    APITypes.OnUpdatePromptTemplateSubscriptionVariables,
+    APITypes.OnUpdatePromptTemplateSubscription
+  >;

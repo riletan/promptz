@@ -2,7 +2,11 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { usePromptCollection } from "@/hooks/usePromptCollection";
 import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
-import { PromptCategory, PromptViewModel, SdlcPhase } from "@/models/PromptViewModel";
+import {
+  PromptCategory,
+  PromptViewModel,
+  SdlcPhase,
+} from "@/models/PromptViewModel";
 import { PromptViewModelCollection } from "@/models/PromptViewModelCollection";
 
 vi.mock("@/repositories/PromptRepository");
@@ -15,7 +19,7 @@ describe("usePromptCollection", () => {
   it("should fetch prompts and update state", async () => {
     const mockPrompts = [new PromptViewModel(), new PromptViewModel()];
     vi.mocked(PromptGraphQLRepository.prototype.listPrompts).mockResolvedValue(
-      new PromptViewModelCollection(mockPrompts)
+      new PromptViewModelCollection(mockPrompts),
     );
 
     const { result } = renderHook(() => usePromptCollection());
@@ -29,7 +33,9 @@ describe("usePromptCollection", () => {
 
   it("should handle errors when fetching prompts", async () => {
     const mockError = new Error("Failed to fetch prompts");
-    vi.mocked(PromptGraphQLRepository.prototype.listPrompts).mockRejectedValue(mockError);
+    vi.mocked(PromptGraphQLRepository.prototype.listPrompts).mockRejectedValue(
+      mockError,
+    );
 
     const { result } = renderHook(() => usePromptCollection());
 
@@ -46,21 +52,23 @@ describe("usePromptCollection", () => {
       .fill(null)
       .map((_, index) => new PromptViewModel());
     vi.mocked(PromptGraphQLRepository.prototype.listPrompts).mockResolvedValue(
-      new PromptViewModelCollection(mockPrompts)
+      new PromptViewModelCollection(mockPrompts),
     );
 
     const { result } = renderHook(() => usePromptCollection(limit));
 
     await waitFor(() => {
       expect(result.current.prompts).toHaveLength(limit);
-      expect(PromptGraphQLRepository.prototype.listPrompts).toHaveBeenCalledWith(limit);
+      expect(
+        PromptGraphQLRepository.prototype.listPrompts,
+      ).toHaveBeenCalledWith(limit);
     });
   });
 
   it("should not make unnecessary API calls on re-render", async () => {
     const mockPrompts = [new PromptViewModel(), new PromptViewModel()];
     vi.mocked(PromptGraphQLRepository.prototype.listPrompts).mockResolvedValue(
-      new PromptViewModelCollection(mockPrompts)
+      new PromptViewModelCollection(mockPrompts),
     );
 
     const { result, rerender } = renderHook(() => usePromptCollection());
@@ -69,10 +77,14 @@ describe("usePromptCollection", () => {
       expect(result.current.loading).toBe(false);
     });
 
-    expect(PromptGraphQLRepository.prototype.listPrompts).toHaveBeenCalledTimes(1);
+    expect(PromptGraphQLRepository.prototype.listPrompts).toHaveBeenCalledTimes(
+      1,
+    );
 
     rerender();
 
-    expect(PromptGraphQLRepository.prototype.listPrompts).toHaveBeenCalledTimes(1);
+    expect(PromptGraphQLRepository.prototype.listPrompts).toHaveBeenCalledTimes(
+      1,
+    );
   });
 });

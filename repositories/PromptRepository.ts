@@ -7,7 +7,10 @@ import { PromptViewModelCollection } from "@/models/PromptViewModelCollection";
 export interface PromptRepository {
   getPrompt(id: string): Promise<PromptViewModel>;
   listPrompts(limit?: number): Promise<PromptViewModelCollection>;
-  createPrompt(prompt: PromptViewModel, owner: UserViewModel): Promise<PromptViewModel>;
+  createPrompt(
+    prompt: PromptViewModel,
+    owner: UserViewModel,
+  ): Promise<PromptViewModel>;
   updatePrompt(prompt: PromptViewModel): Promise<PromptViewModel>;
 }
 
@@ -18,39 +21,44 @@ export class PromptGraphQLRepository implements PromptRepository {
   }
 
   async updatePrompt(prompt: PromptViewModel): Promise<PromptViewModel> {
-    const { data: createdPrompt, errors } = await this.client.models.prompt.update(
-      {
-        id: prompt.id,
-        name: prompt.name,
-        description: prompt.description,
-        sdlc_phase: prompt.sdlcPhase,
-        category: prompt.category,
-        instruction: prompt.instruction,
-      },
-      {
-        authMode: "userPool",
-      }
-    );
+    const { data: createdPrompt, errors } =
+      await this.client.models.prompt.update(
+        {
+          id: prompt.id,
+          name: prompt.name,
+          description: prompt.description,
+          sdlc_phase: prompt.sdlcPhase,
+          category: prompt.category,
+          instruction: prompt.instruction,
+        },
+        {
+          authMode: "userPool",
+        },
+      );
     if (errors && errors.length > 0) {
       throw new Error(errors[0].message);
     }
     return PromptViewModel.fromSchema(createdPrompt!);
   }
 
-  async createPrompt(prompt: PromptViewModel, owner: UserViewModel): Promise<PromptViewModel> {
-    const { data: createdPrompt, errors } = await this.client.models.prompt.create(
-      {
-        name: prompt.name,
-        description: prompt.description,
-        sdlc_phase: prompt.sdlcPhase,
-        category: prompt.category,
-        instruction: prompt.instruction,
-        owner_username: owner.userName,
-      },
-      {
-        authMode: "userPool",
-      }
-    );
+  async createPrompt(
+    prompt: PromptViewModel,
+    owner: UserViewModel,
+  ): Promise<PromptViewModel> {
+    const { data: createdPrompt, errors } =
+      await this.client.models.prompt.create(
+        {
+          name: prompt.name,
+          description: prompt.description,
+          sdlc_phase: prompt.sdlcPhase,
+          category: prompt.category,
+          instruction: prompt.instruction,
+          owner_username: owner.userName,
+        },
+        {
+          authMode: "userPool",
+        },
+      );
     if (errors && errors.length > 0) {
       throw new Error(errors[0].message);
     }
@@ -72,7 +80,10 @@ export class PromptGraphQLRepository implements PromptRepository {
     }
   }
 
-  async listPrompts(limit?: number, pageToken?: string | null | undefined): Promise<PromptViewModelCollection> {
+  async listPrompts(
+    limit?: number,
+    pageToken?: string | null | undefined,
+  ): Promise<PromptViewModelCollection> {
     const {
       data: prompts,
       errors,
@@ -86,7 +97,9 @@ export class PromptGraphQLRepository implements PromptRepository {
       throw new Error(errors[0].message);
     }
     if (prompts) {
-      const promptViewModelList = prompts.map((p) => PromptViewModel.fromSchema(p)); //PromptViewModel.fromSchema(prompt);
+      const promptViewModelList = prompts.map((p) =>
+        PromptViewModel.fromSchema(p),
+      ); //PromptViewModel.fromSchema(prompt);
       const promptList = nextToken
         ? new PromptViewModelCollection(promptViewModelList, nextToken)
         : new PromptViewModelCollection(promptViewModelList);

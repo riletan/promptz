@@ -1,5 +1,9 @@
 "use client";
-import { BreadcrumbGroup, ContentLayout, Header } from "@cloudscape-design/components";
+import {
+  BreadcrumbGroup,
+  ContentLayout,
+  Header,
+} from "@cloudscape-design/components";
 
 import PromptForm from "@/components/PromptForm";
 import { PromptViewModel } from "@/models/PromptViewModel";
@@ -21,7 +25,10 @@ export default function CreatePrompt() {
         />
       }
       header={
-        <Header variant="h1" description="Create a new prompt or prompt template">
+        <Header
+          variant="h1"
+          description="Create a new prompt or prompt template"
+        >
           New Prompt
         </Header>
       }

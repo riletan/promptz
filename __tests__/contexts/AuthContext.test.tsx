@@ -19,14 +19,17 @@ describe("AuthContext", () => {
     const { getByText } = render(
       <AuthProvider>
         <TestComponent />
-      </AuthProvider>
+      </AuthProvider>,
     );
 
     expect(getByText("No user")).toBeTruthy();
   });
 
   it("should fetch user on mount", async () => {
-    vi.mocked(fetchUserAttributes).mockResolvedValue({ sub: "1", preferred_username: "testUser" });
+    vi.mocked(fetchUserAttributes).mockResolvedValue({
+      sub: "1",
+      preferred_username: "testUser",
+    });
 
     const TestComponent = () => {
       const { user } = useAuth();
@@ -38,7 +41,7 @@ describe("AuthContext", () => {
       renderResult = render(
         <AuthProvider>
           <TestComponent />
-        </AuthProvider>
+        </AuthProvider>,
       );
     });
 
@@ -58,7 +61,7 @@ describe("AuthContext", () => {
       renderResult = render(
         <AuthProvider>
           <TestComponent />
-        </AuthProvider>
+        </AuthProvider>,
       );
     });
 
@@ -66,7 +69,10 @@ describe("AuthContext", () => {
   });
 
   it("should logout user", async () => {
-    vi.mocked(fetchUserAttributes).mockResolvedValue({ sub: "1", preferred_username: "testUser" });
+    vi.mocked(fetchUserAttributes).mockResolvedValue({
+      sub: "1",
+      preferred_username: "testUser",
+    });
 
     const TestComponent = () => {
       const { user, logout } = useAuth();
@@ -83,7 +89,7 @@ describe("AuthContext", () => {
       renderResult = render(
         <AuthProvider>
           <TestComponent />
-        </AuthProvider>
+        </AuthProvider>,
       );
     });
 
@@ -101,6 +107,8 @@ describe("AuthContext", () => {
       return null;
     };
 
-    expect(() => render(<TestComponent />)).toThrow("useAuth must be used within an AuthProvider");
+    expect(() => render(<TestComponent />)).toThrow(
+      "useAuth must be used within an AuthProvider",
+    );
   });
 });

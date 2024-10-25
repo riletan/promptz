@@ -38,7 +38,9 @@ describe("PromptForm component", () => {
 
     expect(screen.getByLabelText("Name")).toBeInTheDocument();
     expect(screen.getByLabelText("Description")).toBeInTheDocument();
-    expect(screen.getByLabelText("Software Development Lifecycle (SDLC) Phase")).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("Software Development Lifecycle (SDLC) Phase"),
+    ).toBeInTheDocument();
     expect(screen.getByLabelText("Prompt Category")).toBeInTheDocument();
     expect(screen.getByLabelText("Instruction")).toBeInTheDocument();
   });
@@ -51,25 +53,37 @@ describe("PromptForm component", () => {
     expect(nameInput).toHaveValue("Updated Name");
 
     const descriptionInput = screen.getByLabelText("Description");
-    fireEvent.change(descriptionInput, { target: { value: "Updated Description" } });
+    fireEvent.change(descriptionInput, {
+      target: { value: "Updated Description" },
+    });
     expect(descriptionInput).toHaveValue("Updated Description");
 
     const instructionInput = screen.getByLabelText("Instruction");
-    fireEvent.change(instructionInput, { target: { value: "Updated Instruction" } });
+    fireEvent.change(instructionInput, {
+      target: { value: "Updated Instruction" },
+    });
     expect(instructionInput).toHaveValue("Updated Instruction");
   });
 
   it("calls createPrompt when submitting a new prompt", async () => {
     render(<PromptForm prompt={new PromptViewModel()} />);
 
-    fireEvent.change(screen.getByLabelText("Name"), { target: { value: "New Prompt" } });
-    fireEvent.change(screen.getByLabelText("Description"), { target: { value: "New Description" } });
-    fireEvent.change(screen.getByLabelText("Instruction"), { target: { value: "New Instruction" } });
+    fireEvent.change(screen.getByLabelText("Name"), {
+      target: { value: "New Prompt" },
+    });
+    fireEvent.change(screen.getByLabelText("Description"), {
+      target: { value: "New Description" },
+    });
+    fireEvent.change(screen.getByLabelText("Instruction"), {
+      target: { value: "New Instruction" },
+    });
 
     fireEvent.click(screen.getByText("Save prompt"));
 
     await waitFor(() => {
-      expect(vi.mocked(PromptGraphQLRepository.prototype.createPrompt)).toHaveBeenCalledTimes(1);
+      expect(
+        vi.mocked(PromptGraphQLRepository.prototype.createPrompt),
+      ).toHaveBeenCalledTimes(1);
       expect(mockBack).toHaveBeenCalled();
     });
   });
@@ -89,15 +103,19 @@ describe("PromptForm component", () => {
     });
     render(<PromptForm prompt={existingPrompt} />);
 
-    fireEvent.change(screen.getByLabelText("Name"), { target: { value: "Updated Prompt" } });
+    fireEvent.change(screen.getByLabelText("Name"), {
+      target: { value: "Updated Prompt" },
+    });
     fireEvent.click(screen.getByText("Save prompt"));
 
     await waitFor(() => {
-      expect(vi.mocked(PromptGraphQLRepository.prototype.updatePrompt)).toHaveBeenCalledWith(
+      expect(
+        vi.mocked(PromptGraphQLRepository.prototype.updatePrompt),
+      ).toHaveBeenCalledWith(
         expect.objectContaining({
           id: "1",
           name: "Updated Prompt",
-        })
+        }),
       );
     });
 
