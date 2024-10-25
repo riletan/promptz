@@ -48,7 +48,7 @@ export default function Browse() {
         </Header>
       }
     >
-      <PromptCollection />
+      <PromptCollection showLoadMore={true} limit={10} />
     </ContentLayout>
   );
 }

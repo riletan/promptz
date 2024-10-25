@@ -18,6 +18,7 @@ import { usePromptCollection } from "../hooks/usePromptCollection";
 interface PromptCollectionProps {
   limit?: number;
   promptsPerRow?: CardsProps.CardsLayout[];
+  showLoadMore: boolean;
 }
 
 export default function PromptCollection(props: PromptCollectionProps) {
@@ -86,7 +87,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
         }
       />
 
-      {prompts.length > 0 && (
+      {prompts.length > 0 && props.showLoadMore && (
         <Box textAlign="center">
           <Button
             disabled={!hasMore}
