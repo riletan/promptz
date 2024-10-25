@@ -23,11 +23,17 @@ interface PromptCollectionProps {
 
 export default function PromptCollection(props: PromptCollectionProps) {
   const router = useRouter();
-  const { prompts, error, loading, hasMore, handleLoadMore } = usePromptCollection(props.limit);
+  const { prompts, error, loading, hasMore, handleLoadMore } =
+    usePromptCollection(props.limit);
 
   if (error)
     return (
-      <Alert statusIconAriaLabel="Error" type="error" header={error.name} data-testing="error">
+      <Alert
+        statusIconAriaLabel="Error"
+        type="error"
+        header={error.name}
+        data-testing="error"
+      >
         {error.message}
       </Alert>
     );
@@ -72,7 +78,9 @@ export default function PromptCollection(props: PromptCollectionProps) {
             <Box margin={{ vertical: "xs" }} textAlign="center" color="inherit">
               <SpaceBetween size="m">
                 <b>No prompts created yet</b>
-                <Button onClick={() => router.push("/prompt/create")}>Be the first. Create a prompt.</Button>
+                <Button onClick={() => router.push("/prompt/create")}>
+                  Be the first. Create a prompt.
+                </Button>
               </SpaceBetween>
             </Box>
           </Container>

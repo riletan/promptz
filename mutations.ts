@@ -8,7 +8,8 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
-export const createPromptTemplate = /* GraphQL */ `mutation CreatePromptTemplate(
+export const createPromptTemplate =
+  /* GraphQL */ `mutation CreatePromptTemplate(
   $condition: ModelPromptTemplateConditionInput
   $input: CreatePromptTemplateInput!
 ) {
@@ -21,10 +22,11 @@ export const createPromptTemplate = /* GraphQL */ `mutation CreatePromptTemplate
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreatePromptTemplateMutationVariables,
-  APITypes.CreatePromptTemplateMutation
->;
-export const deletePromptTemplate = /* GraphQL */ `mutation DeletePromptTemplate(
+    APITypes.CreatePromptTemplateMutationVariables,
+    APITypes.CreatePromptTemplateMutation
+  >;
+export const deletePromptTemplate =
+  /* GraphQL */ `mutation DeletePromptTemplate(
   $condition: ModelPromptTemplateConditionInput
   $input: DeletePromptTemplateInput!
 ) {
@@ -37,10 +39,11 @@ export const deletePromptTemplate = /* GraphQL */ `mutation DeletePromptTemplate
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeletePromptTemplateMutationVariables,
-  APITypes.DeletePromptTemplateMutation
->;
-export const updatePromptTemplate = /* GraphQL */ `mutation UpdatePromptTemplate(
+    APITypes.DeletePromptTemplateMutationVariables,
+    APITypes.DeletePromptTemplateMutation
+  >;
+export const updatePromptTemplate =
+  /* GraphQL */ `mutation UpdatePromptTemplate(
   $condition: ModelPromptTemplateConditionInput
   $input: UpdatePromptTemplateInput!
 ) {
@@ -53,6 +56,6 @@ export const updatePromptTemplate = /* GraphQL */ `mutation UpdatePromptTemplate
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdatePromptTemplateMutationVariables,
-  APITypes.UpdatePromptTemplateMutation
->;
+    APITypes.UpdatePromptTemplateMutationVariables,
+    APITypes.UpdatePromptTemplateMutation
+  >;

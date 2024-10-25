@@ -39,7 +39,12 @@ export default function Prompt(props: PromptProps) {
 
   if (error)
     return (
-      <Alert statusIconAriaLabel="Error" type="error" header={error.name} data-testing="error">
+      <Alert
+        statusIconAriaLabel="Error"
+        type="error"
+        header={error.name}
+        data-testing="error"
+      >
         {error.message}
       </Alert>
     );
@@ -60,7 +65,12 @@ export default function Prompt(props: PromptProps) {
                   textToCopy={promptViewModel.instruction}
                 />
                 {user && !user.guest && promptViewModel.isOwnedBy(user) ? (
-                  <Button variant="primary" onClick={() => router.push(`/prompt/${promptViewModel.id}/edit`)}>
+                  <Button
+                    variant="primary"
+                    onClick={() =>
+                      router.push(`/prompt/${promptViewModel.id}/edit`)
+                    }
+                  >
                     Edit
                   </Button>
                 ) : (

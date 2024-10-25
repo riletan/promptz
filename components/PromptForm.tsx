@@ -20,7 +20,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
 import { useAuth } from "@/contexts/AuthContext";
-import { PromptCategory, PromptViewModel, SdlcPhase } from "@/models/PromptViewModel";
+import {
+  PromptCategory,
+  PromptViewModel,
+  SdlcPhase,
+} from "@/models/PromptViewModel";
 
 interface PromptFormProps {
   prompt: PromptViewModel;
@@ -68,7 +72,9 @@ export default function PromptForm(props: PromptFormProps) {
       router.back();
     } catch (error) {
       console.error("Error creating/updating prompt:", error);
-      setFormError("An error occurred while saving the prompt. Please try again.");
+      setFormError(
+        "An error occurred while saving the prompt. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -85,7 +91,11 @@ export default function PromptForm(props: PromptFormProps) {
         errorText={formError}
         actions={
           <SpaceBetween direction="horizontal" size="xs">
-            <Button formAction="none" variant="link" onClick={() => router.back()}>
+            <Button
+              formAction="none"
+              variant="link"
+              onClick={() => router.back()}
+            >
               Cancel
             </Button>
             <Button variant="primary" formAction="submit" loading={loading}>
@@ -96,16 +106,28 @@ export default function PromptForm(props: PromptFormProps) {
       >
         <Container>
           <SpaceBetween direction="vertical" size="l">
-            <FormField stretch description="A catchy name for your prompt." label="Name">
+            <FormField
+              stretch
+              description="A catchy name for your prompt."
+              label="Name"
+            >
               <Input
                 value={formData.name}
-                onChange={({ detail }) => setFormData({ ...formData, name: detail.value })}
+                onChange={({ detail }) =>
+                  setFormData({ ...formData, name: detail.value })
+                }
               />
             </FormField>
-            <FormField stretch description="What is this prompt doing? What is the goal?" label="Description">
+            <FormField
+              stretch
+              description="What is this prompt doing? What is the goal?"
+              label="Description"
+            >
               <Input
                 value={formData.description}
-                onChange={({ detail }) => setFormData({ ...formData, description: detail.value })}
+                onChange={({ detail }) =>
+                  setFormData({ ...formData, description: detail.value })
+                }
               />
             </FormField>
             <FormField
@@ -114,7 +136,9 @@ export default function PromptForm(props: PromptFormProps) {
               stretch
             >
               <Tiles
-                onChange={({ detail }) => setFormData({ ...formData, sdlcPhase: detail.value })}
+                onChange={({ detail }) =>
+                  setFormData({ ...formData, sdlcPhase: detail.value })
+                }
                 value={formData.sdlcPhase}
                 items={[
                   {
@@ -125,7 +149,8 @@ export default function PromptForm(props: PromptFormProps) {
                   },
                   {
                     label: "Requirements Analysis",
-                    description: "Gather, analyze, and document detailed software requirements.",
+                    description:
+                      "Gather, analyze, and document detailed software requirements.",
                     value: "REQ",
                   },
                   {
@@ -167,7 +192,9 @@ export default function PromptForm(props: PromptFormProps) {
               stretch
             >
               <RadioGroup
-                onChange={({ detail }) => setFormData({ ...formData, category: detail.value })}
+                onChange={({ detail }) =>
+                  setFormData({ ...formData, category: detail.value })
+                }
                 value={formData.category}
                 items={[
                   { value: "CHAT", label: "Chat" },
@@ -182,7 +209,9 @@ export default function PromptForm(props: PromptFormProps) {
               stretch
             >
               <Textarea
-                onChange={({ detail }) => setFormData({ ...formData, instruction: detail.value })}
+                onChange={({ detail }) =>
+                  setFormData({ ...formData, instruction: detail.value })
+                }
                 value={formData.instruction}
                 ariaRequired
                 placeholder=""

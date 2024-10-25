@@ -8,7 +8,8 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const getPromptTemplate = /* GraphQL */ `query GetPromptTemplate($id: ID!) {
+export const getPromptTemplate =
+  /* GraphQL */ `query GetPromptTemplate($id: ID!) {
   getPromptTemplate(id: $id) {
     createdAt
     id
@@ -18,9 +19,9 @@ export const getPromptTemplate = /* GraphQL */ `query GetPromptTemplate($id: ID!
   }
 }
 ` as GeneratedQuery<
-  APITypes.GetPromptTemplateQueryVariables,
-  APITypes.GetPromptTemplateQuery
->;
+    APITypes.GetPromptTemplateQueryVariables,
+    APITypes.GetPromptTemplateQuery
+  >;
 export const listPromptTemplates = /* GraphQL */ `query ListPromptTemplates(
   $filter: ModelPromptTemplateFilterInput
   $id: ID

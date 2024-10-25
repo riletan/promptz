@@ -79,7 +79,9 @@ describe("PromptCollection component", () => {
 
     render(<PromptCollection />);
     expect(screen.getByText("No prompts created yet")).toBeInTheDocument();
-    expect(screen.getByText("Be the first. Create a prompt.")).toBeInTheDocument();
+    expect(
+      screen.getByText("Be the first. Create a prompt."),
+    ).toBeInTheDocument();
   });
 
   it("renders empty state for guest user", () => {
@@ -93,7 +95,9 @@ describe("PromptCollection component", () => {
 
     render(<PromptCollection />);
     expect(screen.getByText("No prompts created yet")).toBeInTheDocument();
-    expect(screen.getByText("Be the first. Create a prompt.")).toBeInTheDocument();
+    expect(
+      screen.getByText("Be the first. Create a prompt."),
+    ).toBeInTheDocument();
   });
 
   it("renders load more button when hasMore is true", () => {

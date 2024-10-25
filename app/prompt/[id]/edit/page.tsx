@@ -47,7 +47,12 @@ export default function EditPrompt({ params }: { params: { id: string } }) {
 
       {error && (
         <SpaceBetween size="l" data-testing="error">
-          <Alert statusIconAriaLabel="Error" type="error" header={error.name} data-testing="error">
+          <Alert
+            statusIconAriaLabel="Error"
+            type="error"
+            header={error.name}
+            data-testing="error"
+          >
             {error.message}
           </Alert>
         </SpaceBetween>

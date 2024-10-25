@@ -5,7 +5,8 @@ import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
 const repository = new PromptGraphQLRepository();
 
 export function usePrompt(promptId: string) {
-  const [promptViewModel, setPromptViewModel] = useState<PromptViewModel | null>(null);
+  const [promptViewModel, setPromptViewModel] =
+    useState<PromptViewModel | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(true);
 

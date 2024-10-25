@@ -11,7 +11,10 @@ const schema = a
       owner_username: a.string().required(),
     }),
   })
-  .authorization((allow) => [allow.publicApiKey(), allow.owner().to(["create", "update", "delete"])]);
+  .authorization((allow) => [
+    allow.publicApiKey(),
+    allow.owner().to(["create", "update", "delete"]),
+  ]);
 
 export type Schema = ClientSchema<typeof schema>;
 
