@@ -36,6 +36,7 @@ export const config = {
      * - favicon.ico (favicon file)
      * - auth
      */
-    "/((?!api|_next/static|_next/image|images|favicon.ico|auth|browse|prompt|$).*)",
+    "/((?!api|_next/static|_next/image|images|favicon.ico|auth|browse|prompt/(?!create)|$).*)",
+    "/prompt/create",
   ],
 };
