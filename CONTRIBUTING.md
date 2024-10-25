@@ -1,59 +1,38 @@
-# Contributing Guidelines
+# Contributing Guide
 
-Thank you for your interest in contributing to our project. Whether it's a bug report, new feature, correction, or additional
-documentation, we greatly value feedback and contributions from our community.
+First off, thank you for considering contributing to Promptz. It’s people like you that make a difference. Pull requests are welcome. For major changes, please open an [issue](https://github.com/cremich/promptz/issues) first to discuss what you would like to change.
 
-Please read through this document before submitting any issues or pull requests to ensure we have all the necessary
-information to effectively respond to your bug report or contribution.
+## Pull Requests
 
+We use the [GitHub flow](https://guides.github.com/introduction/flow/) as main versioning workflow. In a nutshell:
 
-## Reporting Bugs/Feature Requests
+1. Fork this repository
+2. Create a new branch for each feature, fix or improvement
+3. Send a pull request from each feature branch to the **main** branch
 
-We welcome you to use the GitHub issue tracker to report bugs or suggest features.
+## Git Commit Guidelines
 
-When filing an issue, please check existing open, or recently closed, issues to make sure somebody else hasn't already
-reported the issue. Please try to include as much information as you can. Details like these are incredibly useful:
+We have rules over how our git commit messages must be formatted. Please ensure to
+[squash](https://help.github.com/articles/about-git-rebase/#commands-available-while-rebasing) unnecessary commits so that your commit history is clean.
 
-* A reproducible test case or series of steps
-* The version of our code being used
-* Any modifications you've made relevant to the bug
-* Anything unusual about your environment or deployment
+If the commit only involves documentation changes you can skip the continuous integration pipelines using `[ci skip]` or `[skip ci]` in your commit message header.
 
+All commits must adhere to the [Conventional Commits specification](https://conventionalcommits.org/). Depending on the type of your change, please choose one of the following to give your commit some more semantic context:
 
-## Contributing via Pull Requests
-Contributions via pull requests are much appreciated. Before sending us a pull request, please ensure that:
+- **feat:** A new feature
+- **fix:** A bug fix
+- **docs:**: Documentation only changes
+- **style:** Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+- **refactor:** A code change that neither fixes a bug nor adds a feature
+- **perf:** A code change that improves performance
+- **test:** Adding missing tests or correcting existing tests
+- **build:** Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+- **ci:** Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
+- **chore:** Other changes that don't modify src or test files
+- **revert:** Reverts a previous commit
 
-1. You are working against the latest source on the *main* branch.
-2. You check existing open, and recently merged, pull requests to make sure someone else hasn't addressed the problem already.
-3. You open an issue to discuss any significant work - we would hate for your time to be wasted.
+In addition to the specification we use tooling to ensure the proper use.
 
-To send us a pull request, please:
-
-1. Fork the repository.
-2. Modify the source; please focus on the specific change you are contributing. If you also reformat all the code, it will be hard for us to focus on your change.
-3. Ensure local tests pass.
-4. Commit to your fork using clear commit messages.
-5. Send us a pull request, answering any default questions in the pull request interface.
-6. Pay attention to any automated CI failures reported in the pull request, and stay involved in the conversation.
-
-GitHub provides additional document on [forking a repository](https://help.github.com/articles/fork-a-repo/) and
-[creating a pull request](https://help.github.com/articles/creating-a-pull-request/).
-
-
-## Finding contributions to work on
-Looking at the existing issues is a great way to find something to contribute on. As our projects, by default, use the default GitHub issue labels (enhancement/bug/duplicate/help wanted/invalid/question/wontfix), looking at any 'help wanted' issues is a great place to start.
-
-
-## Code of Conduct
-This project has adopted the [Amazon Open Source Code of Conduct](https://aws.github.io/code-of-conduct).
-For more information see the [Code of Conduct FAQ](https://aws.github.io/code-of-conduct-faq) or contact
-opensource-codeofconduct@amazon.com with any additional questions or comments.
-
-
-## Security issue notifications
-If you discover a potential security issue in this project we ask that you notify AWS/Amazon Security via our [vulnerability reporting page](http://aws.amazon.com/security/vulnerability-reporting/). Please do **not** create a public github issue.
-
-
-## Licensing
-
-See the [LICENSE](LICENSE) file for our project's licensing. We will ask you to confirm the licensing of your contribution.
+- [Commitizen](https://commitizen-tools.github.io/commitizen/)
+- [Commitlint](https://commitlint.js.org)
+- [Husky](https://typicode.github.io/husky)
