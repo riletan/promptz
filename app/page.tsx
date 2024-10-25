@@ -44,9 +44,9 @@ export default function App() {
       <SpaceBetween size="s">
         <Grid
           gridDefinition={[
-            { colspan: { default: 4, xxs: 12 } },
-            { colspan: { default: 4, xxs: 12 } },
-            { colspan: { default: 4, xxs: 12 } },
+            { colspan: { xxs: 12, xs: 12, s: 4, default: 4, m: 4, xl: 4 } },
+            { colspan: { xxs: 12, xs: 12, s: 4, default: 4, m: 4, xl: 4 } },
+            { colspan: { xxs: 12, xs: 12, s: 4, default: 4, m: 4, xl: 4 } },
           ]}
         >
           <div>
