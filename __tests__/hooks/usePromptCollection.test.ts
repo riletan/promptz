@@ -1,12 +1,11 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { usePromptCollection } from "@/hooks/usePromptCollection";
-import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
 import {
-  PromptCategory,
-  PromptViewModel,
-  SdlcPhase,
-} from "@/models/PromptViewModel";
+  Facets,
+  PromptGraphQLRepository,
+} from "@/repositories/PromptRepository";
+import { PromptViewModel } from "@/models/PromptViewModel";
 import { PromptViewModelCollection } from "@/models/PromptViewModelCollection";
 
 vi.mock("@/repositories/PromptRepository");
@@ -50,7 +49,7 @@ describe("usePromptCollection", () => {
     const limit = 5;
     const mockPrompts = Array(limit)
       .fill(null)
-      .map((_, index) => new PromptViewModel());
+      .map(() => new PromptViewModel());
     vi.mocked(PromptGraphQLRepository.prototype.listPrompts).mockResolvedValue(
       new PromptViewModelCollection(mockPrompts),
     );
@@ -61,7 +60,7 @@ describe("usePromptCollection", () => {
       expect(result.current.prompts).toHaveLength(limit);
       expect(
         PromptGraphQLRepository.prototype.listPrompts,
-      ).toHaveBeenCalledWith(limit);
+      ).toHaveBeenCalledWith(limit, undefined);
     });
   });
 
@@ -86,5 +85,25 @@ describe("usePromptCollection", () => {
     expect(PromptGraphQLRepository.prototype.listPrompts).toHaveBeenCalledTimes(
       1,
     );
+  });
+
+  it("should call repository with facets parameter", async () => {
+    const limit = 5;
+    const facets: Array<Facets> = [{ facet: "OWNER", value: "1" }];
+    const mockPrompts = Array(limit)
+      .fill(null)
+      .map(() => new PromptViewModel());
+    vi.mocked(PromptGraphQLRepository.prototype.listPrompts).mockResolvedValue(
+      new PromptViewModelCollection(mockPrompts),
+    );
+
+    const { result } = renderHook(() => usePromptCollection(limit, facets));
+
+    await waitFor(() => {
+      expect(result.current.prompts).toHaveLength(limit);
+      expect(
+        PromptGraphQLRepository.prototype.listPrompts,
+      ).toHaveBeenCalledWith(limit, facets);
+    });
   });
 });

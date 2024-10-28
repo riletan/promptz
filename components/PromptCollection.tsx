@@ -14,17 +14,19 @@ import {
 } from "@cloudscape-design/components";
 import { useRouter } from "next/navigation";
 import { usePromptCollection } from "../hooks/usePromptCollection";
+import { Facets } from "@/repositories/PromptRepository";
 
 interface PromptCollectionProps {
   limit?: number;
   promptsPerRow?: CardsProps.CardsLayout[];
   showLoadMore: boolean;
+  facets?: Array<Facets>;
 }
 
 export default function PromptCollection(props: PromptCollectionProps) {
   const router = useRouter();
   const { prompts, error, loading, hasMore, handleLoadMore } =
-    usePromptCollection(props.limit);
+    usePromptCollection(props.limit, props.facets);
 
   if (error)
     return (

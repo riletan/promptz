@@ -11,11 +11,13 @@ import {
   Header,
 } from "@cloudscape-design/components";
 import PromptCollection from "@/components/PromptCollection";
+import { useAuth } from "@/contexts/AuthContext";
 
 Amplify.configure(outputs);
 
 export default function Browse() {
   const router = useRouter();
+  const { user } = useAuth();
 
   return (
     <ContentLayout
@@ -26,7 +28,8 @@ export default function Browse() {
         <BreadcrumbGroup
           items={[
             { text: "Promptz", href: "/" },
-            { text: "Browse", href: "#" },
+            { text: "Browse", href: "/browse" },
+            { text: "My Prompts", href: "my" },
           ]}
           ariaLabel="Breadcrumbs"
         />
@@ -34,7 +37,7 @@ export default function Browse() {
       header={
         <Header
           variant="h1"
-          description="Discover the community-driven prompt library for Amazon Q Developer."
+          description="This is a list of your amazing contributions of prompts. You are awesome!"
           actions={
             <Button
               variant="primary"
@@ -44,11 +47,17 @@ export default function Browse() {
             </Button>
           }
         >
-          Browse prompts
+          Your prompts
         </Header>
       }
     >
-      <PromptCollection showLoadMore={true} limit={10} />
+      {user && (
+        <PromptCollection
+          showLoadMore={true}
+          limit={10}
+          facets={[{ facet: "OWNER", value: user?.userId }]}
+        />
+      )}
     </ContentLayout>
   );
 }
