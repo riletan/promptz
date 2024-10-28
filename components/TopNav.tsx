@@ -2,13 +2,52 @@
 
 "use client";
 
-import { TopNavigation } from "@cloudscape-design/components";
+import {
+  TopNavigation,
+  TopNavigationProps,
+} from "@cloudscape-design/components";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function TopNav() {
   const router = useRouter();
   const { user, logout } = useAuth();
+
+  const getUtilities = (): TopNavigationProps.Utility[] => {
+    const utilities: TopNavigationProps.Utility[] = [
+      {
+        type: "button",
+        text: "Browse",
+        href: "/browse",
+      },
+    ];
+
+    if (user && !user.guest) {
+      utilities.push(
+        {
+          type: "button",
+          text: "My Prompts",
+          href: "/browse/my",
+        },
+        {
+          type: "button",
+          text: "Sign Out",
+          onClick: async () => {
+            await logout();
+            router.push("/");
+          },
+        },
+      );
+    } else {
+      utilities.push({
+        type: "button",
+        text: "Sign In",
+        href: "/auth",
+      });
+    }
+
+    return utilities;
+  };
 
   return (
     <TopNavigation
@@ -20,28 +59,7 @@ export default function TopNav() {
           alt: "Amazon Q Developer Logo",
         },
       }}
-      utilities={[
-        {
-          type: "button",
-          text: "Browse",
-          href: "/browse",
-        },
-        user && !user.guest
-          ? {
-              type: "button",
-              text: "Sign Out",
-              onClick: async () => {
-                await logout();
-                router.push("/");
-              },
-            }
-          : {
-              type: "button",
-              text: "Sign In",
-              ariaLabel: "Sign in",
-              href: "/auth",
-            },
-      ]}
+      utilities={getUtilities()}
     />
   );
 }
