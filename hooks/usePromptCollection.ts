@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
-import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
+import {
+  Facets,
+  PromptGraphQLRepository,
+} from "@/repositories/PromptRepository";
 import { PromptViewModel } from "@/models/PromptViewModel";
 
 const repository = new PromptGraphQLRepository();
 
-export function usePromptCollection(limit?: number) {
+export function usePromptCollection(limit?: number, facets?: Array<Facets>) {
   const [prompts, setPrompts] = useState<Array<PromptViewModel>>([]);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(true);
@@ -17,7 +20,7 @@ export function usePromptCollection(limit?: number) {
 
   const loadPrompts = async () => {
     try {
-      const promptList = await repository.listPrompts(limit);
+      const promptList = await repository.listPrompts(limit, facets);
       setLoading(false);
       setPrompts(promptList.prompts);
       if (promptList.nextToken) {
@@ -33,7 +36,7 @@ export function usePromptCollection(limit?: number) {
   const handleLoadMore = async () => {
     try {
       setLoading(true);
-      const promptList = await repository.listPrompts(limit, nextToken);
+      const promptList = await repository.listPrompts(limit, facets, nextToken);
       setPrompts([...prompts, ...promptList.prompts]);
       if (promptList.nextToken) {
         setNextToken(promptList.nextToken);

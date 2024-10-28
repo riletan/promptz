@@ -4,9 +4,19 @@ import type { Schema } from "../amplify/data/resource";
 import { UserViewModel } from "@/models/UserViewModel";
 import { PromptViewModelCollection } from "@/models/PromptViewModelCollection";
 
+export type FacetType = "OWNER" | "CATEGORY" | "SDLC_PHASE";
+
+export type Facets = {
+  facet: FacetType;
+  value: string;
+};
+
 export interface PromptRepository {
   getPrompt(id: string): Promise<PromptViewModel>;
-  listPrompts(limit?: number): Promise<PromptViewModelCollection>;
+  listPrompts(
+    limit?: number,
+    facets?: Array<Facets>,
+  ): Promise<PromptViewModelCollection>;
   createPrompt(
     prompt: PromptViewModel,
     owner: UserViewModel,
@@ -82,6 +92,7 @@ export class PromptGraphQLRepository implements PromptRepository {
 
   async listPrompts(
     limit?: number,
+    facets?: Array<Facets>,
     pageToken?: string | null | undefined,
   ): Promise<PromptViewModelCollection> {
     const {
@@ -91,15 +102,25 @@ export class PromptGraphQLRepository implements PromptRepository {
     } = await this.client.models.prompt.list({
       limit: limit ?? 0,
       nextToken: pageToken,
+      filter: {
+        and: this.facetsToFilter(facets),
+      },
     });
 
     if (errors && errors.length > 0) {
       throw new Error(errors[0].message);
     }
+    return this.parseResponse(prompts, nextToken || "");
+  }
+
+  private parseResponse(
+    prompts: Array<Schema["prompt"]["type"]>,
+    nextToken?: string,
+  ) {
     if (prompts) {
       const promptViewModelList = prompts.map((p) =>
         PromptViewModel.fromSchema(p),
-      ); //PromptViewModel.fromSchema(prompt);
+      );
       const promptList = nextToken
         ? new PromptViewModelCollection(promptViewModelList, nextToken)
         : new PromptViewModelCollection(promptViewModelList);
@@ -108,5 +129,16 @@ export class PromptGraphQLRepository implements PromptRepository {
     } else {
       throw new Error("No prompts found");
     }
+  }
+
+  private facetsToFilter(facets?: Array<Facets>) {
+    return facets
+      ? facets.map((f) => ({
+          [f.facet.toLowerCase()]: {
+            // see https://github.com/aws-amplify/amplify-category-api/issues/665#issuecomment-1189619200
+            eq: f.facet === "OWNER" ? `${f.value}::${f.value}` : f.value,
+          },
+        }))
+      : [];
   }
 }
