@@ -20,8 +20,6 @@ export default function Browse() {
   return (
     <ContentLayout
       defaultPadding
-      headerVariant="high-contrast"
-      maxContentWidth={1024}
       breadcrumbs={
         <BreadcrumbGroup
           items={[
@@ -48,7 +46,11 @@ export default function Browse() {
         </Header>
       }
     >
-      <PromptCollection showLoadMore={true} limit={10} />
+      <PromptCollection
+        showLoadMore={true}
+        limit={10}
+        promptsPerRow={[{ cards: 1 }, { minWidth: 800, cards: 4 }]}
+      />
     </ContentLayout>
   );
 }

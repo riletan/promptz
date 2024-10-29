@@ -25,6 +25,7 @@ describe("PromptCollection component", () => {
       loading: true,
       hasMore: false,
       handleLoadMore: vi.fn(),
+      addFilter: vi.fn(),
     });
     vi.mocked(useAuth).mockReturnValue({
       user: null,
@@ -44,6 +45,7 @@ describe("PromptCollection component", () => {
       loading: false,
       hasMore: false,
       handleLoadMore: vi.fn(),
+      addFilter: vi.fn(),
     });
     vi.mocked(useAuth).mockReturnValue({
       user: null,
@@ -62,6 +64,7 @@ describe("PromptCollection component", () => {
       loading: false,
       hasMore: false,
       handleLoadMore: vi.fn(),
+      addFilter: vi.fn(),
     });
 
     render(<PromptCollection showLoadMore={false} />);
@@ -78,6 +81,7 @@ describe("PromptCollection component", () => {
       loading: false,
       hasMore: false,
       handleLoadMore: vi.fn(),
+      addFilter: vi.fn(),
     });
 
     render(<PromptCollection showLoadMore={false} />);
@@ -94,6 +98,7 @@ describe("PromptCollection component", () => {
       loading: false,
       hasMore: true,
       handleLoadMore: vi.fn(),
+      addFilter: vi.fn(),
     });
 
     render(<PromptCollection showLoadMore={true} />);
@@ -108,11 +113,15 @@ describe("PromptCollection component", () => {
       loading: false,
       hasMore: false,
       handleLoadMore: vi.fn(),
+      addFilter: vi.fn(),
     });
 
     render(<PromptCollection showLoadMore={true} />);
     expect(screen.getByText("Load more")).toBeInTheDocument();
-    expect(screen.getByRole("button")).toHaveAttribute("aria-disabled", "true");
+    expect(screen.getByRole("button", { name: "Load more" })).toHaveAttribute(
+      "aria-disabled",
+      "true",
+    );
   });
 
   it("does not render load more button when showLoadMore is false", () => {
@@ -122,6 +131,7 @@ describe("PromptCollection component", () => {
       loading: false,
       hasMore: false,
       handleLoadMore: vi.fn(),
+      addFilter: vi.fn(),
     });
 
     render(<PromptCollection showLoadMore={false} />);

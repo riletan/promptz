@@ -11,10 +11,16 @@ import {
   Badge,
   Icon,
   Alert,
+  SelectProps,
+  Select,
+  Grid,
 } from "@cloudscape-design/components";
 import { useRouter } from "next/navigation";
 import { usePromptCollection } from "../hooks/usePromptCollection";
 import { Facets } from "@/repositories/PromptRepository";
+import { useState } from "react";
+import { PromptCategory, SdlcPhase } from "@/models/PromptViewModel";
+import { createSelectOptions } from "@/utils/formatters";
 
 interface PromptCollectionProps {
   limit?: number;
@@ -25,8 +31,28 @@ interface PromptCollectionProps {
 
 export default function PromptCollection(props: PromptCollectionProps) {
   const router = useRouter();
-  const { prompts, error, loading, hasMore, handleLoadMore } =
+  const { prompts, error, loading, hasMore, handleLoadMore, addFilter } =
     usePromptCollection(props.limit, props.facets);
+  const [categoryFilter, setCategoryFilter] = useState<SelectProps.Option>({});
+  const [sdlcFilter, setSDLCFilter] = useState<SelectProps.Option>({});
+
+  const getCategoryFilter = () => {
+    return createSelectOptions(PromptCategory, [PromptCategory.UNKNOWN]);
+  };
+
+  const getSDLCFilter = () => {
+    return createSelectOptions(SdlcPhase, [SdlcPhase.UNKNOWN]);
+  };
+
+  const handleCategoryFilterChange = (option: SelectProps.Option) => {
+    setCategoryFilter(option);
+    addFilter({ facet: "CATEGORY", value: option.value! });
+  };
+
+  const handleSDLCFilterChange = (option: SelectProps.Option) => {
+    setSDLCFilter(option);
+    addFilter({ facet: "SDLC_PHASE", value: option.value! });
+  };
 
   if (error)
     return (
@@ -43,7 +69,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
   return (
     <SpaceBetween size="s">
       <Cards
-        variant="container"
+        variant="full-page"
         cardDefinition={{
           header: (item) => (
             <SpaceBetween size="xs">
@@ -86,6 +112,35 @@ export default function PromptCollection(props: PromptCollectionProps) {
               </SpaceBetween>
             </Box>
           </Container>
+        }
+        filter={
+          <Grid
+            gridDefinition={[
+              { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
+              { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
+            ]}
+          >
+            <div>
+              <Select
+                inlineLabelText="SDLC Phase"
+                selectedOption={sdlcFilter}
+                onChange={({ detail }) =>
+                  handleSDLCFilterChange(detail.selectedOption)
+                }
+                options={getSDLCFilter()}
+              />
+            </div>
+            <div>
+              <Select
+                inlineLabelText="Category"
+                selectedOption={categoryFilter}
+                onChange={({ detail }) =>
+                  handleCategoryFilterChange(detail.selectedOption)
+                }
+                options={getCategoryFilter()}
+              />
+            </div>
+          </Grid>
         }
       />
 
