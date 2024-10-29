@@ -48,6 +48,7 @@ export default function Browse() {
     >
       <PromptCollection
         showLoadMore={true}
+        showFilters={true}
         limit={10}
         promptsPerRow={[{ cards: 1 }, { minWidth: 800, cards: 4 }]}
       />

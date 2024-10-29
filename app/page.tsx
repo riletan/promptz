@@ -81,6 +81,7 @@ export default function App() {
         limit={3}
         promptsPerRow={[{ cards: 1 }, { minWidth: 500, cards: 3 }]}
         showLoadMore={false}
+        showFilters={false}
       />
     </ContentLayout>
   );

@@ -26,6 +26,7 @@ interface PromptCollectionProps {
   limit?: number;
   promptsPerRow?: CardsProps.CardsLayout[];
   showLoadMore: boolean;
+  showFilters: boolean;
   facets?: Array<Facets>;
 }
 
@@ -114,33 +115,37 @@ export default function PromptCollection(props: PromptCollectionProps) {
           </Container>
         }
         filter={
-          <Grid
-            gridDefinition={[
-              { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
-              { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
-            ]}
-          >
-            <div>
-              <Select
-                inlineLabelText="SDLC Phase"
-                selectedOption={sdlcFilter}
-                onChange={({ detail }) =>
-                  handleSDLCFilterChange(detail.selectedOption)
-                }
-                options={getSDLCFilter()}
-              />
-            </div>
-            <div>
-              <Select
-                inlineLabelText="Category"
-                selectedOption={categoryFilter}
-                onChange={({ detail }) =>
-                  handleCategoryFilterChange(detail.selectedOption)
-                }
-                options={getCategoryFilter()}
-              />
-            </div>
-          </Grid>
+          props.showFilters && (
+            <Grid
+              gridDefinition={[
+                { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
+                { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
+              ]}
+            >
+              <div>
+                <Select
+                  inlineLabelText="SDLC Phase"
+                  data-testing="sdlc-filter"
+                  selectedOption={sdlcFilter}
+                  onChange={({ detail }) =>
+                    handleSDLCFilterChange(detail.selectedOption)
+                  }
+                  options={getSDLCFilter()}
+                />
+              </div>
+              <div>
+                <Select
+                  inlineLabelText="Category"
+                  data-testing="category-filter"
+                  selectedOption={categoryFilter}
+                  onChange={({ detail }) =>
+                    handleCategoryFilterChange(detail.selectedOption)
+                  }
+                  options={getCategoryFilter()}
+                />
+              </div>
+            </Grid>
+          )
         }
       />
 
