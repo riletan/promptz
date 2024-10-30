@@ -51,6 +51,7 @@ export default function TopNav() {
 
   return (
     <TopNavigation
+      i18nStrings={{ overflowMenuTriggerText: "More" }}
       identity={{
         href: "/",
         title: "Promptz",

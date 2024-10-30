@@ -26,6 +26,7 @@ describe("PromptCollection component", () => {
       hasMore: false,
       handleLoadMore: vi.fn(),
       addFilter: vi.fn(),
+      resetFilter: vi.fn(),
     });
     vi.mocked(useAuth).mockReturnValue({
       user: null,
@@ -46,6 +47,7 @@ describe("PromptCollection component", () => {
       hasMore: false,
       handleLoadMore: vi.fn(),
       addFilter: vi.fn(),
+      resetFilter: vi.fn(),
     });
     vi.mocked(useAuth).mockReturnValue({
       user: null,
@@ -65,6 +67,7 @@ describe("PromptCollection component", () => {
       hasMore: false,
       handleLoadMore: vi.fn(),
       addFilter: vi.fn(),
+      resetFilter: vi.fn(),
     });
 
     render(<PromptCollection showLoadMore={false} showFilters={false} />);
@@ -82,6 +85,7 @@ describe("PromptCollection component", () => {
       hasMore: false,
       handleLoadMore: vi.fn(),
       addFilter: vi.fn(),
+      resetFilter: vi.fn(),
     });
 
     render(<PromptCollection showLoadMore={false} showFilters={false} />);
@@ -99,6 +103,7 @@ describe("PromptCollection component", () => {
       hasMore: true,
       handleLoadMore: vi.fn(),
       addFilter: vi.fn(),
+      resetFilter: vi.fn(),
     });
 
     render(<PromptCollection showLoadMore={true} showFilters={false} />);
@@ -114,6 +119,7 @@ describe("PromptCollection component", () => {
       hasMore: false,
       handleLoadMore: vi.fn(),
       addFilter: vi.fn(),
+      resetFilter: vi.fn(),
     });
 
     render(<PromptCollection showLoadMore={true} showFilters={false} />);
@@ -132,6 +138,7 @@ describe("PromptCollection component", () => {
       hasMore: false,
       handleLoadMore: vi.fn(),
       addFilter: vi.fn(),
+      resetFilter: vi.fn(),
     });
 
     render(<PromptCollection showLoadMore={false} showFilters={false} />);
@@ -147,6 +154,7 @@ describe("PromptCollection component", () => {
       hasMore: false,
       handleLoadMore: vi.fn(),
       addFilter: addFilterMock,
+      resetFilter: vi.fn(),
     });
 
     render(<PromptCollection showLoadMore={false} showFilters={true} />);
@@ -162,6 +170,7 @@ describe("PromptCollection component", () => {
       hasMore: false,
       handleLoadMore: vi.fn(),
       addFilter: vi.fn(),
+      resetFilter: vi.fn(),
     });
 
     render(<PromptCollection showLoadMore={false} showFilters={false} />);

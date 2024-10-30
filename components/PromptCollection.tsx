@@ -14,6 +14,7 @@ import {
   SelectProps,
   Select,
   Grid,
+  TextFilter,
 } from "@cloudscape-design/components";
 import { useRouter } from "next/navigation";
 import { usePromptCollection } from "../hooks/usePromptCollection";
@@ -43,6 +44,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
   } = usePromptCollection(props.limit, props.facets);
   const [categoryFilter, setCategoryFilter] = useState<SelectProps.Option>({});
   const [sdlcFilter, setSDLCFilter] = useState<SelectProps.Option>({});
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const getCategoryFilter = () => {
     return createSelectOptions(PromptCategory, [PromptCategory.UNKNOWN]);
@@ -62,6 +64,11 @@ export default function PromptCollection(props: PromptCollectionProps) {
     addFilter({ facet: "SDLC_PHASE", value: option.value! });
   };
 
+  const handleDelayedSearch = (query: string) => {
+    setSearchQuery(query);
+    addFilter({ facet: "SEARCH", value: query });
+  };
+
   const showClearFilter = () => {
     return categoryFilter.value || sdlcFilter.value;
   };
@@ -69,6 +76,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
   const clearFilter = () => {
     setCategoryFilter({});
     setSDLCFilter({});
+    setSearchQuery("");
     resetFilter();
   };
 
@@ -135,11 +143,26 @@ export default function PromptCollection(props: PromptCollectionProps) {
           props.showFilters && (
             <Grid
               gridDefinition={[
+                {
+                  colspan: { xxs: 12, xs: 12, default: 6, s: 3, m: 3, xl: 3 },
+                },
                 { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
                 { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
                 { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
               ]}
             >
+              <Box margin={{ top: "xs" }}>
+                <TextFilter
+                  filteringText={searchQuery}
+                  filteringPlaceholder="Find Prompts"
+                  onChange={({ detail }) =>
+                    setSearchQuery(detail.filteringText)
+                  }
+                  onDelayedChange={({ detail }) =>
+                    handleDelayedSearch(detail.filteringText)
+                  }
+                />
+              </Box>
               <div>
                 <Select
                   inlineLabelText="SDLC Phase"
