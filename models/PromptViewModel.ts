@@ -2,21 +2,21 @@ import { Schema } from "@/amplify/data/resource";
 import { UserViewModel } from "./UserViewModel";
 
 export enum SdlcPhase {
-  PLAN = "PLAN",
-  REQ = "REQ",
-  DESIGN = "DESIGN",
-  IMPLEMENT = "IMPLEMENT",
-  TEST = "TEST",
-  DEPLOY = "DEPLOY",
-  MAINTAIN = "MAINTAIN",
-  UNKNOWN = "UNKNOWN",
+  PLAN = "Plan",
+  REQ = "Requirements",
+  DESIGN = "Design",
+  IMPLEMENT = "Implement",
+  TEST = "Test",
+  DEPLOY = "Deploy",
+  MAINTAIN = "Maintain",
+  UNKNOWN = "Unknown",
 }
 
 export enum PromptCategory {
-  CHAT = "CHAT",
-  DEV_AGENT = "DEV_AGENT",
-  INLINE = "INLINE",
-  UNKNOWN = "UNKNOWN",
+  CHAT = "Chat",
+  DEV_AGENT = "Dev Agent",
+  INLINE = "Inline",
+  UNKNOWN = "Unknown",
 }
 
 export class PromptViewModel {
@@ -46,8 +46,9 @@ export class PromptViewModel {
     pvm._id = prompt.id;
     pvm._name = prompt.name;
     pvm._description = prompt.description;
-    pvm._sdlcPhase = prompt.sdlc_phase as SdlcPhase;
-    pvm._category = prompt.category as PromptCategory;
+    pvm._sdlcPhase = SdlcPhase[prompt.sdlc_phase as keyof typeof SdlcPhase];
+    pvm._category =
+      PromptCategory[prompt.category as keyof typeof PromptCategory];
     pvm._instruction = prompt.instruction;
     pvm._owner = new UserViewModel(prompt.owner, prompt.owner_username);
 

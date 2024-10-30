@@ -47,6 +47,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
 
   const handleCategoryFilterChange = (option: SelectProps.Option) => {
     setCategoryFilter(option);
+    console.log(option);
     addFilter({ facet: "CATEGORY", value: option.value! });
   };
 

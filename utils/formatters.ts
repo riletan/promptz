@@ -11,11 +11,12 @@ export const createSelectOptions = <T extends string>(
   enumObject: { [key: string]: T },
   excludeValues: T[] = [],
 ): SelectProps.Options => {
-  const options = Object.values(enumObject)
-    .filter((value) => !excludeValues.includes(value))
-    .map((value) => ({
+  const options = Object.entries(enumObject)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    .filter(([_, value]) => !excludeValues.includes(value))
+    .map(([key, value]) => ({
       label: formatEnumLabel(value),
-      value: value,
+      value: key,
     }));
 
   return options;
