@@ -102,9 +102,7 @@ export class PromptGraphQLRepository implements PromptRepository {
     } = await this.client.models.prompt.list({
       limit: limit ?? 0,
       nextToken: pageToken,
-      filter: {
-        and: this.facetsToFilter(facets),
-      },
+      filter: this.facetsToFilter(facets),
     });
 
     if (errors && errors.length > 0) {
@@ -131,22 +129,47 @@ export class PromptGraphQLRepository implements PromptRepository {
     }
   }
 
-  private facetsToFilter(facets?: Array<Facets>) {
-    return facets
-      ? facets.map((f) => {
-          if (f.facet === "SEARCH") {
-            return {
-              ["name"]: { contains: f.value },
-            };
-          } else {
-            return {
-              [f.facet.toLowerCase()]: {
-                // see https://github.com/aws-amplify/amplify-category-api/issues/665#issuecomment-1189619200
-                eq: f.facet === "OWNER" ? `${f.value}::${f.value}` : f.value,
-              },
-            };
-          }
-        })
-      : [];
+  facetsToFilter(facets?: Array<Facets>) {
+    if (!facets || facets.length === 0) {
+      return undefined;
+    }
+
+    const searchFacets = facets.filter((f) => f.facet === "SEARCH");
+    const otherFacets = facets.filter((f) => f.facet !== "SEARCH");
+
+    const conditions: unknown[] = [];
+
+    // Handle search facets with OR condition
+    if (searchFacets.length > 0) {
+      const searchValue = searchFacets[0].value;
+      const sentenceCase =
+        searchValue.charAt(0).toUpperCase() +
+        searchValue.slice(1).toLowerCase();
+      conditions.push({
+        or: [
+          { name: { contains: searchValue.toLowerCase() } },
+          { name: { contains: searchValue.toUpperCase() } },
+          { name: { contains: sentenceCase } },
+          { description: { contains: searchValue.toLowerCase() } },
+          { description: { contains: searchValue.toUpperCase() } },
+          { description: { contains: sentenceCase } },
+        ],
+      });
+    }
+
+    // Handle other facets with AND condition
+    if (otherFacets.length > 0) {
+      const otherConditions = otherFacets.map((f) => ({
+        [f.facet.toLowerCase()]: {
+          eq: f.facet === "OWNER" ? `${f.value}::${f.value}` : f.value,
+        },
+      }));
+
+      conditions.push(...otherConditions);
+    }
+
+    // If we have both search and other facets, or multiple other facets,
+    // wrap everything in an AND condition
+    return conditions.length > 1 ? { and: conditions } : conditions[0] || [];
   }
 }
