@@ -21,23 +21,8 @@ export function usePromptCollection(limit?: number, filter?: Array<Facets>) {
 
   const loadPrompts = async () => {
     try {
-      const promptList = await repository.listPrompts(limit, facets);
-      setLoading(false);
-      setPrompts(promptList.prompts);
-      if (promptList.nextToken) {
-        setNextToken(promptList.nextToken);
-        setHasMore(true);
-      }
-    } catch (error) {
-      setError(error as Error);
-      setLoading(false);
-    }
-  };
-
-  const handleLoadMore = async () => {
-    try {
-      setLoading(true);
       const promptList = await repository.listPrompts(limit, facets, nextToken);
+      setLoading(false);
       setPrompts([...prompts, ...promptList.prompts]);
       if (promptList.nextToken) {
         setNextToken(promptList.nextToken);
@@ -47,9 +32,12 @@ export function usePromptCollection(limit?: number, filter?: Array<Facets>) {
       }
     } catch (error) {
       setError(error as Error);
-    } finally {
       setLoading(false);
     }
+  };
+
+  const handleLoadMore = async () => {
+    await loadPrompts();
   };
 
   const addFilter = async (filter: Facets) => {
@@ -60,6 +48,12 @@ export function usePromptCollection(limit?: number, filter?: Array<Facets>) {
       facets.push(filter);
     }
     setFacets([...facets]);
+    setNextToken(undefined);
+    setPrompts([]);
+  };
+
+  const resetFilter = async () => {
+    setFacets([]);
   };
 
   return {
@@ -69,5 +63,6 @@ export function usePromptCollection(limit?: number, filter?: Array<Facets>) {
     hasMore,
     handleLoadMore,
     addFilter,
+    resetFilter,
   };
 }

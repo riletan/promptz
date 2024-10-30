@@ -32,8 +32,15 @@ interface PromptCollectionProps {
 
 export default function PromptCollection(props: PromptCollectionProps) {
   const router = useRouter();
-  const { prompts, error, loading, hasMore, handleLoadMore, addFilter } =
-    usePromptCollection(props.limit, props.facets);
+  const {
+    prompts,
+    error,
+    loading,
+    hasMore,
+    handleLoadMore,
+    addFilter,
+    resetFilter,
+  } = usePromptCollection(props.limit, props.facets);
   const [categoryFilter, setCategoryFilter] = useState<SelectProps.Option>({});
   const [sdlcFilter, setSDLCFilter] = useState<SelectProps.Option>({});
 
@@ -47,13 +54,22 @@ export default function PromptCollection(props: PromptCollectionProps) {
 
   const handleCategoryFilterChange = (option: SelectProps.Option) => {
     setCategoryFilter(option);
-    console.log(option);
     addFilter({ facet: "CATEGORY", value: option.value! });
   };
 
   const handleSDLCFilterChange = (option: SelectProps.Option) => {
     setSDLCFilter(option);
     addFilter({ facet: "SDLC_PHASE", value: option.value! });
+  };
+
+  const showClearFilter = () => {
+    return categoryFilter.value || sdlcFilter.value;
+  };
+
+  const clearFilter = () => {
+    setCategoryFilter({});
+    setSDLCFilter({});
+    resetFilter();
   };
 
   if (error)
@@ -121,6 +137,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
               gridDefinition={[
                 { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
                 { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
+                { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
               ]}
             >
               <div>
@@ -145,6 +162,18 @@ export default function PromptCollection(props: PromptCollectionProps) {
                   options={getCategoryFilter()}
                 />
               </div>
+              <Box margin={{ top: "xs" }}>
+                {showClearFilter() && (
+                  <Button
+                    data-testing="clear-filter"
+                    iconAlign="right"
+                    iconName="close"
+                    onClick={clearFilter}
+                  >
+                    Clear Filter
+                  </Button>
+                )}
+              </Box>
             </Grid>
           )
         }

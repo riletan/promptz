@@ -60,7 +60,7 @@ describe("usePromptCollection", () => {
       expect(result.current.prompts).toHaveLength(limit);
       expect(
         PromptGraphQLRepository.prototype.listPrompts,
-      ).toHaveBeenCalledWith(limit, []);
+      ).toHaveBeenCalledWith(limit, [], undefined);
     });
   });
 
@@ -103,7 +103,7 @@ describe("usePromptCollection", () => {
       expect(result.current.prompts).toHaveLength(limit);
       expect(
         PromptGraphQLRepository.prototype.listPrompts,
-      ).toHaveBeenCalledWith(limit, facets);
+      ).toHaveBeenCalledWith(limit, facets, undefined);
     });
   });
 
@@ -134,7 +134,7 @@ describe("usePromptCollection", () => {
       expect(result.current.prompts).toEqual(mockPrompts1);
       expect(
         PromptGraphQLRepository.prototype.listPrompts,
-      ).toHaveBeenCalledWith(limit, initialFacets);
+      ).toHaveBeenCalledWith(limit, initialFacets, undefined);
     });
     result.current.addFilter(newFacet);
     rerender({ limit, facets: initialFacets });
@@ -143,7 +143,7 @@ describe("usePromptCollection", () => {
       expect(result.current.prompts).toEqual(mockPrompts2);
       expect(
         PromptGraphQLRepository.prototype.listPrompts,
-      ).toHaveBeenCalledWith(limit, [newFacet]);
+      ).toHaveBeenCalledWith(limit, [newFacet], undefined);
     });
   });
 
