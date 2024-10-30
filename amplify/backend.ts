@@ -13,4 +13,5 @@ cfnUserPool.deletionProtection = "ACTIVE";
 const { amplifyDynamoDbTables } = backend.data.resources.cfnResources;
 for (const table of Object.values(amplifyDynamoDbTables)) {
   table.deletionProtectionEnabled = true;
+  table.pointInTimeRecoveryEnabled = true;
 }
