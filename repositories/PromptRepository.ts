@@ -4,7 +4,7 @@ import type { Schema } from "../amplify/data/resource";
 import { UserViewModel } from "@/models/UserViewModel";
 import { PromptViewModelCollection } from "@/models/PromptViewModelCollection";
 
-export type FacetType = "OWNER" | "CATEGORY" | "SDLC_PHASE";
+export type FacetType = "OWNER" | "CATEGORY" | "SDLC_PHASE" | "SEARCH";
 
 export type Facets = {
   facet: FacetType;
@@ -133,12 +133,20 @@ export class PromptGraphQLRepository implements PromptRepository {
 
   private facetsToFilter(facets?: Array<Facets>) {
     return facets
-      ? facets.map((f) => ({
-          [f.facet.toLowerCase()]: {
-            // see https://github.com/aws-amplify/amplify-category-api/issues/665#issuecomment-1189619200
-            eq: f.facet === "OWNER" ? `${f.value}::${f.value}` : f.value,
-          },
-        }))
+      ? facets.map((f) => {
+          if (f.facet === "SEARCH") {
+            return {
+              ["name"]: { contains: f.value },
+            };
+          } else {
+            return {
+              [f.facet.toLowerCase()]: {
+                // see https://github.com/aws-amplify/amplify-category-api/issues/665#issuecomment-1189619200
+                eq: f.facet === "OWNER" ? `${f.value}::${f.value}` : f.value,
+              },
+            };
+          }
+        })
       : [];
   }
 }
