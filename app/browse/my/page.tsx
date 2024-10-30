@@ -54,6 +54,7 @@ export default function Browse() {
       {user && (
         <PromptCollection
           showLoadMore={true}
+          showFilters={false}
           limit={10}
           facets={[{ facet: "OWNER", value: user?.userId }]}
         />

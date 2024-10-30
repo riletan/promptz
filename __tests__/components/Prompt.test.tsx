@@ -4,11 +4,7 @@ import { usePrompt } from "@/hooks/usePrompt";
 import Prompt from "@/components/Prompt";
 import { useAuth } from "@/contexts/AuthContext";
 import "@testing-library/jest-dom/vitest";
-import {
-  SdlcPhase,
-  PromptCategory,
-  PromptViewModel,
-} from "@/models/PromptViewModel";
+import { PromptViewModel } from "@/models/PromptViewModel";
 import { UserViewModel } from "@/models/UserViewModel";
 
 // Mock the hooks
@@ -26,8 +22,8 @@ const promptViewModel = PromptViewModel.fromSchema({
   id: "test-id",
   name: "Test Prompt",
   instruction: "Test instruction",
-  sdlc_phase: SdlcPhase.DEPLOY,
-  category: PromptCategory.CHAT,
+  sdlc_phase: "DEPLOY",
+  category: "CHAT",
   owner_username: "Test User",
   owner: "user123",
   description: "description",

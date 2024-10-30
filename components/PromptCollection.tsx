@@ -11,22 +11,66 @@ import {
   Badge,
   Icon,
   Alert,
+  SelectProps,
+  Select,
+  Grid,
 } from "@cloudscape-design/components";
 import { useRouter } from "next/navigation";
 import { usePromptCollection } from "../hooks/usePromptCollection";
 import { Facets } from "@/repositories/PromptRepository";
+import { useState } from "react";
+import { PromptCategory, SdlcPhase } from "@/models/PromptViewModel";
+import { createSelectOptions } from "@/utils/formatters";
 
 interface PromptCollectionProps {
   limit?: number;
   promptsPerRow?: CardsProps.CardsLayout[];
   showLoadMore: boolean;
+  showFilters: boolean;
   facets?: Array<Facets>;
 }
 
 export default function PromptCollection(props: PromptCollectionProps) {
   const router = useRouter();
-  const { prompts, error, loading, hasMore, handleLoadMore } =
-    usePromptCollection(props.limit, props.facets);
+  const {
+    prompts,
+    error,
+    loading,
+    hasMore,
+    handleLoadMore,
+    addFilter,
+    resetFilter,
+  } = usePromptCollection(props.limit, props.facets);
+  const [categoryFilter, setCategoryFilter] = useState<SelectProps.Option>({});
+  const [sdlcFilter, setSDLCFilter] = useState<SelectProps.Option>({});
+
+  const getCategoryFilter = () => {
+    return createSelectOptions(PromptCategory, [PromptCategory.UNKNOWN]);
+  };
+
+  const getSDLCFilter = () => {
+    return createSelectOptions(SdlcPhase, [SdlcPhase.UNKNOWN]);
+  };
+
+  const handleCategoryFilterChange = (option: SelectProps.Option) => {
+    setCategoryFilter(option);
+    addFilter({ facet: "CATEGORY", value: option.value! });
+  };
+
+  const handleSDLCFilterChange = (option: SelectProps.Option) => {
+    setSDLCFilter(option);
+    addFilter({ facet: "SDLC_PHASE", value: option.value! });
+  };
+
+  const showClearFilter = () => {
+    return categoryFilter.value || sdlcFilter.value;
+  };
+
+  const clearFilter = () => {
+    setCategoryFilter({});
+    setSDLCFilter({});
+    resetFilter();
+  };
 
   if (error)
     return (
@@ -43,7 +87,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
   return (
     <SpaceBetween size="s">
       <Cards
-        variant="container"
+        variant="full-page"
         cardDefinition={{
           header: (item) => (
             <SpaceBetween size="xs">
@@ -86,6 +130,52 @@ export default function PromptCollection(props: PromptCollectionProps) {
               </SpaceBetween>
             </Box>
           </Container>
+        }
+        filter={
+          props.showFilters && (
+            <Grid
+              gridDefinition={[
+                { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
+                { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
+                { colspan: { xxs: 6, xs: 6, default: 6, s: 2, m: 2, xl: 1 } },
+              ]}
+            >
+              <div>
+                <Select
+                  inlineLabelText="SDLC Phase"
+                  data-testing="sdlc-filter"
+                  selectedOption={sdlcFilter}
+                  onChange={({ detail }) =>
+                    handleSDLCFilterChange(detail.selectedOption)
+                  }
+                  options={getSDLCFilter()}
+                />
+              </div>
+              <div>
+                <Select
+                  inlineLabelText="Category"
+                  data-testing="category-filter"
+                  selectedOption={categoryFilter}
+                  onChange={({ detail }) =>
+                    handleCategoryFilterChange(detail.selectedOption)
+                  }
+                  options={getCategoryFilter()}
+                />
+              </div>
+              <Box margin={{ top: "xs" }}>
+                {showClearFilter() && (
+                  <Button
+                    data-testing="clear-filter"
+                    iconAlign="right"
+                    iconName="close"
+                    onClick={clearFilter}
+                  >
+                    Clear Filter
+                  </Button>
+                )}
+              </Box>
+            </Grid>
+          )
         }
       />
 
