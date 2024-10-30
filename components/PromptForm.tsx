@@ -78,7 +78,6 @@ export default function PromptForm(props: PromptFormProps) {
       setLoading(false);
     }
   };
-
   return (
     <form
       onSubmit={async (e) => {
@@ -144,43 +143,43 @@ export default function PromptForm(props: PromptFormProps) {
                     label: "Plan",
                     description:
                       "Define project scope, objectives, and feasibility while estimating resources and timelines.",
-                    value: "PLAN",
+                    value: SdlcPhase.PLAN,
                   },
                   {
                     label: "Requirements Analysis",
                     description:
                       "Gather, analyze, and document detailed software requirements.",
-                    value: "REQ",
+                    value: SdlcPhase.REQ,
                   },
                   {
                     label: "Design",
                     description:
                       "Create the software architecture, user interface, and system design based on the requirements.",
-                    value: "DESIGN",
+                    value: SdlcPhase.DESIGN,
                   },
                   {
                     label: "Implement",
                     description:
                       "Write, refactor, fix and review the actual code for the software according to design specifications.",
-                    value: "IMPLEMENT",
+                    value: SdlcPhase.IMPLEMENT,
                   },
                   {
                     label: "Test",
                     description:
                       "Conduct various types of testing to identify and fix bugs, ensuring the software meets quality standards and requirements.",
-                    value: "TEST",
+                    value: SdlcPhase.TEST,
                   },
                   {
                     label: "Deploy",
                     description:
                       "Release the software to the production environment, including installation, configuration, and user training.",
-                    value: "DEPLOY",
+                    value: SdlcPhase.DEPLOY,
                   },
                   {
                     label: "Maintain",
                     description:
                       "Monitor, update, and support the software post-deployment, addressing issues and implementing new features as needed.",
-                    value: "MAINTAIN",
+                    value: SdlcPhase.MAINTAIN,
                   },
                 ]}
               />
@@ -196,9 +195,12 @@ export default function PromptForm(props: PromptFormProps) {
                 }
                 value={formData.category}
                 items={[
-                  { value: "CHAT", label: "Chat" },
-                  { value: "DEV_AGENT", label: "Dev Agent" },
-                  { value: "INLINE", label: "Inline Code Completion" },
+                  { value: PromptCategory.CHAT, label: "Chat" },
+                  { value: PromptCategory.DEV_AGENT, label: "Dev Agent" },
+                  {
+                    value: PromptCategory.INLINE,
+                    label: "Inline Code Completion",
+                  },
                 ]}
               />
             </FormField>

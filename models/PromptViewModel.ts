@@ -46,12 +46,10 @@ export class PromptViewModel {
     pvm._id = prompt.id;
     pvm._name = prompt.name;
     pvm._description = prompt.description;
-    pvm._sdlcPhase = SdlcPhase[prompt.sdlc_phase as keyof typeof SdlcPhase];
-    pvm._category =
-      PromptCategory[prompt.category as keyof typeof PromptCategory];
+    pvm._sdlcPhase = prompt.sdlc_phase as SdlcPhase;
+    pvm._category = prompt.category as PromptCategory;
     pvm._instruction = prompt.instruction;
     pvm._owner = new UserViewModel(prompt.owner, prompt.owner_username);
-
     return pvm;
   }
 
