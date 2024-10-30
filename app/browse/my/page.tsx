@@ -22,8 +22,6 @@ export default function Browse() {
   return (
     <ContentLayout
       defaultPadding
-      headerVariant="high-contrast"
-      maxContentWidth={1024}
       breadcrumbs={
         <BreadcrumbGroup
           items={[
@@ -55,8 +53,9 @@ export default function Browse() {
         <PromptCollection
           showLoadMore={true}
           showFilters={false}
-          limit={10}
+          limit={50}
           facets={[{ facet: "OWNER", value: user?.userId }]}
+          promptsPerRow={[{ cards: 1 }, { minWidth: 800, cards: 4 }]}
         />
       )}
     </ContentLayout>
