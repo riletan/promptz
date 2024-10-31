@@ -15,6 +15,9 @@ vi.mock("next/navigation", () => ({
   useRouter: () => ({
     push: vi.fn(),
   }),
+  useSearchParams: () => ({
+    get: vi.fn(),
+  }),
 }));
 
 describe("PromptCollection component", () => {
