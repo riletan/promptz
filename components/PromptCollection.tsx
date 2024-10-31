@@ -32,6 +32,10 @@ interface PromptCollectionProps {
 }
 
 export default function PromptCollection(props: PromptCollectionProps) {
+  const initSearchFacet = props.facets?.find(
+    (facet) => facet.facet === "SEARCH",
+  );
+
   const router = useRouter();
   const {
     prompts,
@@ -44,7 +48,9 @@ export default function PromptCollection(props: PromptCollectionProps) {
   } = usePromptCollection(props.limit, props.facets);
   const [categoryFilter, setCategoryFilter] = useState<SelectProps.Option>({});
   const [sdlcFilter, setSDLCFilter] = useState<SelectProps.Option>({});
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>(
+    initSearchFacet?.value || "",
+  );
 
   const getCategoryFilter = () => {
     return createSelectOptions(PromptCategory, [PromptCategory.UNKNOWN]);
