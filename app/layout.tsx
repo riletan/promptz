@@ -4,6 +4,7 @@ import "@cloudscape-design/global-styles/index.css";
 import "./globals.css";
 import TopNav from "@/components/TopNav";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Promptz",
@@ -26,7 +27,7 @@ export default function RootLayout({
         <ConfigureAmplifyClientSide />
         <AuthProvider>
           <TopNav />
-          {children}
+          <Suspense>{children}</Suspense>
         </AuthProvider>
       </body>
     </html>

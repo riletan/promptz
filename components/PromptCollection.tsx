@@ -16,7 +16,7 @@ import {
   Grid,
   TextFilter,
 } from "@cloudscape-design/components";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { usePromptCollection } from "../hooks/usePromptCollection";
 import { Facets } from "@/repositories/PromptRepository";
 import { useState } from "react";
@@ -32,9 +32,12 @@ interface PromptCollectionProps {
 }
 
 export default function PromptCollection(props: PromptCollectionProps) {
-  const initSearchFacet = props.facets?.find(
-    (facet) => facet.facet === "SEARCH",
-  );
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query");
+  const initFacets = props.facets || [];
+  if (query) {
+    initFacets.push({ facet: "SEARCH", value: query });
+  }
 
   const router = useRouter();
   const {
@@ -45,12 +48,10 @@ export default function PromptCollection(props: PromptCollectionProps) {
     handleLoadMore,
     addFilter,
     resetFilter,
-  } = usePromptCollection(props.limit, props.facets);
+  } = usePromptCollection(props.limit, initFacets);
   const [categoryFilter, setCategoryFilter] = useState<SelectProps.Option>({});
   const [sdlcFilter, setSDLCFilter] = useState<SelectProps.Option>({});
-  const [searchQuery, setSearchQuery] = useState<string>(
-    initSearchFacet?.value || "",
-  );
+  const [searchQuery, setSearchQuery] = useState<string>(query || "");
 
   const getCategoryFilter = () => {
     return createSelectOptions(PromptCategory, [PromptCategory.UNKNOWN]);
