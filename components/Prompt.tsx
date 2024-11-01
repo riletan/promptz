@@ -30,7 +30,7 @@ export default function Prompt(props: PromptProps) {
 
   if (loading)
     return (
-      <Container data-testing="loading">
+      <Container data-testid="container-loading">
         <Box textAlign="center">
           <Spinner size="large" />
         </Box>
@@ -40,6 +40,7 @@ export default function Prompt(props: PromptProps) {
   if (error)
     return (
       <Alert
+        data-testid="alert-error"
         statusIconAriaLabel="Error"
         type="error"
         header={error.name}
@@ -59,6 +60,7 @@ export default function Prompt(props: PromptProps) {
             actions={
               <SpaceBetween direction="horizontal" size="xs">
                 <CopyToClipboard
+                  data-testid="button-copy"
                   copyButtonText="Copy"
                   copyErrorText="Prompt failed to copy"
                   copySuccessText=" Prompt copied. Now, go build!"
@@ -66,6 +68,7 @@ export default function Prompt(props: PromptProps) {
                 />
                 {user && !user.guest && promptViewModel.isOwnedBy(user) ? (
                   <Button
+                    data-testid="button-edit"
                     variant="primary"
                     onClick={() =>
                       router.push(`/prompt/${promptViewModel.id}/edit`)

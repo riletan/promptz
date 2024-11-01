@@ -22,6 +22,7 @@ import {
   PromptViewModel,
   SdlcPhase,
 } from "@/models/PromptViewModel";
+import validator from "validator";
 
 interface PromptFormProps {
   prompt: PromptViewModel;
@@ -36,6 +37,14 @@ interface FormData {
   category: string;
 }
 
+interface FormErrors {
+  name?: string;
+  description?: string;
+  instruction?: string;
+  sdlcPhase?: string;
+  category?: string;
+}
+
 const repository = new PromptGraphQLRepository();
 
 export default function PromptForm(props: PromptFormProps) {
@@ -43,6 +52,8 @@ export default function PromptForm(props: PromptFormProps) {
   const router = useRouter();
 
   const [formError, setFormError] = useState("");
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
+
   const [formData, setFormData] = useState<FormData>({
     id: props.prompt.id,
     name: props.prompt.name,
@@ -56,6 +67,16 @@ export default function PromptForm(props: PromptFormProps) {
   const handleSubmit = async () => {
     try {
       setLoading(true);
+      setFormError("");
+
+      // TODO: move this to PromptViewModel
+      if (!validateForm()) {
+        setFormError(
+          "There are some validation issues with your input. Please check the form for for errors.",
+        );
+        return;
+      }
+
       const editedPrompt = props.prompt.copy();
       editedPrompt.name = formData.name;
       editedPrompt.description = formData.description;
@@ -78,6 +99,102 @@ export default function PromptForm(props: PromptFormProps) {
       setLoading(false);
     }
   };
+
+  const validateInput = (
+    value: string,
+    options: {
+      field: keyof FormData;
+      minLength?: number;
+      maxLength?: number;
+      required?: boolean;
+    },
+  ): { isValid: boolean; sanitized: string } => {
+    const { field, minLength = 0, maxLength = 2000, required = true } = options;
+
+    // Trim the input
+    const sanitized = validator.trim(value);
+
+    // Check if field is required
+    if (required && validator.isEmpty(sanitized)) {
+      setFormErrors((prev) => ({
+        ...prev,
+        [field]: `${field} is required`,
+      }));
+      return { isValid: false, sanitized };
+    }
+
+    // Validate length
+    if (!validator.isLength(sanitized, { min: minLength, max: maxLength })) {
+      setFormErrors((prev) => ({
+        ...prev,
+        [field]: `${field} must be between ${minLength} and ${maxLength} characters`,
+      }));
+      return { isValid: false, sanitized };
+    }
+
+    // Clear error if validation passes
+    setFormErrors((prev) => ({ ...prev, [field]: undefined }));
+    return { isValid: true, sanitized };
+  };
+
+  const validateForm = (): boolean => {
+    const nameValidation = validateInput(formData.name, {
+      field: "name",
+      minLength: 3,
+      maxLength: 100,
+    });
+
+    const descriptionValidation = validateInput(formData.description, {
+      field: "description",
+      minLength: 10,
+      maxLength: 500,
+    });
+
+    const instructionValidation = validateInput(formData.instruction, {
+      field: "instruction",
+      minLength: 10,
+      maxLength: 2000,
+    });
+
+    // Validate enum values
+    const isValidSdlcPhase = Object.values(SdlcPhase).includes(
+      formData.sdlcPhase as SdlcPhase,
+    );
+    const isValidCategory = Object.values(PromptCategory).includes(
+      formData.category as PromptCategory,
+    );
+
+    if (!isValidSdlcPhase) {
+      setFormErrors((prev) => ({
+        ...prev,
+        sdlcPhase: "Please select a valid SDLC phase",
+      }));
+    }
+
+    if (!isValidCategory) {
+      setFormErrors((prev) => ({
+        ...prev,
+        category: "Please select a valid category",
+      }));
+    }
+
+    // Update form data with sanitized values
+    setFormData((prev) => ({
+      ...prev,
+      name: nameValidation.sanitized,
+      description: descriptionValidation.sanitized,
+      instruction: instructionValidation.sanitized,
+    }));
+
+    return (
+      nameValidation.isValid &&
+      descriptionValidation.isValid &&
+      instructionValidation.isValid &&
+      isValidSdlcPhase &&
+      isValidCategory
+    );
+  };
+
   return (
     <form
       onSubmit={async (e) => {
@@ -93,10 +210,16 @@ export default function PromptForm(props: PromptFormProps) {
               formAction="none"
               variant="link"
               onClick={() => router.back()}
+              data-testid="button-cancel"
             >
               Cancel
             </Button>
-            <Button variant="primary" formAction="submit" loading={loading}>
+            <Button
+              variant="primary"
+              formAction="submit"
+              loading={loading}
+              data-testid="button-save"
+            >
               Save prompt
             </Button>
           </SpaceBetween>
@@ -105,11 +228,14 @@ export default function PromptForm(props: PromptFormProps) {
         <Container>
           <SpaceBetween direction="vertical" size="l">
             <FormField
+              data-testid="formfield-name"
               stretch
               description="A catchy name for your prompt."
               label="Name"
+              errorText={formErrors.name}
             >
               <Input
+                data-testid="input-name"
                 value={formData.name}
                 onChange={({ detail }) =>
                   setFormData({ ...formData, name: detail.value })
@@ -117,11 +243,14 @@ export default function PromptForm(props: PromptFormProps) {
               />
             </FormField>
             <FormField
+              data-testid="formfield-description"
               stretch
               description="What is this prompt doing? What is the goal?"
               label="Description"
+              errorText={formErrors.description}
             >
               <Input
+                data-testid="input-description"
                 value={formData.description}
                 onChange={({ detail }) =>
                   setFormData({ ...formData, description: detail.value })
@@ -129,9 +258,11 @@ export default function PromptForm(props: PromptFormProps) {
               />
             </FormField>
             <FormField
+              data-testid="formfield-sdlc"
               label="Software Development Lifecycle (SDLC) Phase"
               description="Which phase of the SDLC does this prompt relate to?"
               stretch
+              errorText={formErrors.sdlcPhase}
             >
               <Tiles
                 onChange={({ detail }) =>
@@ -185,9 +316,11 @@ export default function PromptForm(props: PromptFormProps) {
               />
             </FormField>
             <FormField
+              data-testid="formfield-category"
               label="Prompt Category"
               description="Is this prompt related to Amazon Q Developer Chat, Dev Agent, or inline code completion?"
               stretch
+              errorText={formErrors.category}
             >
               <RadioGroup
                 onChange={({ detail }) =>
@@ -205,11 +338,14 @@ export default function PromptForm(props: PromptFormProps) {
               />
             </FormField>
             <FormField
+              data-testid="formfield-instruction"
               label="Instruction"
               description="The specific task you want Amazon Q Developer to perform."
               stretch
+              errorText={formErrors.instruction}
             >
               <Textarea
+                data-testid="textarea-instruction"
                 onChange={({ detail }) =>
                   setFormData({ ...formData, instruction: detail.value })
                 }

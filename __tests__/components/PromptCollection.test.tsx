@@ -1,9 +1,10 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import PromptCollection from "@/components/PromptCollection";
 import { usePromptCollection } from "@/hooks/usePromptCollection";
 import { useAuth } from "@/contexts/AuthContext";
 import "@testing-library/jest-dom/vitest";
+import createWrapper from "@cloudscape-design/components/test-utils/dom";
 import { PromptViewModel } from "@/models/PromptViewModel";
 
 // Mock the hooks
@@ -37,8 +38,14 @@ describe("PromptCollection component", () => {
       fetchUser: vi.fn(),
     });
 
-    render(<PromptCollection showLoadMore={false} showFilters={false} />);
-    expect(screen.getByText("Loading a world of prompts")).toBeInTheDocument();
+    const { container } = render(
+      <PromptCollection showLoadMore={false} showFilters={false} />,
+    );
+
+    const wrapper = createWrapper(container);
+    const content = wrapper.findContainer()!.findContent()!.getElement()!;
+
+    expect(content.textContent).toBe("Loading a world of prompts");
   });
 
   it("renders error state", () => {
@@ -58,11 +65,19 @@ describe("PromptCollection component", () => {
       fetchUser: vi.fn(),
     });
 
-    render(<PromptCollection showLoadMore={false} showFilters={false} />);
-    expect(screen.getByText("Test error")).toBeInTheDocument();
+    const { container } = render(
+      <PromptCollection showLoadMore={false} showFilters={false} />,
+    );
+
+    const wrapper = createWrapper(container).findAlert(
+      '[data-testid="alert-error"]',
+    )!;
+    expect(wrapper.findContent().getElement().textContent).toContain(
+      "Test error",
+    );
   });
 
-  it("renders empty state for non-guest user", () => {
+  it("renders empty state", () => {
     vi.mocked(usePromptCollection).mockReturnValue({
       prompts: [],
       error: null,
@@ -73,29 +88,14 @@ describe("PromptCollection component", () => {
       resetFilter: vi.fn(),
     });
 
-    render(<PromptCollection showLoadMore={false} showFilters={false} />);
-    expect(screen.getByText("No prompts created yet")).toBeInTheDocument();
-    expect(
-      screen.getByText("Be the first. Create a prompt."),
-    ).toBeInTheDocument();
-  });
+    const { container } = render(
+      <PromptCollection showLoadMore={false} showFilters={false} />,
+    );
+    const wrapper = createWrapper(container);
+    const content = wrapper.findContainer()!.findContent()!.getElement()!;
 
-  it("renders empty state for guest user", () => {
-    vi.mocked(usePromptCollection).mockReturnValue({
-      prompts: [],
-      error: null,
-      loading: false,
-      hasMore: false,
-      handleLoadMore: vi.fn(),
-      addFilter: vi.fn(),
-      resetFilter: vi.fn(),
-    });
-
-    render(<PromptCollection showLoadMore={false} showFilters={false} />);
-    expect(screen.getByText("No prompts created yet")).toBeInTheDocument();
-    expect(
-      screen.getByText("Be the first. Create a prompt."),
-    ).toBeInTheDocument();
+    expect(content.textContent).contains("No prompts created yet");
+    expect(wrapper.findButton('[data-testid="button-create"]')).toBeTruthy();
   });
 
   it("renders load more button when hasMore is true", () => {
@@ -109,9 +109,15 @@ describe("PromptCollection component", () => {
       resetFilter: vi.fn(),
     });
 
-    render(<PromptCollection showLoadMore={true} showFilters={false} />);
-    expect(screen.getByText("Load more")).toBeInTheDocument();
-    expect(screen.getByText("Load more")).not.toBeDisabled();
+    const { container } = render(
+      <PromptCollection showLoadMore={true} showFilters={false} />,
+    );
+    const wrapper = createWrapper(container);
+
+    expect(wrapper.findButton('[data-testid="button-load-more"]')).toBeTruthy();
+    expect(
+      wrapper.findButton('[data-testid="button-load-more"]')!.isDisabled(),
+    ).toBeFalsy();
   });
 
   it("disables load more button when hasMore is false", () => {
@@ -125,12 +131,15 @@ describe("PromptCollection component", () => {
       resetFilter: vi.fn(),
     });
 
-    render(<PromptCollection showLoadMore={true} showFilters={false} />);
-    expect(screen.getByText("Load more")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Load more" })).toHaveAttribute(
-      "aria-disabled",
-      "true",
+    const { container } = render(
+      <PromptCollection showLoadMore={true} showFilters={false} />,
     );
+    const wrapper = createWrapper(container);
+
+    expect(wrapper.findButton('[data-testid="button-load-more"]')).toBeTruthy();
+    expect(
+      wrapper.findButton('[data-testid="button-load-more"]')!.isDisabled(),
+    ).toBeTruthy();
   });
 
   it("does not render load more button when showLoadMore is false", () => {
@@ -144,8 +153,12 @@ describe("PromptCollection component", () => {
       resetFilter: vi.fn(),
     });
 
-    render(<PromptCollection showLoadMore={false} showFilters={false} />);
-    expect(screen.queryByText("Load more")).not.toBeInTheDocument();
+    const { container } = render(
+      <PromptCollection showLoadMore={false} showFilters={false} />,
+    );
+    const wrapper = createWrapper(container);
+
+    expect(wrapper.findButton('[data-testid="button-load-more"]')).toBeFalsy();
   });
 
   it("renders filters when showFilters is true", () => {
@@ -160,9 +173,16 @@ describe("PromptCollection component", () => {
       resetFilter: vi.fn(),
     });
 
-    render(<PromptCollection showLoadMore={false} showFilters={true} />);
-    expect(screen.getByTestId("category-filter")).toBeInTheDocument();
-    expect(screen.getByTestId("sdlc-filter")).toBeInTheDocument();
+    const { container } = render(
+      <PromptCollection showLoadMore={true} showFilters={true} />,
+    );
+    const wrapper = createWrapper(container);
+
+    expect(
+      wrapper.findTextFilter('[data-testid="textfilter-search"]'),
+    ).toBeTruthy();
+    expect(wrapper.findSelect('[data-testid="select-sdlc"]')).toBeTruthy();
+    expect(wrapper.findSelect('[data-testid="select-category"]')).toBeTruthy();
   });
 
   it("does not render filters when showFilters is false", () => {
@@ -176,8 +196,63 @@ describe("PromptCollection component", () => {
       resetFilter: vi.fn(),
     });
 
-    render(<PromptCollection showLoadMore={false} showFilters={false} />);
-    expect(screen.queryByTestId("category-filter")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("sdlc-filter")).not.toBeInTheDocument();
+    const { container } = render(
+      <PromptCollection showLoadMore={true} showFilters={false} />,
+    );
+    const wrapper = createWrapper(container);
+
+    expect(
+      wrapper.findTextFilter('[data-testid="textfilter-search"]'),
+    ).toBeFalsy();
+    expect(wrapper.findSelect('[data-testid="select-sdlc"]')).toBeFalsy();
+    expect(wrapper.findSelect('[data-testid="select-category"]')).toBeFalsy();
+  });
+
+  it("shows clear filter if sdlc filter set", () => {
+    vi.mocked(usePromptCollection).mockReturnValue({
+      prompts: [new PromptViewModel()],
+      error: null,
+      loading: false,
+      hasMore: false,
+      handleLoadMore: vi.fn(),
+      addFilter: vi.fn(),
+      resetFilter: vi.fn(),
+    });
+
+    const { container } = render(
+      <PromptCollection showLoadMore={true} showFilters={true} />,
+    );
+    const wrapper = createWrapper(container);
+    const select = wrapper.findSelect('[data-testid="select-sdlc"]')!;
+    select.openDropdown();
+    select.selectOptionByValue("Implement");
+
+    expect(
+      wrapper.findButton('[data-testid="button-clear-filter"]'),
+    ).toBeTruthy();
+  });
+
+  it("shows clear filter if category filter set", () => {
+    vi.mocked(usePromptCollection).mockReturnValue({
+      prompts: [new PromptViewModel()],
+      error: null,
+      loading: false,
+      hasMore: false,
+      handleLoadMore: vi.fn(),
+      addFilter: vi.fn(),
+      resetFilter: vi.fn(),
+    });
+
+    const { container } = render(
+      <PromptCollection showLoadMore={true} showFilters={true} />,
+    );
+    const wrapper = createWrapper(container);
+    const select = wrapper.findSelect('[data-testid="select-category"]')!;
+    select.openDropdown();
+    select.selectOptionByValue("Chat");
+
+    expect(
+      wrapper.findButton('[data-testid="button-clear-filter"]'),
+    ).toBeTruthy();
   });
 });

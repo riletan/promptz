@@ -4,6 +4,8 @@ import { usePrompt } from "@/hooks/usePrompt";
 import Prompt from "@/components/Prompt";
 import { useAuth } from "@/contexts/AuthContext";
 import "@testing-library/jest-dom/vitest";
+import createWrapper from "@cloudscape-design/components/test-utils/dom";
+
 import { PromptViewModel } from "@/models/PromptViewModel";
 import { UserViewModel } from "@/models/UserViewModel";
 
@@ -44,8 +46,12 @@ describe("Prompt component", () => {
       fetchUser: vi.fn(),
     });
 
-    render(<Prompt promptId="test-id" />);
-    expect(screen.getByTestId("loading")).toBeInTheDocument();
+    const { container } = render(<Prompt promptId="test-id" />);
+
+    const wrapper = createWrapper(container);
+    expect(
+      wrapper.findContainer('[data-testid="container-loading"]'),
+    ).toBeTruthy();
   });
 
   it("renders error state", () => {
@@ -59,9 +65,14 @@ describe("Prompt component", () => {
       logout: vi.fn(),
       fetchUser: vi.fn(),
     });
-    render(<Prompt promptId="test-id" />);
-    expect(screen.getByTestId("error")).toBeInTheDocument();
-    expect(screen.getByTestId("error")).toHaveTextContent("Test error");
+    const { container } = render(<Prompt promptId="test-id" />);
+
+    const wrapper = createWrapper(container).findAlert(
+      '[data-testid="alert-error"]',
+    )!;
+    expect(wrapper.findContent().getElement().textContent).toContain(
+      "Test error",
+    );
   });
 
   it("renders prompt data", () => {
@@ -95,8 +106,10 @@ describe("Prompt component", () => {
       fetchUser: vi.fn(),
     });
 
-    render(<Prompt promptId="test-id" />);
-    expect(screen.getByRole("button", { name: "Edit" })).toBeInTheDocument();
+    const { container } = render(<Prompt promptId="test-id" />);
+
+    const wrapper = createWrapper(container);
+    expect(wrapper.findButton('[data-testid="button-edit"]')).toBeTruthy();
   });
 
   it("does not render edit button for non-owner", () => {
@@ -111,10 +124,10 @@ describe("Prompt component", () => {
       fetchUser: vi.fn(),
     });
 
-    render(<Prompt promptId="test-id" />);
-    expect(
-      screen.queryByRole("button", { name: "Edit" }),
-    ).not.toBeInTheDocument();
+    const { container } = render(<Prompt promptId="test-id" />);
+
+    const wrapper = createWrapper(container);
+    expect(wrapper.findButton('[data-testid="button-edit"]')).toBeFalsy();
   });
 
   it("does not render edit button for guest user", () => {
@@ -129,10 +142,10 @@ describe("Prompt component", () => {
       fetchUser: vi.fn(),
     });
 
-    render(<Prompt promptId="test-id" />);
-    expect(
-      screen.queryByRole("button", { name: "Edit" }),
-    ).not.toBeInTheDocument();
+    const { container } = render(<Prompt promptId="test-id" />);
+
+    const wrapper = createWrapper(container);
+    expect(wrapper.findButton('[data-testid="button-edit"]')).toBeFalsy();
   });
 
   it("renders copy button", () => {
@@ -147,7 +160,11 @@ describe("Prompt component", () => {
       fetchUser: vi.fn(),
     });
 
-    render(<Prompt promptId="test-id" />);
-    expect(screen.getByRole("button", { name: "Copy" })).toBeInTheDocument();
+    const { container } = render(<Prompt promptId="test-id" />);
+
+    const wrapper = createWrapper(container);
+    expect(
+      wrapper.findCopyToClipboard('[data-testid="button-copy"]'),
+    ).toBeTruthy();
   });
 });
