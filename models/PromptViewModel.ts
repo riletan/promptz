@@ -1,5 +1,6 @@
 import { Schema } from "@/amplify/data/resource";
 import { UserViewModel } from "./UserViewModel";
+import validator from "validator";
 
 export enum SdlcPhase {
   PLAN = "Plan",
@@ -18,6 +19,13 @@ export enum PromptCategory {
   INLINE = "Inline",
   UNKNOWN = "Unknown",
 }
+
+export type ValidationError = { key: string; value: string };
+
+export type ValidationResult = {
+  isValid: boolean;
+  errors: Array<ValidationError>;
+};
 
 export class PromptViewModel {
   private _id: string;
@@ -100,9 +108,69 @@ export class PromptViewModel {
     return `created by ${this._owner?.userName}`;
   }
 
+  public validate() {
+    const nameValidation = this.validateProperty(this._name, {
+      field: "name",
+      minLength: 3,
+      maxLength: 100,
+    });
+
+    const descriptionValidation = this.validateProperty(this._description, {
+      field: "description",
+      minLength: 10,
+      maxLength: 500,
+    });
+
+    const instructionValidation = this.validateProperty(this._instruction, {
+      field: "instruction",
+      minLength: 10,
+      maxLength: 4000,
+    });
+
+    return {
+      name: nameValidation,
+      description: descriptionValidation,
+      instruction: instructionValidation,
+      isValid:
+        nameValidation.isValid &&
+        descriptionValidation.isValid &&
+        instructionValidation.isValid,
+    };
+  }
+
   public copy(): PromptViewModel {
     const clone = new PromptViewModel();
     Object.assign(clone, this);
     return clone;
+  }
+
+  private validateProperty(
+    value: string,
+    options: {
+      field: keyof PromptViewModel;
+      minLength?: number;
+      maxLength?: number;
+      required?: boolean;
+    },
+  ): ValidationResult {
+    const { field, minLength = 0, maxLength = 2000, required = true } = options;
+
+    // Trim the input
+    const errors: Array<ValidationError> = [];
+
+    // Check if field is required
+    if (required && validator.isEmpty(value)) {
+      errors.push({ key: field, value: `${field} is required` });
+    }
+
+    // Validate length
+    if (!validator.isLength(value, { min: minLength, max: maxLength })) {
+      errors.push({
+        key: field,
+        value: `${field} must be between ${minLength} and ${maxLength} characters`,
+      });
+    }
+
+    return { isValid: errors.length === 0 ? true : false, errors };
   }
 }
