@@ -4,7 +4,7 @@ import { configure, cleanup } from "@testing-library/react";
 
 beforeEach(() => {
   vi.spyOn(console, "error");
-  // @ts-ignore jest.spyOn adds this functionallity
+  // @ts-expect-error jest.spyOn adds this functionallity
   console.error.mockImplementation(() => null);
 });
 
@@ -14,5 +14,5 @@ afterEach(() => {
 });
 
 configure({
-  testIdAttribute: "data-testing",
+  testIdAttribute: "data-testid",
 });

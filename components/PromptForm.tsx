@@ -21,6 +21,7 @@ import {
   PromptCategory,
   PromptViewModel,
   SdlcPhase,
+  ValidationError,
 } from "@/models/PromptViewModel";
 
 interface PromptFormProps {
@@ -43,6 +44,10 @@ export default function PromptForm(props: PromptFormProps) {
   const router = useRouter();
 
   const [formError, setFormError] = useState("");
+  const [formFieldError, setFormFieldError] = useState<Array<ValidationError>>(
+    [],
+  );
+
   const [formData, setFormData] = useState<FormData>({
     id: props.prompt.id,
     name: props.prompt.name,
@@ -56,19 +61,37 @@ export default function PromptForm(props: PromptFormProps) {
   const handleSubmit = async () => {
     try {
       setLoading(true);
+      setFormError("");
+      setFormFieldError([]);
+
       const editedPrompt = props.prompt.copy();
       editedPrompt.name = formData.name;
       editedPrompt.description = formData.description;
       editedPrompt.instruction = formData.instruction;
       editedPrompt.sdlcPhase = formData.sdlcPhase as SdlcPhase;
       editedPrompt.category = formData.category as PromptCategory;
-      if (editedPrompt.id === "") {
-        await repository.createPrompt(editedPrompt, user!);
-      } else {
-        await repository.updatePrompt(editedPrompt);
-      }
 
-      router.back();
+      const validationResult = editedPrompt.validate();
+      if (!validationResult.isValid) {
+        setFormError(
+          "There are some validation issues with your input. Please check the form for for errors.",
+        );
+        setFormFieldError([
+          ...validationResult.name.errors,
+          ...validationResult.description.errors,
+          ...validationResult.instruction.errors,
+          ...validationResult.description.errors,
+        ]);
+        return;
+      } else {
+        if (editedPrompt.id === "") {
+          await repository.createPrompt(editedPrompt, user!);
+        } else {
+          await repository.updatePrompt(editedPrompt);
+        }
+
+        router.back();
+      }
     } catch (error) {
       console.error("Error creating/updating prompt:", error);
       setFormError(
@@ -78,6 +101,12 @@ export default function PromptForm(props: PromptFormProps) {
       setLoading(false);
     }
   };
+
+  const getFormFieldErrorText = (formfieldName: string) => {
+    const error = formFieldError.find((e) => e.key === formfieldName);
+    return error ? error.value : "";
+  };
+
   return (
     <form
       onSubmit={async (e) => {
@@ -93,10 +122,16 @@ export default function PromptForm(props: PromptFormProps) {
               formAction="none"
               variant="link"
               onClick={() => router.back()}
+              data-testid="button-cancel"
             >
               Cancel
             </Button>
-            <Button variant="primary" formAction="submit" loading={loading}>
+            <Button
+              variant="primary"
+              formAction="submit"
+              loading={loading}
+              data-testid="button-save"
+            >
               Save prompt
             </Button>
           </SpaceBetween>
@@ -105,11 +140,14 @@ export default function PromptForm(props: PromptFormProps) {
         <Container>
           <SpaceBetween direction="vertical" size="l">
             <FormField
+              data-testid="formfield-name"
               stretch
               description="A catchy name for your prompt."
               label="Name"
+              errorText={getFormFieldErrorText("name")}
             >
               <Input
+                data-testid="input-name"
                 value={formData.name}
                 onChange={({ detail }) =>
                   setFormData({ ...formData, name: detail.value })
@@ -117,11 +155,14 @@ export default function PromptForm(props: PromptFormProps) {
               />
             </FormField>
             <FormField
+              data-testid="formfield-description"
               stretch
               description="What is this prompt doing? What is the goal?"
               label="Description"
+              errorText={getFormFieldErrorText("description")}
             >
               <Input
+                data-testid="input-description"
                 value={formData.description}
                 onChange={({ detail }) =>
                   setFormData({ ...formData, description: detail.value })
@@ -129,6 +170,7 @@ export default function PromptForm(props: PromptFormProps) {
               />
             </FormField>
             <FormField
+              data-testid="formfield-sdlc"
               label="Software Development Lifecycle (SDLC) Phase"
               description="Which phase of the SDLC does this prompt relate to?"
               stretch
@@ -185,6 +227,7 @@ export default function PromptForm(props: PromptFormProps) {
               />
             </FormField>
             <FormField
+              data-testid="formfield-category"
               label="Prompt Category"
               description="Is this prompt related to Amazon Q Developer Chat, Dev Agent, or inline code completion?"
               stretch
@@ -205,11 +248,14 @@ export default function PromptForm(props: PromptFormProps) {
               />
             </FormField>
             <FormField
+              data-testid="formfield-instruction"
               label="Instruction"
               description="The specific task you want Amazon Q Developer to perform."
               stretch
+              errorText={getFormFieldErrorText("instruction")}
             >
               <Textarea
+                data-testid="textarea-instruction"
                 onChange={({ detail }) =>
                   setFormData({ ...formData, instruction: detail.value })
                 }

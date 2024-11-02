@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
+import createWrapper from "@cloudscape-design/components/test-utils/dom";
 import "@testing-library/jest-dom/vitest";
 import { PromptViewModel } from "@/models/PromptViewModel";
 import { UserViewModel } from "@/models/UserViewModel";
@@ -22,8 +23,6 @@ vi.mock("next/navigation", () => ({
 describe("PromptForm component", () => {
   const mockPrompt = new PromptViewModel();
 
-  const mockUser = new UserViewModel("user123", "testuser");
-
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(useAuth).mockReturnValue({
@@ -34,51 +33,83 @@ describe("PromptForm component", () => {
   });
 
   it("renders form fields correctly", () => {
-    render(<PromptForm prompt={mockPrompt} />);
+    const { container } = render(<PromptForm prompt={mockPrompt} />);
 
-    expect(screen.getByLabelText("Name")).toBeInTheDocument();
-    expect(screen.getByLabelText("Description")).toBeInTheDocument();
+    const wrapper = createWrapper(container);
     expect(
-      screen.getByLabelText("Software Development Lifecycle (SDLC) Phase"),
+      wrapper.findFormField('[data-testid="formfield-name"]')!.getElement(),
     ).toBeInTheDocument();
-    expect(screen.getByLabelText("Prompt Category")).toBeInTheDocument();
-    expect(screen.getByLabelText("Instruction")).toBeInTheDocument();
+    expect(
+      wrapper
+        .findFormField('[data-testid="formfield-description"]')!
+        .getElement(),
+    ).toBeInTheDocument();
+    expect(
+      wrapper.findFormField('[data-testid="formfield-sdlc"]')!.getElement(),
+    ).toBeInTheDocument();
+    expect(
+      wrapper.findFormField('[data-testid="formfield-category"]')!.getElement(),
+    ).toBeInTheDocument();
+    expect(
+      wrapper
+        .findFormField('[data-testid="formfield-instruction"]')!
+        .getElement(),
+    ).toBeInTheDocument();
   });
 
   it("updates form data when input changes", () => {
-    render(<PromptForm prompt={mockPrompt} />);
+    const { container } = render(<PromptForm prompt={mockPrompt} />);
 
-    const nameInput = screen.getByLabelText("Name");
-    fireEvent.change(nameInput, { target: { value: "Updated Name" } });
-    expect(nameInput).toHaveValue("Updated Name");
+    const wrapper = createWrapper(container);
 
-    const descriptionInput = screen.getByLabelText("Description");
-    fireEvent.change(descriptionInput, {
-      target: { value: "Updated Description" },
-    });
-    expect(descriptionInput).toHaveValue("Updated Description");
+    wrapper
+      .findInput('[data-testid="input-name"]')!
+      .setInputValue("Updated Name");
 
-    const instructionInput = screen.getByLabelText("Instruction");
-    fireEvent.change(instructionInput, {
-      target: { value: "Updated Instruction" },
-    });
-    expect(instructionInput).toHaveValue("Updated Instruction");
+    const nativeInputName = wrapper
+      .findInput('[data-testid="input-name"]')!
+      .findNativeInput()
+      .getElement();
+    expect(nativeInputName.value).toBe("Updated Name");
+
+    wrapper
+      .findInput('[data-testid="input-description"]')!
+      .setInputValue("Updated Description");
+
+    const nativeInputDescription = wrapper
+      .findInput('[data-testid="input-description"]')!
+      .findNativeInput()
+      .getElement();
+    expect(nativeInputDescription.value).toBe("Updated Description");
+
+    wrapper
+      .findTextarea('[data-testid="textarea-instruction"]')!
+      .setTextareaValue("Updated Instruction");
+
+    const nativeInputInstruction = wrapper
+      .findTextarea('[data-testid="textarea-instruction"]')!
+      .findNativeTextarea()
+      .getElement();
+    expect(nativeInputInstruction.value).toBe("Updated Instruction");
   });
 
   it("calls createPrompt when submitting a new prompt", async () => {
     render(<PromptForm prompt={new PromptViewModel()} />);
 
-    fireEvent.change(screen.getByLabelText("Name"), {
-      target: { value: "New Prompt" },
-    });
-    fireEvent.change(screen.getByLabelText("Description"), {
-      target: { value: "New Description" },
-    });
-    fireEvent.change(screen.getByLabelText("Instruction"), {
-      target: { value: "New Instruction" },
-    });
+    const { container } = render(<PromptForm prompt={mockPrompt} />);
 
-    fireEvent.click(screen.getByText("Save prompt"));
+    const wrapper = createWrapper(container);
+
+    wrapper
+      .findInput('[data-testid="input-name"]')!
+      .setInputValue("Updated Name");
+    wrapper
+      .findInput('[data-testid="input-description"]')!
+      .setInputValue("Updated Description");
+    wrapper
+      .findTextarea('[data-testid="textarea-instruction"]')!
+      .setTextareaValue("Updated Instruction");
+    wrapper.findButton('[data-testid="button-save"]')!.click();
 
     await waitFor(() => {
       expect(
@@ -93,20 +124,22 @@ describe("PromptForm component", () => {
       id: "1",
       name: "Test Prompt",
       description: "A test prompt",
-      sdlc_phase: "DESIGN",
-      category: "CHAT",
+      sdlc_phase: "Design",
+      category: "Chat",
       instruction: "Test instruction",
       owner_username: "testuser",
       owner: "user123",
       createdAt: "",
       updatedAt: "",
     });
-    render(<PromptForm prompt={existingPrompt} />);
+    const { container } = render(<PromptForm prompt={existingPrompt} />);
 
-    fireEvent.change(screen.getByLabelText("Name"), {
-      target: { value: "Updated Prompt" },
-    });
-    fireEvent.click(screen.getByText("Save prompt"));
+    const wrapper = createWrapper(container);
+
+    wrapper
+      .findInput('[data-testid="input-name"]')!
+      .setInputValue("Updated Name");
+    wrapper.findButton('[data-testid="button-save"]')!.click();
 
     await waitFor(() => {
       expect(
@@ -114,7 +147,7 @@ describe("PromptForm component", () => {
       ).toHaveBeenCalledWith(
         expect.objectContaining({
           id: "1",
-          name: "Updated Prompt",
+          name: "Updated Name",
         }),
       );
     });
@@ -123,10 +156,86 @@ describe("PromptForm component", () => {
   });
 
   it("navigates back when cancel button is clicked", () => {
-    render(<PromptForm prompt={mockPrompt} />);
-
-    fireEvent.click(screen.getByText("Cancel"));
+    const { container } = render(<PromptForm prompt={mockPrompt} />);
+    const wrapper = createWrapper(container);
+    wrapper.findButton('[data-testid="button-cancel"]')!.click();
 
     expect(mockBack).toHaveBeenCalled();
+  });
+
+  it("displays validation errors when submitting with empty required fields", async () => {
+    const { container } = render(<PromptForm prompt={new PromptViewModel()} />);
+    const wrapper = createWrapper(container);
+
+    // Submit without filling required fields
+    wrapper.findButton('[data-testid="button-save"]')!.click();
+
+    await waitFor(() => {
+      expect(
+        wrapper.findFormField('[data-testid="formfield-name"]')!.findError(),
+      ).toBeTruthy();
+      expect(
+        wrapper
+          .findFormField('[data-testid="formfield-description"]')!
+          .findError(),
+      ).toBeTruthy();
+      expect(
+        wrapper
+          .findFormField('[data-testid="formfield-instruction"]')!
+          .findError(),
+      ).toBeTruthy();
+    });
+
+    expect(
+      vi.mocked(PromptGraphQLRepository.prototype.createPrompt),
+    ).not.toHaveBeenCalled();
+  });
+
+  it("displays validation error when name is too short", async () => {
+    const { container } = render(<PromptForm prompt={new PromptViewModel()} />);
+    const wrapper = createWrapper(container);
+
+    wrapper.findInput('[data-testid="input-name"]')!.setInputValue("ab"); // Less than minimum length
+    wrapper.findButton('[data-testid="button-save"]')!.click();
+
+    await waitFor(() => {
+      expect(
+        wrapper.findFormField('[data-testid="formfield-name"]')!.findError(),
+      ).toBeTruthy();
+    });
+  });
+
+  it("displays validation error when description is too short", async () => {
+    const { container } = render(<PromptForm prompt={new PromptViewModel()} />);
+    const wrapper = createWrapper(container);
+
+    wrapper.findInput('[data-testid="input-description"]')!.setInputValue("ab"); // Less than minimum length
+    wrapper.findButton('[data-testid="button-save"]')!.click();
+
+    await waitFor(() => {
+      expect(
+        wrapper
+          .findFormField('[data-testid="formfield-description"]')!
+          .findError(),
+      ).toBeTruthy();
+    });
+  });
+
+  it("displays validation error when instruction is too short", async () => {
+    const { container } = render(<PromptForm prompt={new PromptViewModel()} />);
+    const wrapper = createWrapper(container);
+
+    wrapper
+      .findTextarea('[data-testid="textarea-instruction"]')!
+      .setTextareaValue("ab"); // Less than minimum length
+    wrapper.findButton('[data-testid="button-save"]')!.click();
+
+    await waitFor(() => {
+      expect(
+        wrapper
+          .findFormField('[data-testid="formfield-instruction"]')!
+          .findError(),
+      ).toBeTruthy();
+    });
   });
 });

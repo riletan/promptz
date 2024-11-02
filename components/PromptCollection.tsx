@@ -93,7 +93,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
         statusIconAriaLabel="Error"
         type="error"
         header={error.name}
-        data-testing="error"
+        data-testid="alert-error"
       >
         {error.message}
       </Alert>
@@ -139,7 +139,10 @@ export default function PromptCollection(props: PromptCollectionProps) {
             <Box margin={{ vertical: "xs" }} textAlign="center" color="inherit">
               <SpaceBetween size="m">
                 <b>No prompts created yet</b>
-                <Button onClick={() => router.push("/prompt/create")}>
+                <Button
+                  data-testid="button-create"
+                  onClick={() => router.push("/prompt/create")}
+                >
                   Be the first. Create a prompt.
                 </Button>
               </SpaceBetween>
@@ -160,6 +163,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
             >
               <Box margin={{ top: "xs" }}>
                 <TextFilter
+                  data-testid="textfilter-search"
                   filteringText={searchQuery}
                   filteringPlaceholder="Find Prompts"
                   onChange={({ detail }) =>
@@ -172,6 +176,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
               </Box>
               <div>
                 <Select
+                  data-testid="select-sdlc"
                   inlineLabelText="SDLC Phase"
                   data-testing="sdlc-filter"
                   selectedOption={sdlcFilter}
@@ -183,6 +188,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
               </div>
               <div>
                 <Select
+                  data-testid="select-category"
                   inlineLabelText="Category"
                   data-testing="category-filter"
                   selectedOption={categoryFilter}
@@ -195,7 +201,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
               <Box margin={{ top: "xs" }}>
                 {showClearFilter() && (
                   <Button
-                    data-testing="clear-filter"
+                    data-testid="button-clear-filter"
                     iconAlign="right"
                     iconName="close"
                     onClick={clearFilter}
@@ -212,6 +218,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
       {prompts.length > 0 && props.showLoadMore && (
         <Box textAlign="center">
           <Button
+            data-testid="button-load-more"
             disabled={!hasMore}
             disabledReason="Congrats. You reached the end of Promptz."
             loading={loading}
