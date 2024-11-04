@@ -14,9 +14,11 @@ vi.mock("@/contexts/AuthContext");
 
 // Mock next/navigation
 const mockBack = vi.fn();
+const mockPush = vi.fn();
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
     back: mockBack,
+    push: mockPush,
   }),
 }));
 
@@ -237,5 +239,103 @@ describe("PromptForm component", () => {
           .findError(),
       ).toBeTruthy();
     });
+  });
+
+  it("shows delete modal when delete button is clicked", async () => {
+    const existingPrompt = PromptViewModel.fromSchema({
+      id: "1",
+      name: "Test Prompt",
+      description: "A test prompt",
+      sdlc_phase: "Design",
+      category: "Chat",
+      instruction: "Test instruction",
+      owner_username: "testuser",
+      owner: "user123",
+      createdAt: "",
+      updatedAt: "",
+    });
+
+    render(<PromptForm prompt={existingPrompt} />);
+    const wrapper = createWrapper(document.body);
+    const modalWrapper = wrapper.findModal()!;
+    const button = wrapper.findButton('[data-testid="button-remove"]');
+    expect(modalWrapper.isVisible()).toBe(false);
+
+    button?.click();
+    expect(modalWrapper.isVisible()).toBe(true);
+  });
+
+  it("calls deletePrompt when delete button is clicked and confirmed", async () => {
+    const existingPrompt = PromptViewModel.fromSchema({
+      id: "1",
+      name: "Test Prompt",
+      description: "A test prompt",
+      sdlc_phase: "Design",
+      category: "Chat",
+      instruction: "Test instruction",
+      owner_username: "testuser",
+      owner: "user123",
+      createdAt: "",
+      updatedAt: "",
+    });
+
+    render(<PromptForm prompt={existingPrompt} />);
+    const wrapper = createWrapper(document.body);
+
+    // Click the delete button
+    wrapper.findButton('[data-testid="button-remove"]')!.click();
+
+    // Confirm deletion in the modal
+    wrapper.findButton('[data-testid="button-remove-confirm"]')!.click();
+
+    await waitFor(() => {
+      expect(
+        vi.mocked(PromptGraphQLRepository.prototype.deletePrompt),
+      ).toHaveBeenCalledWith(existingPrompt);
+      expect(mockPush).toHaveBeenCalled();
+    });
+  });
+
+  it("does not call deletePrompt when delete is cancelled", async () => {
+    const existingPrompt = PromptViewModel.fromSchema({
+      id: "1",
+      name: "Test Prompt",
+      description: "A test prompt",
+      sdlc_phase: "Design",
+      category: "Chat",
+      instruction: "Test instruction",
+      owner_username: "testuser",
+      owner: "user123",
+      createdAt: "",
+      updatedAt: "",
+    });
+
+    render(<PromptForm prompt={existingPrompt} />);
+    const wrapper = createWrapper(document.body);
+
+    // Click the delete button
+    wrapper.findButton('[data-testid="button-remove"]')!.click();
+
+    // Cancel deletion in the modal
+    wrapper.findButton('[data-testid="button-remove-cancel"]')!.click();
+
+    await waitFor(() => {
+      expect(
+        vi.mocked(PromptGraphQLRepository.prototype.deletePrompt),
+      ).not.toHaveBeenCalled();
+      expect(mockBack).not.toHaveBeenCalled();
+      const modalWrapper = wrapper.findModal()!;
+      expect(modalWrapper.isVisible()).toBe(false);
+    });
+  });
+
+  it("does not render delete prompt button for newish created prompt", async () => {
+    render(<PromptForm prompt={new PromptViewModel()} />);
+
+    const { container } = render(<PromptForm prompt={mockPrompt} />);
+
+    const wrapper = createWrapper(container);
+
+    expect(wrapper.findButton('[data-testid="button-remove"]')).toBeFalsy();
   });
 });

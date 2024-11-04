@@ -12,6 +12,8 @@ import {
   Textarea,
   Tiles,
   RadioGroup,
+  Box,
+  Modal,
 } from "@cloudscape-design/components";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -47,6 +49,7 @@ export default function PromptForm(props: PromptFormProps) {
   const [formFieldError, setFormFieldError] = useState<Array<ValidationError>>(
     [],
   );
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
   const [formData, setFormData] = useState<FormData>({
     id: props.prompt.id,
@@ -102,6 +105,15 @@ export default function PromptForm(props: PromptFormProps) {
     }
   };
 
+  const handleDelete = () => {
+    setDeleteModalVisible(true);
+  };
+
+  const deletePrompt = async () => {
+    await repository.deletePrompt(props.prompt);
+    router.push("/browse/my");
+  };
+
   const getFormFieldErrorText = (formfieldName: string) => {
     const error = formFieldError.find((e) => e.key === formfieldName);
     return error ? error.value : "";
@@ -135,6 +147,19 @@ export default function PromptForm(props: PromptFormProps) {
               Save prompt
             </Button>
           </SpaceBetween>
+        }
+        secondaryActions={
+          props.prompt.id && (
+            <Button
+              formAction="none"
+              variant="normal"
+              iconName="remove"
+              onClick={() => handleDelete()}
+              data-testid="button-remove"
+            >
+              Delete prompt
+            </Button>
+          )
         }
       >
         <Container>
@@ -269,6 +294,34 @@ export default function PromptForm(props: PromptFormProps) {
           </SpaceBetween>
         </Container>
       </Form>
+
+      <Modal
+        onDismiss={() => setDeleteModalVisible(false)}
+        visible={deleteModalVisible}
+        footer={
+          <Box float="right">
+            <SpaceBetween direction="horizontal" size="xs">
+              <Button
+                variant="link"
+                data-testid="button-remove-cancel"
+                onClick={() => setDeleteModalVisible(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                onClick={deletePrompt}
+                data-testid="button-remove-confirm"
+              >
+                Yes, delete the prompt
+              </Button>
+            </SpaceBetween>
+          </Box>
+        }
+        header="Delete prompt"
+      >
+        Permanently delete this prompt? This action cannot be undone.
+      </Modal>
     </form>
   );
 }

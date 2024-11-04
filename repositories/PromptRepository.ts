@@ -22,6 +22,7 @@ export interface PromptRepository {
     owner: UserViewModel,
   ): Promise<PromptViewModel>;
   updatePrompt(prompt: PromptViewModel): Promise<PromptViewModel>;
+  deletePrompt(prompt: PromptViewModel): Promise<PromptViewModel>;
 }
 
 export class PromptGraphQLRepository implements PromptRepository {
@@ -88,6 +89,21 @@ export class PromptGraphQLRepository implements PromptRepository {
     } else {
       throw new Error("Prompt not found");
     }
+  }
+
+  async deletePrompt(prompt: PromptViewModel): Promise<PromptViewModel> {
+    const { errors } = await this.client.models.prompt.delete(
+      {
+        id: prompt.id,
+      },
+      {
+        authMode: "userPool",
+      },
+    );
+    if (errors && errors.length > 0) {
+      throw new Error(errors[0].message);
+    }
+    return prompt;
   }
 
   async listPrompts(
