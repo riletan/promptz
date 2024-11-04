@@ -23,21 +23,29 @@ export default function TopNav() {
     ];
 
     if (user && !user.guest) {
-      utilities.push(
-        {
-          type: "button",
-          text: "My Prompts",
-          href: "/browse/my",
+      utilities.push({
+        type: "button",
+        text: "My Prompts",
+        href: "/browse/my",
+      });
+    }
+
+    utilities.push({
+      type: "button",
+      text: "Feedback",
+      external: true,
+      href: "https://github.com/cremich/promptz/issues",
+    });
+
+    if (user && !user.guest) {
+      utilities.push({
+        type: "button",
+        text: "Sign Out",
+        onClick: async () => {
+          await logout();
+          router.push("/");
         },
-        {
-          type: "button",
-          text: "Sign Out",
-          onClick: async () => {
-            await logout();
-            router.push("/");
-          },
-        },
-      );
+      });
     } else {
       utilities.push({
         type: "button",
