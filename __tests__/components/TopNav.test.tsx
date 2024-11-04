@@ -44,6 +44,20 @@ describe("TopNav component", () => {
     );
   });
 
+  it("renders feedback link button for all users", () => {
+    vi.mocked(useAuth).mockReturnValue({
+      user: new UserViewModel("guest", "guest", true),
+      logout: vi.fn(),
+      fetchUser: vi.fn(),
+    });
+
+    render(<TopNav />);
+    expect(screen.getByRole("link", { name: "Feedback" })).toHaveAttribute(
+      "href",
+      "https://github.com/cremich/promptz/issues",
+    );
+  });
+
   it("renders Sign In button for guest users", () => {
     vi.mocked(useAuth).mockReturnValue({
       user: new UserViewModel("guest", "guest", true),
