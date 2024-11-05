@@ -24,7 +24,7 @@ export default async function Image({ params }: { params: { id: string } }) {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#0f141a",
+          background: "linear-gradient(to bottom, #6d6de5, #630d78)",
           padding: "40px 60px",
         }}
       >
@@ -44,36 +44,36 @@ export default async function Image({ params }: { params: { id: string } }) {
           >
             <h1
               style={{
-                fontSize: "48px",
+                fontSize: "3em",
                 fontWeight: 600,
-                color: "#E6EDF3",
+                color: "white",
                 width: "75%",
                 lineHeight: 1.2,
               }}
             >
-              {prompt.name}
+              {prompt.name.toUpperCase()}
             </h1>
             <img
               src="https://promptz.dev/images/amazon-q.png"
-              width="120"
+              width="200"
               alt="Amazon Q Developer Logo"
             ></img>
           </div>
-          <p
+          <h2
             style={{
-              fontSize: "24px",
-              color: "#7D8590",
+              fontSize: "2em",
+              color: "white",
               width: "75%",
 
               lineHeight: 1.4,
             }}
           >
             {prompt.description}
-          </p>
+          </h2>
           <p
             style={{
-              fontSize: "24px",
-              color: "#7D8590",
+              fontSize: "1.5em",
+              color: "#c6c6cd",
               width: "75%",
 
               lineHeight: 1.4,
