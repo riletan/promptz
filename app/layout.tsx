@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   keywords:
     "promptz, prompt, prompt engineering, Amazon Q Developer, prompt library, promptz.dev, software development lifecycle, SDLC prompts, developer tools, prompt sharing, collaborative platform, software prompts, development best practices, prompt creation, coding prompts, deployment prompts, community-driven development, cloud development tools, generative AI prompts",
   robots: "index, follow",
+  metadataBase: new URL("https://promptz.dev"),
   openGraph: {
     type: "website",
     url: "https://promptz.dev",
