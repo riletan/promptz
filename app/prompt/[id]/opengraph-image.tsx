@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
 import { ServerSideAppsyncRepository } from "@/repositories/ServerSideAppsyncRepository";
 
-export const alt = "PROMPTZ";
+export const alt =
+  "An image describing a prompt of the PROMPTZ prompt library for Amazon Q Developer";
 export const size = {
   width: 1200,
   height: 630,
