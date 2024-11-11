@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { PromptViewModel } from "../models/PromptViewModel";
 import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
+import { LocalStorageDraftRepository } from "@/repositories/DraftRepository";
 
 const repository = new PromptGraphQLRepository();
-
+const draftRepository = new LocalStorageDraftRepository();
 export function usePrompt(promptId: string) {
   const [promptViewModel, setPromptViewModel] =
     useState<PromptViewModel | null>(null);
@@ -13,7 +14,9 @@ export function usePrompt(promptId: string) {
   useEffect(() => {
     const loadPrompt = async () => {
       try {
-        const prompt = await repository.getPrompt(promptId);
+        const prompt = promptId.startsWith("draft")
+          ? draftRepository.getDraft(promptId)
+          : await repository.getPrompt(promptId);
         setPromptViewModel(prompt);
         setLoading(false);
       } catch (error) {

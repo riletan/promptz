@@ -28,6 +28,11 @@ export default function TopNav() {
         text: "My Prompts",
         href: "/browse/my",
       });
+      utilities.push({
+        type: "button",
+        text: "My Drafts",
+        href: "/prompt/drafts",
+      });
     }
 
     utilities.push({

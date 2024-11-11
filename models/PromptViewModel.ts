@@ -1,6 +1,12 @@
 import { Schema } from "@/amplify/data/resource";
 import { UserViewModel } from "./UserViewModel";
-import validator from "validator";
+import { v4 as uuidv4 } from "uuid";
+import { PromptFormInputs } from "@/components/PromptForm";
+import {
+  PromptGraphQLRepository,
+  PromptRepository,
+} from "@/repositories/PromptRepository";
+import { DraftRepository } from "@/repositories/DraftRepository";
 
 export enum SdlcPhase {
   PLAN = "Plan",
@@ -35,14 +41,16 @@ export class PromptViewModel {
   private _category: PromptCategory;
   private _instruction: string;
   private _owner?: UserViewModel;
+  private _draft: boolean;
 
   constructor() {
-    this._id = "";
-    this._name = "";
+    this._id = `draft_${uuidv4()}`;
+    this._name = "Unnamed [DRAFT]";
     this._description = "";
     this._sdlcPhase = SdlcPhase.UNKNOWN;
     this._category = PromptCategory.UNKNOWN;
     this._instruction = "";
+    this._draft = true;
   }
 
   public static fromSchema(prompt: Schema["prompt"]["type"]): PromptViewModel {
@@ -100,6 +108,10 @@ export class PromptViewModel {
     this._instruction = value;
   }
 
+  public get owner(): UserViewModel | undefined {
+    return this._owner;
+  }
+
   public isOwnedBy(user: UserViewModel) {
     return this._owner?.userId === user.userId;
   }
@@ -108,69 +120,47 @@ export class PromptViewModel {
     return `created by ${this._owner?.userName}`;
   }
 
-  public validate() {
-    const nameValidation = this.validateProperty(this._name, {
-      field: "name",
-      minLength: 3,
-      maxLength: 100,
-    });
+  public async publish(
+    promptData: PromptFormInputs,
+    owner: UserViewModel,
+    repository: PromptRepository,
+  ) {
+    this._name = promptData.name;
+    this._description = promptData.description;
+    this._sdlcPhase = promptData.sdlc as SdlcPhase;
+    this._category = promptData.category as PromptCategory;
+    this._instruction = promptData.instruction;
+    this._owner = owner;
 
-    const descriptionValidation = this.validateProperty(this._description, {
-      field: "description",
-      minLength: 10,
-      maxLength: 500,
-    });
-
-    const instructionValidation = this.validateProperty(this._instruction, {
-      field: "instruction",
-      minLength: 10,
-      maxLength: 4000,
-    });
-
-    return {
-      name: nameValidation,
-      description: descriptionValidation,
-      instruction: instructionValidation,
-      isValid:
-        nameValidation.isValid &&
-        descriptionValidation.isValid &&
-        instructionValidation.isValid,
-    };
+    if (this.id.startsWith("draft")) {
+      const publishedPrompt = await repository.createPrompt(this, owner);
+      this._id = publishedPrompt.id;
+    } else {
+      await repository.updatePrompt(this);
+    }
+    this._draft = false;
   }
 
-  public copy(): PromptViewModel {
-    const clone = new PromptViewModel();
-    Object.assign(clone, this);
-    return clone;
+  public async delete(
+    user: UserViewModel,
+    repository: PromptGraphQLRepository,
+  ) {
+    if (!this.isDraft() && this.isOwnedBy(user)) {
+      await repository.deletePrompt(this);
+    }
   }
 
-  private validateProperty(
-    value: string,
-    options: {
-      field: keyof PromptViewModel;
-      minLength?: number;
-      maxLength?: number;
-      required?: boolean;
-    },
-  ): ValidationResult {
-    const { field, minLength = 0, maxLength = 2000, required = true } = options;
+  saveDraft(promptData: PromptFormInputs, repository: DraftRepository) {
+    this._name = promptData.name;
+    this._description = promptData.description;
+    this._sdlcPhase = promptData.sdlc as SdlcPhase;
+    this._category = promptData.category as PromptCategory;
+    this._instruction = promptData.instruction;
+    this._draft = true;
+    repository.saveDraft(this);
+  }
 
-    // Trim the input
-    const errors: Array<ValidationError> = [];
-
-    // Check if field is required
-    if (required && validator.isEmpty(value)) {
-      errors.push({ key: field, value: `${field} is required` });
-    }
-
-    // Validate length
-    if (!validator.isLength(value, { min: minLength, max: maxLength })) {
-      errors.push({
-        key: field,
-        value: `${field} must be between ${minLength} and ${maxLength} characters`,
-      });
-    }
-
-    return { isValid: errors.length === 0 ? true : false, errors };
+  public isDraft() {
+    return this._draft;
   }
 }
