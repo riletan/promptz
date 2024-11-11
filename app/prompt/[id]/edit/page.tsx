@@ -31,9 +31,10 @@ export default function EditPrompt({ params }: { params: { id: string } }) {
   const [processing, setProcessing] = useState(false);
 
   const savePrompt: SubmitHandler<PromptFormInputs> = async (data) => {
+    const draftPromptId = promptViewModel!.id;
     await promptViewModel!.publish(data, user!, repository);
 
-    draftRepository.deleteDraft(promptViewModel!.id);
+    draftRepository.deleteDraft(draftPromptId);
     router.push(`/prompt/${promptViewModel!.id}`);
   };
 
