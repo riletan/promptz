@@ -54,7 +54,7 @@ export default async function Image({ params }: { params: { id: string } }) {
               {prompt.name.toUpperCase()}
             </h1>
             <img
-              src="https://promptz.dev/images/amazon-q.png"
+              src="https://promptz.dev/images/promptz_logo.png"
               width="200"
               alt="Amazon Q Developer Logo"
             ></img>
