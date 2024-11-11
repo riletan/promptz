@@ -66,6 +66,7 @@ export class PromptViewModel {
     pvm._category = prompt.category as PromptCategory;
     pvm._instruction = prompt.instruction;
     pvm._owner = new UserViewModel(prompt.owner, prompt.owner_username);
+    pvm._draft = false;
     return pvm;
   }
 
