@@ -27,6 +27,7 @@ interface PromptFormProps {
   prompt: PromptViewModel;
   onSubmit: SubmitHandler<PromptFormInputs>;
   onDelete?: (prompt: PromptViewModel) => void;
+  onSaveDraft?: (formInputs: PromptFormInputs) => void;
 }
 
 export interface PromptFormInputs {
@@ -62,7 +63,9 @@ export default function PromptForm(props: PromptFormProps) {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    getValues,
+    reset,
+    formState: { errors, isDirty },
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -86,13 +89,26 @@ export default function PromptForm(props: PromptFormProps) {
             >
               Cancel
             </Button>
+            {props.onSaveDraft && (
+              <Button
+                formAction="none"
+                disabled={!isDirty}
+                onClick={() => {
+                  props.onSaveDraft!(getValues());
+                  reset(getValues());
+                }}
+                data-testid="button-save-draft"
+              >
+                Save Draft
+              </Button>
+            )}
             <Button
               variant="primary"
               formAction="submit"
               form="prompt-form"
               data-testid="button-save"
             >
-              Save prompt
+              Publish prompt
             </Button>
           </SpaceBetween>
         }

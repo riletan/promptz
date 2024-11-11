@@ -6,6 +6,7 @@ import {
   PromptGraphQLRepository,
   PromptRepository,
 } from "@/repositories/PromptRepository";
+import { DraftRepository } from "@/repositories/DraftRepository";
 
 export enum SdlcPhase {
   PLAN = "Plan",
@@ -40,6 +41,7 @@ export class PromptViewModel {
   private _category: PromptCategory;
   private _instruction: string;
   private _owner?: UserViewModel;
+  private _draft: boolean;
 
   constructor() {
     this._id = `draft_${uuidv4()}`;
@@ -48,6 +50,7 @@ export class PromptViewModel {
     this._sdlcPhase = SdlcPhase.UNKNOWN;
     this._category = PromptCategory.UNKNOWN;
     this._instruction = "";
+    this._draft = true;
   }
 
   public static fromSchema(prompt: Schema["prompt"]["type"]): PromptViewModel {
@@ -129,12 +132,13 @@ export class PromptViewModel {
     this._instruction = promptData.instruction;
     this._owner = owner;
 
-    if (this.isDraft()) {
+    if (this.id.startsWith("draft")) {
       const publishedPrompt = await repository.createPrompt(this, owner);
       this._id = publishedPrompt.id;
     } else {
       await repository.updatePrompt(this);
     }
+    this._draft = false;
   }
 
   public async delete(
@@ -146,7 +150,17 @@ export class PromptViewModel {
     }
   }
 
+  saveDraft(promptData: PromptFormInputs, repository: DraftRepository) {
+    this._name = promptData.name;
+    this._description = promptData.description;
+    this._sdlcPhase = promptData.sdlc as SdlcPhase;
+    this._category = promptData.category as PromptCategory;
+    this._instruction = promptData.instruction;
+    this._draft = true;
+    repository.saveDraft(this);
+  }
+
   public isDraft() {
-    return this._id.startsWith("draft_");
+    return this._draft;
   }
 }

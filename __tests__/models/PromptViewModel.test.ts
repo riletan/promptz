@@ -7,8 +7,10 @@ import {
 import { UserViewModel } from "../../models/UserViewModel";
 import { PromptFormInputs } from "@/components/PromptForm";
 import { PromptRepository } from "@/repositories/PromptRepository";
+import { DraftRepository } from "@/repositories/DraftRepository";
 
 const createPromptMock = vi.fn();
+const saveDraftMock = vi.fn();
 const updatePromptMock = vi.fn();
 
 const mockRepository: PromptRepository = {
@@ -17,6 +19,14 @@ const mockRepository: PromptRepository = {
   listPrompts: vi.fn(),
   updatePrompt: updatePromptMock,
   deletePrompt: vi.fn(),
+};
+
+const mockDraftRepository: DraftRepository = {
+  saveDraft: saveDraftMock,
+  getDraft: vi.fn(),
+  deleteDraft: vi.fn(),
+  getAllDrafts: vi.fn(),
+  hasDraft: vi.fn(),
 };
 
 const schemaPrompt = {
@@ -119,5 +129,22 @@ describe("PromptViewModel", () => {
     await promptViewModel.publish(promptFormInputs, user, mockRepository);
     expect(updatePromptMock).toHaveBeenCalled();
     expect(promptViewModel.id).toBe(schemaPrompt.id);
+  });
+
+  it("should save a prompt as draft", async () => {
+    const promptViewModel = new PromptViewModel();
+
+    vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
+
+    const promptFormInputs: PromptFormInputs = {
+      name: "Test Prompt",
+      description: "A test prompt",
+      sdlc: "Design",
+      category: "Chat",
+      instruction: "Test instruction",
+    };
+
+    await promptViewModel.saveDraft(promptFormInputs, mockDraftRepository);
+    expect(saveDraftMock).toHaveBeenCalled();
   });
 });

@@ -11,6 +11,8 @@ describe("PromptForm component", () => {
   const onSubmitMock: SubmitHandler<PromptFormInputs> = vi.fn();
 
   const onDeleteMock = vi.fn();
+  const onSaveDraftMock = vi.fn();
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -264,5 +266,21 @@ describe("PromptForm component", () => {
       wrapper.findButton('[data-testid="button-delete"]')!.click(),
     );
     expect(vi.mocked(onDeleteMock)).toHaveBeenCalled();
+  });
+
+  it("renders save draft button when onSaveDraft handler set", async () => {
+    const { container } = render(
+      <PromptForm
+        prompt={new PromptViewModel()}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+        onSaveDraft={onSaveDraftMock}
+      />,
+    );
+    const wrapper = createWrapper(container);
+
+    expect(
+      wrapper.findButton('[data-testid="button-save-draft"]'),
+    ).toBeTruthy();
   });
 });

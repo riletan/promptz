@@ -18,8 +18,10 @@ import { SubmitHandler } from "react-hook-form";
 import { useAuth } from "@/contexts/AuthContext";
 import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
 import { useState } from "react";
+import { LocalStorageDraftRepository } from "@/repositories/DraftRepository";
 
 const repository = new PromptGraphQLRepository();
+const draftRepository = new LocalStorageDraftRepository();
 
 export default function EditPrompt({ params }: { params: { id: string } }) {
   const { user } = useAuth();
@@ -30,7 +32,13 @@ export default function EditPrompt({ params }: { params: { id: string } }) {
 
   const savePrompt: SubmitHandler<PromptFormInputs> = async (data) => {
     await promptViewModel!.publish(data, user!, repository);
+
+    draftRepository.deleteDraft(promptViewModel!.id);
     router.push(`/prompt/${promptViewModel!.id}`);
+  };
+
+  const saveDraft = (formInputs: PromptFormInputs) => {
+    promptViewModel!.saveDraft(formInputs, draftRepository);
   };
 
   const handleDelete = () => {
@@ -95,6 +103,7 @@ export default function EditPrompt({ params }: { params: { id: string } }) {
           prompt={promptViewModel}
           onSubmit={savePrompt}
           onDelete={handleDelete}
+          onSaveDraft={saveDraft}
         />
       )}
 

@@ -1,16 +1,27 @@
 import { PromptViewModel } from "@/models/PromptViewModel";
 
-export class DraftRepository {
+export interface DraftRepository {
+  saveDraft(draft: PromptViewModel): void;
+  getDraft(promptId: string): PromptViewModel | null;
+  deleteDraft(promptId: string): void;
+  getAllDrafts(): { [key: string]: PromptViewModel };
+  hasDraft(promptId: string): boolean;
+}
+
+export class LocalStorageDraftRepository {
   private static readonly STORAGE_KEY = "promptz_drafts";
 
-  public static saveDraft(draft: PromptViewModel): void {
+  public saveDraft(draft: PromptViewModel): void {
     const drafts = this.getAllDrafts();
     const key = draft.id;
     drafts[key] = draft;
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(drafts));
+    localStorage.setItem(
+      LocalStorageDraftRepository.STORAGE_KEY,
+      JSON.stringify(drafts),
+    );
   }
 
-  public static getDraft(promptId: string): PromptViewModel | null {
+  public getDraft(promptId: string): PromptViewModel | null {
     const drafts = this.getAllDrafts();
     const draft = drafts[promptId];
     if (!draft) return null;
@@ -20,15 +31,21 @@ export class DraftRepository {
     return draftVM;
   }
 
-  public static deleteDraft(promptId: string): void {
+  public deleteDraft(promptId: string): void {
+    console.log(`delete draft ${promptId}`);
     const drafts = this.getAllDrafts();
     delete drafts[promptId];
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(drafts));
+    localStorage.setItem(
+      LocalStorageDraftRepository.STORAGE_KEY,
+      JSON.stringify(drafts),
+    );
   }
 
-  public static getAllDrafts(): { [key: string]: PromptViewModel } {
+  public getAllDrafts(): { [key: string]: PromptViewModel } {
     try {
-      const draftsJson = localStorage.getItem(this.STORAGE_KEY);
+      const draftsJson = localStorage.getItem(
+        LocalStorageDraftRepository.STORAGE_KEY,
+      );
       if (!draftsJson) return {};
 
       const drafts = JSON.parse(draftsJson);
@@ -48,7 +65,7 @@ export class DraftRepository {
     }
   }
 
-  public static hasDraft(promptId: string): boolean {
+  public hasDraft(promptId: string): boolean {
     return !!this.getDraft(promptId);
   }
 }

@@ -11,8 +11,10 @@ import { SubmitHandler } from "react-hook-form";
 import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
+import { LocalStorageDraftRepository } from "@/repositories/DraftRepository";
 
 const repository = new PromptGraphQLRepository();
+const draftRepository = new LocalStorageDraftRepository();
 
 export default function CreatePrompt() {
   const { user } = useAuth();
@@ -20,8 +22,15 @@ export default function CreatePrompt() {
   const newPrompt = new PromptViewModel();
 
   const savePrompt: SubmitHandler<PromptFormInputs> = async (data) => {
+    const draftPromptId = newPrompt.id;
     await newPrompt.publish(data, user!, repository);
+    draftRepository.deleteDraft(draftPromptId);
+
     router.push(`/prompt/${newPrompt.id}`);
+  };
+
+  const saveDraft = (formInputs: PromptFormInputs) => {
+    newPrompt.saveDraft(formInputs, draftRepository);
   };
 
   return (
@@ -48,7 +57,11 @@ export default function CreatePrompt() {
         </Header>
       }
     >
-      <PromptForm prompt={newPrompt} onSubmit={savePrompt} />
+      <PromptForm
+        prompt={newPrompt}
+        onSubmit={savePrompt}
+        onSaveDraft={saveDraft}
+      />
     </ContentLayout>
   );
 }

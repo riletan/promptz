@@ -11,22 +11,15 @@ import {
   Badge,
 } from "@cloudscape-design/components";
 
-import { useEffect, useState } from "react";
-import { PromptViewModel } from "@/models/PromptViewModel";
 import router from "next/router";
-import { DraftRepository } from "@/repositories/DraftRepository";
+import { useDraftCollection } from "@/hooks/useDraftCollection";
 
 interface PromptCollectionProps {
   promptsPerRow?: CardsProps.CardsLayout[];
 }
 
 export default function DraftCollection(props: PromptCollectionProps) {
-  const [drafts, setDrafts] = useState<Array<PromptViewModel>>([]);
-
-  useEffect(() => {
-    const drafts = DraftRepository.getAllDrafts();
-    setDrafts(Object.values(drafts));
-  }, []);
+  const { drafts } = useDraftCollection();
 
   return (
     <SpaceBetween size="s">
