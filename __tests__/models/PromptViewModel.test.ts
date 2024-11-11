@@ -78,6 +78,11 @@ describe("PromptViewModel", () => {
     expect(promptViewModel.isOwnedBy(user)).toBe(true);
   });
 
+  it("should not mark prompt as draft when created from schema", () => {
+    const promptViewModel = PromptViewModel.fromSchema(schemaPrompt);
+    expect(promptViewModel.isDraft()).toBeFalsy();
+  });
+
   it("should return false if the user is not the owner of the prompt", () => {
     const user = new UserViewModel("user456", "testuser");
     const promptViewModel = PromptViewModel.fromSchema(schemaPrompt);

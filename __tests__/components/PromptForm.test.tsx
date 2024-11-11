@@ -6,6 +6,13 @@ import { PromptViewModel } from "@/models/PromptViewModel";
 import PromptForm, { PromptFormInputs } from "@/components/PromptForm";
 import { SubmitHandler } from "react-hook-form";
 
+const backMock = vi.fn();
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({
+    back: backMock,
+  }),
+}));
+
 describe("PromptForm component", () => {
   const mockPrompt = new PromptViewModel();
   const onSubmitMock: SubmitHandler<PromptFormInputs> = vi.fn();
@@ -282,5 +289,21 @@ describe("PromptForm component", () => {
     expect(
       wrapper.findButton('[data-testid="button-save-draft"]'),
     ).toBeTruthy();
+  });
+
+  it("routes back when button is clicked", async () => {
+    const { container } = render(
+      <PromptForm
+        prompt={new PromptViewModel()}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
+    const wrapper = createWrapper(container);
+
+    await waitFor(() =>
+      wrapper.findButton('[data-testid="button-cancel"]')!.click(),
+    );
+    expect(vi.mocked(backMock)).toHaveBeenCalled();
   });
 });

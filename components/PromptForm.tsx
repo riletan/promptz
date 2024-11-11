@@ -22,6 +22,7 @@ import {
   SdlcPhase,
 } from "@/models/PromptViewModel";
 import { createSelectOptions } from "@/utils/formatters";
+import { useRouter } from "next/navigation";
 
 interface PromptFormProps {
   prompt: PromptViewModel;
@@ -76,6 +77,7 @@ export default function PromptForm(props: PromptFormProps) {
       category: props.prompt.category,
     },
   });
+  const router = useRouter();
 
   return (
     <form onSubmit={handleSubmit(props.onSubmit)} id="prompt-form">
@@ -86,6 +88,10 @@ export default function PromptForm(props: PromptFormProps) {
               formAction="none"
               variant="link"
               data-testid="button-cancel"
+              onClick={() => {
+                reset();
+                router.back();
+              }}
             >
               Cancel
             </Button>

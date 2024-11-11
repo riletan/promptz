@@ -4,15 +4,15 @@ import DraftCollection from "@/components/DraftCollection";
 import "@testing-library/jest-dom/vitest";
 import createWrapper from "@cloudscape-design/components/test-utils/dom";
 import { PromptViewModel } from "@/models/PromptViewModel";
-import router from "next/router";
 import { useDraftCollection } from "@/hooks/useDraftCollection";
 
 // Mock the dependencies
+const mockPush = vi.fn();
 vi.mock("@/hooks/useDraftCollection");
-vi.mock("next/router", () => ({
-  default: {
-    push: vi.fn(),
-  },
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: mockPush,
+  }),
 }));
 
 describe("DraftCollection component", () => {
@@ -39,7 +39,7 @@ describe("DraftCollection component", () => {
 
     fireEvent.click(createButton.getElement());
 
-    expect(router.push).toHaveBeenCalledWith("/prompt/create");
+    expect(mockPush).toHaveBeenCalledWith("/prompt/create");
   });
 
   it("renders drafts", () => {

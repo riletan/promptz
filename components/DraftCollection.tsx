@@ -11,8 +11,8 @@ import {
   Badge,
 } from "@cloudscape-design/components";
 
-import router from "next/router";
 import { useDraftCollection } from "@/hooks/useDraftCollection";
+import { useRouter } from "next/navigation";
 
 interface PromptCollectionProps {
   promptsPerRow?: CardsProps.CardsLayout[];
@@ -20,6 +20,7 @@ interface PromptCollectionProps {
 
 export default function DraftCollection(props: PromptCollectionProps) {
   const { drafts } = useDraftCollection();
+  const router = useRouter();
 
   return (
     <SpaceBetween size="s">
