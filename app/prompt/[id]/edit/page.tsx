@@ -12,13 +12,13 @@ import {
   Spinner,
 } from "@cloudscape-design/components";
 import PromptForm, { PromptFormInputs } from "@/components/PromptForm";
-import { usePrompt } from "@/hooks/usePrompt";
 import { useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
 import { useAuth } from "@/contexts/AuthContext";
 import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
 import { useState } from "react";
 import { LocalStorageDraftRepository } from "@/repositories/DraftRepository";
+import { useDraft } from "@/hooks/useDraft";
 
 const repository = new PromptGraphQLRepository();
 const draftRepository = new LocalStorageDraftRepository();
@@ -26,7 +26,7 @@ const draftRepository = new LocalStorageDraftRepository();
 export default function EditPrompt({ params }: { params: { id: string } }) {
   const { user } = useAuth();
   const router = useRouter();
-  const { promptViewModel, error, loading } = usePrompt(params.id);
+  const { promptViewModel, error, loading } = useDraft(params.id);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [processing, setProcessing] = useState(false);
 
