@@ -3,39 +3,26 @@ import { render, waitFor } from "@testing-library/react";
 import createWrapper from "@cloudscape-design/components/test-utils/dom";
 import "@testing-library/jest-dom/vitest";
 import { PromptViewModel } from "@/models/PromptViewModel";
-import { UserViewModel } from "@/models/UserViewModel";
-import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
-import PromptForm from "@/components/PromptForm";
-import { useAuth } from "@/contexts/AuthContext";
-
-// Mock the PromptGraphQLRepository
-vi.mock("@/repositories/PromptRepository");
-vi.mock("@/contexts/AuthContext");
-
-// Mock next/navigation
-const mockBack = vi.fn();
-const mockPush = vi.fn();
-vi.mock("next/navigation", () => ({
-  useRouter: () => ({
-    back: mockBack,
-    push: mockPush,
-  }),
-}));
+import PromptForm, { PromptFormInputs } from "@/components/PromptForm";
+import { SubmitHandler } from "react-hook-form";
 
 describe("PromptForm component", () => {
   const mockPrompt = new PromptViewModel();
+  const onSubmitMock: SubmitHandler<PromptFormInputs> = vi.fn();
 
+  const onDeleteMock = vi.fn();
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("user123", "testuser", false),
-      logout: vi.fn(),
-      fetchUser: vi.fn(),
-    });
   });
 
   it("renders form fields correctly", () => {
-    const { container } = render(<PromptForm prompt={mockPrompt} />);
+    const { container } = render(
+      <PromptForm
+        prompt={mockPrompt}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
 
     const wrapper = createWrapper(container);
     expect(
@@ -59,8 +46,43 @@ describe("PromptForm component", () => {
     ).toBeInTheDocument();
   });
 
+  it("renders input fields correctly", () => {
+    const { container } = render(
+      <PromptForm
+        prompt={mockPrompt}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
+
+    const wrapper = createWrapper(container);
+    expect(
+      wrapper.findInput('[data-testid="input-name"]')!.getElement(),
+    ).toBeInTheDocument();
+    expect(
+      wrapper.findInput('[data-testid="input-description"]')!.getElement(),
+    ).toBeInTheDocument();
+    expect(
+      wrapper.findSelect('[data-testid="select-sdlc"]')!.getElement(),
+    ).toBeInTheDocument();
+    expect(
+      wrapper.findSelect('[data-testid="select-category"]')!.getElement(),
+    ).toBeInTheDocument();
+    expect(
+      wrapper
+        .findTextarea('[data-testid="textarea-instruction"]')!
+        .getElement(),
+    ).toBeInTheDocument();
+  });
+
   it("updates form data when input changes", () => {
-    const { container } = render(<PromptForm prompt={mockPrompt} />);
+    const { container } = render(
+      <PromptForm
+        prompt={mockPrompt}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
 
     const wrapper = createWrapper(container);
 
@@ -95,90 +117,29 @@ describe("PromptForm component", () => {
     expect(nativeInputInstruction.value).toBe("Updated Instruction");
   });
 
-  it("calls createPrompt when submitting a new prompt", async () => {
-    render(<PromptForm prompt={new PromptViewModel()} />);
-
-    const { container } = render(<PromptForm prompt={mockPrompt} />);
-
-    const wrapper = createWrapper(container);
-
-    wrapper
-      .findInput('[data-testid="input-name"]')!
-      .setInputValue("Updated Name");
-    wrapper
-      .findInput('[data-testid="input-description"]')!
-      .setInputValue("Updated Description");
-    wrapper
-      .findTextarea('[data-testid="textarea-instruction"]')!
-      .setTextareaValue("Updated Instruction");
-    wrapper.findButton('[data-testid="button-save"]')!.click();
-
-    await waitFor(() => {
-      expect(
-        vi.mocked(PromptGraphQLRepository.prototype.createPrompt),
-      ).toHaveBeenCalledTimes(1);
-      expect(mockBack).toHaveBeenCalled();
-    });
-  });
-
-  it("calls updatePrompt when submitting an existing prompt", async () => {
-    const existingPrompt = PromptViewModel.fromSchema({
-      id: "1",
-      name: "Test Prompt",
-      description: "A test prompt",
-      sdlc_phase: "Design",
-      category: "Chat",
-      instruction: "Test instruction",
-      owner_username: "testuser",
-      owner: "user123",
-      createdAt: "",
-      updatedAt: "",
-    });
-    const { container } = render(<PromptForm prompt={existingPrompt} />);
-
-    const wrapper = createWrapper(container);
-
-    wrapper
-      .findInput('[data-testid="input-name"]')!
-      .setInputValue("Updated Name");
-    wrapper.findButton('[data-testid="button-save"]')!.click();
-
-    await waitFor(() => {
-      expect(
-        vi.mocked(PromptGraphQLRepository.prototype.updatePrompt),
-      ).toHaveBeenCalledWith(
-        expect.objectContaining({
-          id: "1",
-          name: "Updated Name",
-        }),
-      );
-    });
-
-    expect(mockBack).toHaveBeenCalled();
-  });
-
-  it("navigates back when cancel button is clicked", () => {
-    const { container } = render(<PromptForm prompt={mockPrompt} />);
-    const wrapper = createWrapper(container);
-    wrapper.findButton('[data-testid="button-cancel"]')!.click();
-
-    expect(mockBack).toHaveBeenCalled();
-  });
-
   it("displays validation errors when submitting with empty required fields", async () => {
-    const { container } = render(<PromptForm prompt={new PromptViewModel()} />);
+    const { container } = render(
+      <PromptForm
+        prompt={new PromptViewModel()}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
     const wrapper = createWrapper(container);
 
-    // Submit without filling required fields
-    wrapper.findButton('[data-testid="button-save"]')!.click();
-
     await waitFor(() => {
-      expect(
-        wrapper.findFormField('[data-testid="formfield-name"]')!.findError(),
-      ).toBeTruthy();
+      wrapper.findButton('[data-testid="button-save"]')!.click();
       expect(
         wrapper
           .findFormField('[data-testid="formfield-description"]')!
+          .findError(),
+      ).toBeTruthy();
+      expect(
+        wrapper.findFormField('[data-testid="formfield-sdlc"]')!.findError(),
+      ).toBeTruthy();
+      expect(
+        wrapper
+          .findFormField('[data-testid="formfield-category"]')!
           .findError(),
       ).toBeTruthy();
       expect(
@@ -187,20 +148,22 @@ describe("PromptForm component", () => {
           .findError(),
       ).toBeTruthy();
     });
-
-    expect(
-      vi.mocked(PromptGraphQLRepository.prototype.createPrompt),
-    ).not.toHaveBeenCalled();
   });
 
   it("displays validation error when name is too short", async () => {
-    const { container } = render(<PromptForm prompt={new PromptViewModel()} />);
+    const pvm = new PromptViewModel();
+    pvm.name = "ab";
+    const { container } = render(
+      <PromptForm
+        prompt={pvm}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
     const wrapper = createWrapper(container);
 
-    wrapper.findInput('[data-testid="input-name"]')!.setInputValue("ab"); // Less than minimum length
-    wrapper.findButton('[data-testid="button-save"]')!.click();
-
     await waitFor(() => {
+      wrapper.findButton('[data-testid="button-save"]')!.click();
       expect(
         wrapper.findFormField('[data-testid="formfield-name"]')!.findError(),
       ).toBeTruthy();
@@ -208,13 +171,19 @@ describe("PromptForm component", () => {
   });
 
   it("displays validation error when description is too short", async () => {
-    const { container } = render(<PromptForm prompt={new PromptViewModel()} />);
+    const pvm = new PromptViewModel();
+    pvm.description = "ab";
+    const { container } = render(
+      <PromptForm
+        prompt={pvm}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
     const wrapper = createWrapper(container);
 
-    wrapper.findInput('[data-testid="input-description"]')!.setInputValue("ab"); // Less than minimum length
-    wrapper.findButton('[data-testid="button-save"]')!.click();
-
     await waitFor(() => {
+      wrapper.findButton('[data-testid="button-save"]')!.click();
       expect(
         wrapper
           .findFormField('[data-testid="formfield-description"]')!
@@ -224,15 +193,19 @@ describe("PromptForm component", () => {
   });
 
   it("displays validation error when instruction is too short", async () => {
-    const { container } = render(<PromptForm prompt={new PromptViewModel()} />);
+    const pvm = new PromptViewModel();
+    pvm.instruction = "ab";
+    const { container } = render(
+      <PromptForm
+        prompt={pvm}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
     const wrapper = createWrapper(container);
 
-    wrapper
-      .findTextarea('[data-testid="textarea-instruction"]')!
-      .setTextareaValue("ab"); // Less than minimum length
-    wrapper.findButton('[data-testid="button-save"]')!.click();
-
     await waitFor(() => {
+      wrapper.findButton('[data-testid="button-save"]')!.click();
       expect(
         wrapper
           .findFormField('[data-testid="formfield-instruction"]')!
@@ -241,101 +214,55 @@ describe("PromptForm component", () => {
     });
   });
 
-  it("shows delete modal when delete button is clicked", async () => {
-    const existingPrompt = PromptViewModel.fromSchema({
-      id: "1",
-      name: "Test Prompt",
-      description: "A test prompt",
-      sdlc_phase: "Design",
-      category: "Chat",
-      instruction: "Test instruction",
-      owner_username: "testuser",
-      owner: "user123",
-      createdAt: "",
-      updatedAt: "",
-    });
-
-    render(<PromptForm prompt={existingPrompt} />);
-    const wrapper = createWrapper(document.body);
-    const modalWrapper = wrapper.findModal()!;
-    const button = wrapper.findButton('[data-testid="button-remove"]');
-    expect(modalWrapper.isVisible()).toBe(false);
-
-    button?.click();
-    expect(modalWrapper.isVisible()).toBe(true);
-  });
-
-  it("calls deletePrompt when delete button is clicked and confirmed", async () => {
-    const existingPrompt = PromptViewModel.fromSchema({
-      id: "1",
-      name: "Test Prompt",
-      description: "A test prompt",
-      sdlc_phase: "Design",
-      category: "Chat",
-      instruction: "Test instruction",
-      owner_username: "testuser",
-      owner: "user123",
-      createdAt: "",
-      updatedAt: "",
-    });
-
-    render(<PromptForm prompt={existingPrompt} />);
-    const wrapper = createWrapper(document.body);
-
-    // Click the delete button
-    wrapper.findButton('[data-testid="button-remove"]')!.click();
-
-    // Confirm deletion in the modal
-    wrapper.findButton('[data-testid="button-remove-confirm"]')!.click();
-
-    await waitFor(() => {
-      expect(
-        vi.mocked(PromptGraphQLRepository.prototype.deletePrompt),
-      ).toHaveBeenCalledWith(existingPrompt);
-      expect(mockPush).toHaveBeenCalled();
-    });
-  });
-
-  it("does not call deletePrompt when delete is cancelled", async () => {
-    const existingPrompt = PromptViewModel.fromSchema({
-      id: "1",
-      name: "Test Prompt",
-      description: "A test prompt",
-      sdlc_phase: "Design",
-      category: "Chat",
-      instruction: "Test instruction",
-      owner_username: "testuser",
-      owner: "user123",
-      createdAt: "",
-      updatedAt: "",
-    });
-
-    render(<PromptForm prompt={existingPrompt} />);
-    const wrapper = createWrapper(document.body);
-
-    // Click the delete button
-    wrapper.findButton('[data-testid="button-remove"]')!.click();
-
-    // Cancel deletion in the modal
-    wrapper.findButton('[data-testid="button-remove-cancel"]')!.click();
-
-    await waitFor(() => {
-      expect(
-        vi.mocked(PromptGraphQLRepository.prototype.deletePrompt),
-      ).not.toHaveBeenCalled();
-      expect(mockBack).not.toHaveBeenCalled();
-      const modalWrapper = wrapper.findModal()!;
-      expect(modalWrapper.isVisible()).toBe(false);
-    });
-  });
-
-  it("does not render delete prompt button for newish created prompt", async () => {
-    render(<PromptForm prompt={new PromptViewModel()} />);
-
-    const { container } = render(<PromptForm prompt={mockPrompt} />);
-
+  it("calls on submit handler when form is valid", async () => {
+    const { container } = render(
+      <PromptForm
+        prompt={new PromptViewModel()}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
     const wrapper = createWrapper(container);
 
-    expect(wrapper.findButton('[data-testid="button-remove"]')).toBeFalsy();
+    wrapper
+      .findInput('[data-testid="input-name"]')!
+      .setInputValue("This is the name");
+    wrapper
+      .findInput('[data-testid="input-description"]')!
+      .setInputValue("This is the description");
+    const categorySelect = wrapper.findSelect(
+      '[data-testid="select-category"]',
+    )!;
+    categorySelect.openDropdown();
+    categorySelect.selectOptionByValue("Chat");
+
+    const sdlcSelect = wrapper.findSelect('[data-testid="select-sdlc"]')!;
+    sdlcSelect.openDropdown();
+    sdlcSelect.selectOptionByValue("Plan");
+    wrapper
+      .findTextarea('[data-testid="textarea-instruction"]')!
+      .setTextareaValue(
+        "This is the prompt that will solve all my developer issues.",
+      );
+    await waitFor(() =>
+      wrapper.findButton('[data-testid="button-save"]')!.click(),
+    );
+    expect(vi.mocked(onSubmitMock)).toHaveBeenCalled();
+  });
+
+  it("calls on delete handler when delete button is clicked", async () => {
+    const { container } = render(
+      <PromptForm
+        prompt={new PromptViewModel()}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
+    const wrapper = createWrapper(container);
+
+    await waitFor(() =>
+      wrapper.findButton('[data-testid="button-delete"]')!.click(),
+    );
+    expect(vi.mocked(onDeleteMock)).toHaveBeenCalled();
   });
 });

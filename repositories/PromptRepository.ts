@@ -52,10 +52,7 @@ export class PromptGraphQLRepository implements PromptRepository {
     return PromptViewModel.fromSchema(createdPrompt!);
   }
 
-  async createPrompt(
-    prompt: PromptViewModel,
-    owner: UserViewModel,
-  ): Promise<PromptViewModel> {
+  async createPrompt(prompt: PromptViewModel): Promise<PromptViewModel> {
     const { data: createdPrompt, errors } =
       await this.client.models.prompt.create(
         {
@@ -64,7 +61,7 @@ export class PromptGraphQLRepository implements PromptRepository {
           sdlc_phase: prompt.sdlcPhase,
           category: prompt.category,
           instruction: prompt.instruction,
-          owner_username: owner.userName,
+          owner_username: prompt.owner!.userName,
         },
         {
           authMode: "userPool",

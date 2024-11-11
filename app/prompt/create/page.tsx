@@ -5,10 +5,25 @@ import {
   Header,
 } from "@cloudscape-design/components";
 
-import PromptForm from "@/components/PromptForm";
+import PromptForm, { PromptFormInputs } from "@/components/PromptForm";
 import { PromptViewModel } from "@/models/PromptViewModel";
+import { SubmitHandler } from "react-hook-form";
+import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
+import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
+
+const repository = new PromptGraphQLRepository();
 
 export default function CreatePrompt() {
+  const { user } = useAuth();
+  const router = useRouter();
+  const newPrompt = new PromptViewModel();
+
+  const savePrompt: SubmitHandler<PromptFormInputs> = async (data) => {
+    await newPrompt.publish(data, user!, repository);
+    router.push(`/prompt/${newPrompt.id}`);
+  };
+
   return (
     <ContentLayout
       defaultPadding
@@ -33,7 +48,7 @@ export default function CreatePrompt() {
         </Header>
       }
     >
-      <PromptForm prompt={new PromptViewModel()} />
+      <PromptForm prompt={newPrompt} onSubmit={savePrompt} />
     </ContentLayout>
   );
 }

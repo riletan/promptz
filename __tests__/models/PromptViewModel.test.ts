@@ -1,10 +1,23 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   PromptViewModel,
   SdlcPhase,
   PromptCategory,
 } from "../../models/PromptViewModel";
 import { UserViewModel } from "../../models/UserViewModel";
+import { PromptFormInputs } from "@/components/PromptForm";
+import { PromptRepository } from "@/repositories/PromptRepository";
+
+const createPromptMock = vi.fn();
+const updatePromptMock = vi.fn();
+
+const mockRepository: PromptRepository = {
+  createPrompt: createPromptMock,
+  getPrompt: vi.fn(),
+  listPrompts: vi.fn(),
+  updatePrompt: updatePromptMock,
+  deletePrompt: vi.fn(),
+};
 
 const schemaPrompt = {
   id: "1",
@@ -62,69 +75,49 @@ describe("PromptViewModel", () => {
     expect(promptViewModel.isOwnedBy(user)).toBe(false);
   });
 
-  describe("validate", () => {
-    it("should return valid result for valid input", () => {
-      const promptViewModel = new PromptViewModel();
-      promptViewModel.name = "Valid Name";
-      promptViewModel.description = "Valid description with enough characters";
-      promptViewModel.instruction = "Valid instruction with enough characters";
+  it("should name a new prompt as draft", () => {
+    const promptViewModel = new PromptViewModel();
+    expect(promptViewModel.name).toBe("Unnamed [DRAFT]");
+    expect(promptViewModel.id.startsWith("draft")).toBeTruthy();
+  });
 
-      const result = promptViewModel.validate();
+  it("should create a new prompt from a draft", async () => {
+    const promptViewModel = new PromptViewModel();
+    const user = new UserViewModel("user456", "testuser");
 
-      expect(result.isValid).toBe(true);
-      expect(result.name.isValid).toBe(true);
-      expect(result.description.isValid).toBe(true);
-      expect(result.instruction.isValid).toBe(true);
-    });
+    vi.mocked(createPromptMock).mockResolvedValue(
+      PromptViewModel.fromSchema(schemaPrompt),
+    );
 
-    it("should return invalid result for invalid input", () => {
-      const promptViewModel = new PromptViewModel();
-      promptViewModel.name = "Ab";
-      promptViewModel.description = "Too short";
-      promptViewModel.instruction = "Too short";
+    const promptFormInputs: PromptFormInputs = {
+      name: "Test Prompt",
+      description: "A test prompt",
+      sdlc: "Design",
+      category: "Chat",
+      instruction: "Test instruction",
+    };
 
-      const result = promptViewModel.validate();
+    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    expect(createPromptMock).toHaveBeenCalled();
+    expect(promptViewModel.isDraft()).toBeFalsy();
+  });
 
-      expect(result.isValid).toBe(false);
-      expect(result.name.isValid).toBe(false);
-      expect(result.description.isValid).toBe(false);
-      expect(result.instruction.isValid).toBe(false);
-      expect(result.name.errors[0].value).toContain(
-        "between 3 and 100 characters",
-      );
-      expect(result.description.errors[0].value).toContain(
-        "between 10 and 500 characters",
-      );
-      expect(result.instruction.errors[0].value).toContain(
-        "between 10 and 4000 characters",
-      );
-    });
+  it("should update an existing prompt", async () => {
+    const promptViewModel = PromptViewModel.fromSchema(schemaPrompt);
+    const user = new UserViewModel("user456", "testuser");
 
-    it("should return invalid result for empty input", () => {
-      const promptViewModel = new PromptViewModel();
-      promptViewModel.name = "";
-      promptViewModel.description = "";
-      promptViewModel.instruction = "";
+    vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
 
-      const result = promptViewModel.validate();
+    const promptFormInputs: PromptFormInputs = {
+      name: "Test Prompt",
+      description: "A test prompt",
+      sdlc: "Design",
+      category: "Chat",
+      instruction: "Test instruction",
+    };
 
-      expect(result.isValid).toBe(false);
-      expect(result.name.isValid).toBe(false);
-      expect(result.description.isValid).toBe(false);
-      expect(result.instruction.isValid).toBe(false);
-      expect(result.name.errors[0].value).toBe("name is required");
-      expect(result.description.errors[0].value).toBe(
-        "description is required",
-      );
-      expect(result.instruction.errors[0].value).toBe(
-        "instruction is required",
-      );
-    });
-
-    it("should name a new prompt as draft", () => {
-      const promptViewModel = new PromptViewModel();
-      expect(promptViewModel.name).toBe("Unnamed [DRAFT]");
-      expect(promptViewModel.id.startsWith("draft")).toBeTruthy();
-    });
+    await promptViewModel.publish(promptFormInputs, user, mockRepository);
+    expect(updatePromptMock).toHaveBeenCalled();
+    expect(promptViewModel.id).toBe(schemaPrompt.id);
   });
 });
