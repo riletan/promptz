@@ -98,4 +98,18 @@ describe("TopNav component", () => {
       screen.getByRole("button", { name: "Sign Out" }),
     ).toBeInTheDocument();
   });
+
+  it("renders My Drafts button for logged-in users", () => {
+    vi.mocked(useAuth).mockReturnValue({
+      user: new UserViewModel("user123", "Test User", false),
+      logout: vi.fn(),
+      fetchUser: vi.fn(),
+    });
+
+    render(<TopNav />);
+    expect(screen.getByRole("link", { name: "My Drafts" })).toHaveAttribute(
+      "href",
+      "/prompt/drafts",
+    );
+  });
 });
