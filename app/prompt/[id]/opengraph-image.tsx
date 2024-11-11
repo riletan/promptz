@@ -35,52 +35,52 @@ export default async function Image({ params }: { params: { id: string } }) {
             width: "100%",
           }}
         >
-          <div
+          <h1
             style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "20px",
+              fontSize: "3em",
+              fontWeight: 600,
+              color: "white",
+              width: "75%",
+              lineHeight: 1.2,
             }}
           >
-            <h1
-              style={{
-                fontSize: "3em",
-                fontWeight: 600,
-                color: "white",
-                width: "75%",
-                lineHeight: 1.2,
-              }}
-            >
-              {prompt.name.toUpperCase()}
-            </h1>
-            <img
-              src="https://promptz.dev/images/promptz_logo.png"
-              width="200"
-              alt="Amazon Q Developer Logo"
-            ></img>
-          </div>
+            {prompt.name.toUpperCase()}
+          </h1>
           <h2
             style={{
               fontSize: "2em",
               color: "white",
-              width: "75%",
+              width: "100%",
 
               lineHeight: 1.4,
             }}
           >
             {prompt.description}
           </h2>
-          <p
+          <div
             style={{
-              fontSize: "1.5em",
-              color: "#c6c6cd",
-              width: "75%",
-
-              lineHeight: 1.4,
+              display: "flex",
+              alignItems: "baseline",
+              marginBottom: "20px",
             }}
           >
-            👤 {prompt.createdBy()}
-          </p>
+            <p
+              style={{
+                fontSize: "1.5em",
+                color: "#c6c6cd",
+                width: "75%",
+                lineHeight: 1.4,
+              }}
+            >
+              👤 {prompt.createdBy()}
+            </p>
+            <img
+              style={{ marginLeft: "100px" }}
+              src="https://promptz.dev/images/promptz_logo.png"
+              width="120"
+              alt="Amazon Q Developer Logo"
+            ></img>
+          </div>
         </div>
       </div>
     ),
