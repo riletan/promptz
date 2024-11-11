@@ -2,7 +2,10 @@ import { Schema } from "@/amplify/data/resource";
 import { UserViewModel } from "./UserViewModel";
 import { v4 as uuidv4 } from "uuid";
 import { PromptFormInputs } from "@/components/PromptForm";
-import { PromptRepository } from "@/repositories/PromptRepository";
+import {
+  PromptGraphQLRepository,
+  PromptRepository,
+} from "@/repositories/PromptRepository";
 
 export enum SdlcPhase {
   PLAN = "Plan",
@@ -131,6 +134,15 @@ export class PromptViewModel {
       this._id = publishedPrompt.id;
     } else {
       await repository.updatePrompt(this);
+    }
+  }
+
+  public async delete(
+    user: UserViewModel,
+    repository: PromptGraphQLRepository,
+  ) {
+    if (!this.isDraft() && this.isOwnedBy(user)) {
+      await repository.deletePrompt(this);
     }
   }
 

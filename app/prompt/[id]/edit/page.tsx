@@ -3,17 +3,49 @@ import {
   Alert,
   Box,
   BreadcrumbGroup,
+  Button,
   Container,
   ContentLayout,
   Header,
+  Modal,
   SpaceBetween,
   Spinner,
 } from "@cloudscape-design/components";
-import PromptForm from "@/components/PromptForm";
+import PromptForm, { PromptFormInputs } from "@/components/PromptForm";
 import { usePrompt } from "@/hooks/usePrompt";
+import { useRouter } from "next/navigation";
+import { SubmitHandler } from "react-hook-form";
+import { useAuth } from "@/contexts/AuthContext";
+import { PromptGraphQLRepository } from "@/repositories/PromptRepository";
+import { useState } from "react";
+
+const repository = new PromptGraphQLRepository();
 
 export default function EditPrompt({ params }: { params: { id: string } }) {
+  const { user } = useAuth();
+  const router = useRouter();
   const { promptViewModel, error, loading } = usePrompt(params.id);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [processing, setProcessing] = useState(false);
+
+  const savePrompt: SubmitHandler<PromptFormInputs> = async (data) => {
+    await promptViewModel!.publish(data, user!, repository);
+    router.push(`/prompt/${promptViewModel!.id}`);
+  };
+
+  const handleDelete = () => {
+    setDeleteModalVisible(true);
+  };
+
+  const deletePrompt = async () => {
+    setProcessing(true);
+    try {
+      await promptViewModel!.delete(user!, repository);
+      router.push("/browse/my");
+    } finally {
+      setProcessing(false);
+    }
+  };
 
   return (
     <ContentLayout
@@ -58,7 +90,42 @@ export default function EditPrompt({ params }: { params: { id: string } }) {
         </SpaceBetween>
       )}
 
-      {promptViewModel && <PromptForm prompt={promptViewModel} />}
+      {promptViewModel && (
+        <PromptForm
+          prompt={promptViewModel}
+          onSubmit={savePrompt}
+          onDelete={handleDelete}
+        />
+      )}
+
+      <Modal
+        onDismiss={() => setDeleteModalVisible(false)}
+        visible={deleteModalVisible}
+        footer={
+          <Box float="right">
+            <SpaceBetween direction="horizontal" size="xs">
+              <Button
+                variant="link"
+                data-testid="button-remove-cancel"
+                onClick={() => setDeleteModalVisible(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                onClick={deletePrompt}
+                loading={processing}
+                data-testid="button-remove-confirm"
+              >
+                Yes, delete the prompt
+              </Button>
+            </SpaceBetween>
+          </Box>
+        }
+        header="Delete prompt"
+      >
+        Permanently delete this prompt? This action cannot be undone.
+      </Modal>
     </ContentLayout>
   );
 }

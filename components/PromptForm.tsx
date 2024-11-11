@@ -26,7 +26,7 @@ import { createSelectOptions } from "@/utils/formatters";
 interface PromptFormProps {
   prompt: PromptViewModel;
   onSubmit: SubmitHandler<PromptFormInputs>;
-  onDelete?: () => void;
+  onDelete?: (prompt: PromptViewModel) => void;
 }
 
 export interface PromptFormInputs {
@@ -102,7 +102,7 @@ export default function PromptForm(props: PromptFormProps) {
               formAction="none"
               variant="normal"
               iconName="remove"
-              onClick={props.onDelete}
+              onClick={() => props.onDelete!(props.prompt)}
               data-testid="button-delete"
             >
               Delete prompt
