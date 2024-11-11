@@ -69,7 +69,7 @@ export default function TopNav() {
         href: "/",
         title: "Promptz",
         logo: {
-          src: "/images/amazon-q.png",
+          src: "/images/promptz_logo.png",
           alt: "Amazon Q Developer Logo",
         },
       }}
