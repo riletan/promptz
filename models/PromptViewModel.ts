@@ -1,6 +1,7 @@
 import { Schema } from "@/amplify/data/resource";
 import { UserViewModel } from "./UserViewModel";
 import validator from "validator";
+import { v4 as uuidv4 } from "uuid";
 
 export enum SdlcPhase {
   PLAN = "Plan",
@@ -37,8 +38,8 @@ export class PromptViewModel {
   private _owner?: UserViewModel;
 
   constructor() {
-    this._id = "";
-    this._name = "";
+    this._id = `draft_${uuidv4()}`;
+    this._name = "Unnamed [DRAFT]";
     this._description = "";
     this._sdlcPhase = SdlcPhase.UNKNOWN;
     this._category = PromptCategory.UNKNOWN;

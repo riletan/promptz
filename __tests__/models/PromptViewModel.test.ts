@@ -120,5 +120,11 @@ describe("PromptViewModel", () => {
         "instruction is required",
       );
     });
+
+    it("should name a new prompt as draft", () => {
+      const promptViewModel = new PromptViewModel();
+      expect(promptViewModel.name).toBe("Unnamed [DRAFT]");
+      expect(promptViewModel.id.startsWith("draft")).toBeTruthy();
+    });
   });
 });
