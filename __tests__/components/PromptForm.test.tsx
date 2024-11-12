@@ -53,6 +53,9 @@ describe("PromptForm component", () => {
         .findFormField('[data-testid="formfield-instruction"]')!
         .getElement(),
     ).toBeInTheDocument();
+    expect(
+      wrapper.findFormField('[data-testid="formfield-howto"]')!.getElement(),
+    ).toBeInTheDocument();
   });
 
   it("renders input fields correctly", () => {
@@ -81,6 +84,9 @@ describe("PromptForm component", () => {
       wrapper
         .findTextarea('[data-testid="textarea-instruction"]')!
         .getElement(),
+    ).toBeInTheDocument();
+    expect(
+      wrapper.findTextarea('[data-testid="textarea-howto"]')!.getElement(),
     ).toBeInTheDocument();
   });
 
@@ -124,6 +130,16 @@ describe("PromptForm component", () => {
       .findNativeTextarea()
       .getElement();
     expect(nativeInputInstruction.value).toBe("Updated Instruction");
+
+    wrapper
+      .findTextarea('[data-testid="textarea-howto"]')!
+      .setTextareaValue("Updated Howto");
+
+    const nativeHowTo = wrapper
+      .findTextarea('[data-testid="textarea-howto"]')!
+      .findNativeTextarea()
+      .getElement();
+    expect(nativeHowTo.value).toBe("Updated Howto");
   });
 
   it("displays validation errors when submitting with empty required fields", async () => {

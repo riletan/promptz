@@ -8,6 +8,7 @@ const schema = a
       sdlc_phase: a.string().required(),
       category: a.string().required(),
       instruction: a.string().required(),
+      howto: a.string(),
       owner_username: a.string().required(),
     }),
   })

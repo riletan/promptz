@@ -29,6 +29,7 @@ const promptViewModel = PromptViewModel.fromSchema({
   owner_username: "Test User",
   owner: "user123",
   description: "description",
+  howto: "howto",
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 });
@@ -92,6 +93,38 @@ describe("Prompt component", () => {
     expect(screen.getByText(promptViewModel.sdlcPhase)).toBeInTheDocument();
     expect(screen.getByText(promptViewModel.category)).toBeInTheDocument();
     expect(screen.getByText(promptViewModel.createdBy())).toBeInTheDocument();
+    expect(screen.getByText(promptViewModel.howto)).toBeInTheDocument();
+  });
+
+  it("hides how to if empty", () => {
+    const promptViewModel = PromptViewModel.fromSchema({
+      id: "test-id",
+      name: "Test Prompt",
+      instruction: "Test instruction",
+      sdlc_phase: "DEPLOY",
+      category: "CHAT",
+      owner_username: "Test User",
+      owner: "user123",
+      description: "description",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
+
+    vi.mocked(usePrompt).mockReturnValue({
+      loading: false,
+      error: null,
+      promptViewModel: promptViewModel,
+    });
+    vi.mocked(useAuth).mockReturnValue({
+      user: new UserViewModel("guest", "guest"),
+      logout: vi.fn(),
+      fetchUser: vi.fn(),
+    });
+
+    const { container } = render(<Prompt promptId="test-id" />);
+    const wrapper = createWrapper(container);
+
+    expect(wrapper.findBox('[data-testid="box-howto"]')).toBeFalsy();
   });
 
   it("renders edit button for owner", () => {

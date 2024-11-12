@@ -4,4 +4,6 @@ pre {
   white-space: -moz-pre-wrap;
   white-space: -pre-wrap;
   white-space: -o-pre-wrap;
+  margin: 0;
+  padding: 0;
 }

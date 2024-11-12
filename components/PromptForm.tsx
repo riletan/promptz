@@ -37,6 +37,7 @@ export interface PromptFormInputs {
   instruction: string;
   sdlc: string;
   category: string;
+  howto?: string;
 }
 
 const schema = yup
@@ -44,6 +45,7 @@ const schema = yup
     name: yup.string().required().min(3).max(100),
     description: yup.string().required().min(10).max(500),
     instruction: yup.string().required().min(10).max(4000),
+    howto: yup.string().max(4000),
     sdlc: yup
       .string()
       .required()
@@ -75,6 +77,7 @@ export default function PromptForm(props: PromptFormProps) {
       instruction: props.prompt.instruction,
       sdlc: props.prompt.sdlcPhase,
       category: props.prompt.category,
+      howto: props.prompt.howto,
     },
   });
   const router = useRouter();
@@ -223,6 +226,31 @@ export default function PromptForm(props: PromptFormProps) {
                       field.onChange(detail.selectedOption?.value)
                     }
                     options={categoryOptions}
+                  />
+                )}
+              />
+            </FormField>
+            <FormField
+              data-testid="formfield-howto"
+              label={
+                <span>
+                  How-To <i>- optional</i>
+                </span>
+              }
+              description="Document relevant prerequisities or explanation that help others to better understand on how to use this prompt."
+              stretch
+              errorText={errors.howto?.message}
+            >
+              <Controller
+                name="howto"
+                control={control}
+                render={({ field }) => (
+                  <Textarea
+                    {...field}
+                    data-testid="textarea-howto"
+                    rows={3}
+                    value={field.value || ""}
+                    onChange={({ detail }) => field.onChange(detail.value)}
                   />
                 )}
               />

@@ -124,16 +124,23 @@ describe("PromptViewModel", () => {
     vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
 
     const promptFormInputs: PromptFormInputs = {
-      name: "Test Prompt",
-      description: "A test prompt",
-      sdlc: "Design",
-      category: "Chat",
-      instruction: "Test instruction",
+      name: "Updated",
+      description: "Updated",
+      sdlc: "Plan",
+      category: "Inline",
+      instruction: "Updated",
+      howto: "Updated",
     };
 
     await promptViewModel.publish(promptFormInputs, user, mockRepository);
     expect(updatePromptMock).toHaveBeenCalled();
     expect(promptViewModel.id).toBe(schemaPrompt.id);
+    expect(promptViewModel.name).toBe(promptFormInputs.name);
+    expect(promptViewModel.description).toBe(promptFormInputs.description);
+    expect(promptViewModel.sdlcPhase).toBe(SdlcPhase.PLAN);
+    expect(promptViewModel.category).toBe(PromptCategory.INLINE);
+    expect(promptViewModel.instruction).toBe(promptFormInputs.instruction);
+    expect(promptViewModel.howto).toBe(promptFormInputs.howto);
   });
 
   it("should save a prompt as draft", async () => {
@@ -142,14 +149,22 @@ describe("PromptViewModel", () => {
     vi.mocked(createPromptMock).mockResolvedValue(new PromptViewModel());
 
     const promptFormInputs: PromptFormInputs = {
-      name: "Test Prompt",
-      description: "A test prompt",
-      sdlc: "Design",
-      category: "Chat",
-      instruction: "Test instruction",
+      name: "Draft",
+      description: "Draft",
+      sdlc: "Plan",
+      category: "Inline",
+      instruction: "Draft",
+      howto: "Draft",
     };
 
     await promptViewModel.saveDraft(promptFormInputs, mockDraftRepository);
     expect(saveDraftMock).toHaveBeenCalled();
+    expect(promptViewModel.id.startsWith("draft")).toBeTruthy();
+    expect(promptViewModel.name).toBe(promptFormInputs.name);
+    expect(promptViewModel.description).toBe(promptFormInputs.description);
+    expect(promptViewModel.sdlcPhase).toBe(SdlcPhase.PLAN);
+    expect(promptViewModel.category).toBe(PromptCategory.INLINE);
+    expect(promptViewModel.instruction).toBe(promptFormInputs.instruction);
+    expect(promptViewModel.howto).toBe(promptFormInputs.howto);
   });
 });

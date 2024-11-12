@@ -41,6 +41,7 @@ export class PromptGraphQLRepository implements PromptRepository {
           sdlc_phase: prompt.sdlcPhase,
           category: prompt.category,
           instruction: prompt.instruction,
+          howto: prompt.howto,
         },
         {
           authMode: "userPool",
@@ -61,6 +62,7 @@ export class PromptGraphQLRepository implements PromptRepository {
           sdlc_phase: prompt.sdlcPhase,
           category: prompt.category,
           instruction: prompt.instruction,
+          howto: prompt.howto,
           owner_username: prompt.owner!.userName,
         },
         {

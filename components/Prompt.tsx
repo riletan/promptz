@@ -95,10 +95,21 @@ export default function Prompt(props: PromptProps) {
           </SpaceBetween>
         }
       >
-        <pre className="wrap">{promptViewModel.instruction}</pre>
-        <SpaceBetween alignItems="start" direction="horizontal" size="xs">
-          <Badge color="blue">{promptViewModel.sdlcPhase}</Badge>
-          <Badge color="grey">{promptViewModel.category}</Badge>
+        <SpaceBetween alignItems="start" direction="vertical" size="xs">
+          {promptViewModel.howto && promptViewModel.howto.length > 0 && (
+            <div>
+              <Box variant="awsui-key-label">How to use this prompt:</Box>
+              <Box data-testid="box-howto">{promptViewModel.howto}</Box>
+            </div>
+          )}
+          <div>
+            <Box variant="awsui-key-label">Instruction:</Box>
+            <pre className="wrap">{promptViewModel.instruction}</pre>
+          </div>
+          <SpaceBetween alignItems="start" direction="horizontal" size="xs">
+            <Badge color="blue">{promptViewModel.sdlcPhase}</Badge>
+            <Badge color="grey">{promptViewModel.category}</Badge>
+          </SpaceBetween>
         </SpaceBetween>
       </Container>
     );
