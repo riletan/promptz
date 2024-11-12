@@ -40,6 +40,7 @@ export class PromptViewModel {
   private _sdlcPhase: SdlcPhase;
   private _category: PromptCategory;
   private _instruction: string;
+  private _howto: string;
   private _owner?: UserViewModel;
   private _draft: boolean;
 
@@ -50,6 +51,7 @@ export class PromptViewModel {
     this._sdlcPhase = SdlcPhase.UNKNOWN;
     this._category = PromptCategory.UNKNOWN;
     this._instruction = "";
+    this._howto = "";
     this._draft = true;
   }
 
@@ -66,6 +68,7 @@ export class PromptViewModel {
     pvm._category = prompt.category as PromptCategory;
     pvm._instruction = prompt.instruction;
     pvm._owner = new UserViewModel(prompt.owner, prompt.owner_username);
+    pvm._howto = prompt.howto || "";
     pvm._draft = false;
     return pvm;
   }
@@ -109,6 +112,13 @@ export class PromptViewModel {
     this._instruction = value;
   }
 
+  public get howto(): string {
+    return this._howto;
+  }
+  public set howto(value: string) {
+    this._howto = value;
+  }
+
   public get owner(): UserViewModel | undefined {
     return this._owner;
   }
@@ -131,6 +141,7 @@ export class PromptViewModel {
     this._sdlcPhase = promptData.sdlc as SdlcPhase;
     this._category = promptData.category as PromptCategory;
     this._instruction = promptData.instruction;
+    this._howto = promptData.howto || "";
     this._owner = owner;
 
     if (this.id.startsWith("draft")) {
@@ -157,6 +168,7 @@ export class PromptViewModel {
     this._sdlcPhase = promptData.sdlc as SdlcPhase;
     this._category = promptData.category as PromptCategory;
     this._instruction = promptData.instruction;
+    this._howto = promptData.howto || "";
     this._draft = true;
     repository.saveDraft(this);
   }
