@@ -42,7 +42,7 @@ describe("Prompt component", () => {
       promptViewModel: null,
     });
     vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("guest", "guest"),
+      user: new UserViewModel("userId", "username", "preferred_username", true),
       logout: vi.fn(),
       fetchUser: vi.fn(),
     });
@@ -62,7 +62,7 @@ describe("Prompt component", () => {
       promptViewModel: null,
     });
     vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("guest", "guest"),
+      user: new UserViewModel("userId", "username", "preferred_username", true),
       logout: vi.fn(),
       fetchUser: vi.fn(),
     });
@@ -83,7 +83,7 @@ describe("Prompt component", () => {
       promptViewModel: promptViewModel,
     });
     vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("guest", "guest"),
+      user: new UserViewModel("userId", "username", "preferred_username", true),
       logout: vi.fn(),
       fetchUser: vi.fn(),
     });
@@ -116,7 +116,7 @@ describe("Prompt component", () => {
       promptViewModel: promptViewModel,
     });
     vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("guest", "guest"),
+      user: new UserViewModel("userId", "username", "preferred_username", true),
       logout: vi.fn(),
       fetchUser: vi.fn(),
     });
@@ -134,7 +134,35 @@ describe("Prompt component", () => {
       promptViewModel: promptViewModel,
     });
     vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("user123", "Test User", false),
+      user: new UserViewModel(
+        "user123",
+        "username",
+        "preferred_username",
+        false,
+      ),
+      logout: vi.fn(),
+      fetchUser: vi.fn(),
+    });
+
+    const { container } = render(<Prompt promptId="test-id" />);
+
+    const wrapper = createWrapper(container);
+    expect(wrapper.findButton('[data-testid="button-edit"]')).toBeTruthy();
+  });
+
+  it("renders edit button for owner signed up with google account", () => {
+    vi.mocked(usePrompt).mockReturnValue({
+      loading: false,
+      error: null,
+      promptViewModel: promptViewModel,
+    });
+    vi.mocked(useAuth).mockReturnValue({
+      user: new UserViewModel(
+        "google_userId",
+        "user123",
+        "preferred_username",
+        false,
+      ),
       logout: vi.fn(),
       fetchUser: vi.fn(),
     });
@@ -152,7 +180,12 @@ describe("Prompt component", () => {
       promptViewModel: promptViewModel,
     });
     vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("user1234", "Test User"),
+      user: new UserViewModel(
+        "userId",
+        "username",
+        "preferred_username",
+        false,
+      ),
       logout: vi.fn(),
       fetchUser: vi.fn(),
     });
@@ -170,7 +203,7 @@ describe("Prompt component", () => {
       promptViewModel: promptViewModel,
     });
     vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("user123", "Test User", true),
+      user: new UserViewModel("userId", "username", "preferred_username", true),
       logout: vi.fn(),
       fetchUser: vi.fn(),
     });
@@ -188,7 +221,7 @@ describe("Prompt component", () => {
       promptViewModel: promptViewModel,
     });
     vi.mocked(useAuth).mockReturnValue({
-      user: new UserViewModel("user123", "Test User"),
+      user: new UserViewModel("userId", "username", "preferred_username", true),
       logout: vi.fn(),
       fetchUser: vi.fn(),
     });

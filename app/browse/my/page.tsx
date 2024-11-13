@@ -53,7 +53,9 @@ export default function Browse() {
           showLoadMore={true}
           showFilters={false}
           limit={50}
-          facets={[{ facet: "OWNER", value: user?.userId }]}
+          facets={[
+            { facet: "OWNER", value: `${user.userId}::${user.userName}` },
+          ]}
           promptsPerRow={[{ cards: 1 }, { minWidth: 800, cards: 4 }]}
         />
       )}

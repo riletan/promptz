@@ -63,7 +63,7 @@ export class PromptGraphQLRepository implements PromptRepository {
           category: prompt.category,
           instruction: prompt.instruction,
           howto: prompt.howto,
-          owner_username: prompt.owner!.userName,
+          owner_username: prompt.owner,
         },
         {
           authMode: "userPool",
@@ -176,7 +176,7 @@ export class PromptGraphQLRepository implements PromptRepository {
     if (otherFacets.length > 0) {
       const otherConditions = otherFacets.map((f) => ({
         [f.facet.toLowerCase()]: {
-          eq: f.facet === "OWNER" ? `${f.value}::${f.value}` : f.value,
+          eq: f.value,
         },
       }));
 

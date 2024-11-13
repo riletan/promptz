@@ -40,7 +40,7 @@ describe("PromptGraphQLRepository", () => {
       ];
       const result = repository["facetsToFilter"](facets);
       expect(result).toEqual({
-        and: [{ category: { eq: "AI" } }, { owner: { eq: "John::John" } }],
+        and: [{ category: { eq: "AI" } }, { owner: { eq: "John" } }],
       });
     });
 

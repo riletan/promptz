@@ -41,7 +41,8 @@ export class PromptViewModel {
   private _category: PromptCategory;
   private _instruction: string;
   private _howto: string;
-  private _owner?: UserViewModel;
+  private _owner?: string;
+  private _ownerUsername?: string;
   private _draft: boolean;
 
   constructor() {
@@ -67,7 +68,8 @@ export class PromptViewModel {
     pvm._sdlcPhase = prompt.sdlc_phase as SdlcPhase;
     pvm._category = prompt.category as PromptCategory;
     pvm._instruction = prompt.instruction;
-    pvm._owner = new UserViewModel(prompt.owner, prompt.owner_username);
+    pvm._owner = prompt.owner;
+    pvm._ownerUsername = prompt.owner_username;
     pvm._howto = prompt.howto || "";
     pvm._draft = false;
     return pvm;
@@ -119,16 +121,21 @@ export class PromptViewModel {
     this._howto = value;
   }
 
-  public get owner(): UserViewModel | undefined {
-    return this._owner;
+  public get ownerUsername(): string {
+    return this._ownerUsername || "unknown";
+  }
+
+  public get owner(): string {
+    return this._owner || "unknown";
   }
 
   public isOwnedBy(user: UserViewModel) {
-    return this._owner?.userId === user.userId;
+    console.log(this._owner, user);
+    return this._owner === user.userId || this._owner === user.userName;
   }
 
   public createdBy() {
-    return `created by ${this._owner?.userName}`;
+    return `created by ${this._ownerUsername}`;
   }
 
   public async publish(
@@ -142,7 +149,6 @@ export class PromptViewModel {
     this._category = promptData.category as PromptCategory;
     this._instruction = promptData.instruction;
     this._howto = promptData.howto || "";
-    this._owner = owner;
 
     if (this.id.startsWith("draft")) {
       const publishedPrompt = await repository.createPrompt(this, owner);

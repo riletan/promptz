@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, act, RenderResult } from "@testing-library/react";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { getCurrentUser, fetchUserAttributes, signOut } from "aws-amplify/auth";
+import { fetchUserAttributes, getCurrentUser, signOut } from "aws-amplify/auth";
 
 vi.mock("aws-amplify/auth", () => ({
   getCurrentUser: vi.fn(),
@@ -26,6 +26,10 @@ describe("AuthContext", () => {
   });
 
   it("should fetch user on mount", async () => {
+    vi.mocked(getCurrentUser).mockResolvedValue({
+      userId: "11234",
+      username: "username",
+    });
     vi.mocked(fetchUserAttributes).mockResolvedValue({
       sub: "1",
       preferred_username: "testUser",
@@ -45,7 +49,7 @@ describe("AuthContext", () => {
       );
     });
 
-    expect(renderResult!.getByText("testUser")).toBeTruthy();
+    expect(renderResult!.getByText("username")).toBeTruthy();
   });
 
   it("should set guest user when fetch fails", async () => {

@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { UserViewModel } from "@/models/UserViewModel";
-import { fetchUserAttributes, signOut } from "aws-amplify/auth";
+import { fetchUserAttributes, signOut, getCurrentUser } from "aws-amplify/auth";
 
 interface AuthContextType {
   user: UserViewModel | null;
@@ -22,17 +22,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   async function fetchUser() {
     try {
-      const userAttributes = await fetchUserAttributes();
+      const currentUser = await getCurrentUser();
+      const attributes = await fetchUserAttributes();
       setUser(
         new UserViewModel(
-          userAttributes.sub!,
-          userAttributes.preferred_username!,
+          currentUser.userId,
+          currentUser.username!,
+          attributes.preferred_username || "unknown",
           false,
         ),
       );
     } catch (err) {
       console.error("Error fetching user:", err);
-      setUser(new UserViewModel("guest", "guest", true));
+      setUser(new UserViewModel("guest", "guest", "guest", true));
     }
   }
 
@@ -42,7 +44,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     } catch (error) {
       console.error("Error signing out:", error);
     } finally {
-      setUser(new UserViewModel("guest", "guest", true));
+      setUser(new UserViewModel("guest", "guest", "guest", true));
     }
   }
 
