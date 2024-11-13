@@ -130,7 +130,6 @@ export class PromptViewModel {
   }
 
   public isOwnedBy(user: UserViewModel) {
-    console.log(this._owner, user);
     return this._owner === user.userId || this._owner === user.userName;
   }
 

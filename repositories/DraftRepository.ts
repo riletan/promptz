@@ -32,7 +32,6 @@ export class LocalStorageDraftRepository {
   }
 
   public deleteDraft(promptId: string): void {
-    console.log(`delete draft ${promptId}`);
     const drafts = this.getAllDrafts();
     delete drafts[promptId];
     localStorage.setItem(

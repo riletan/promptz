@@ -21,7 +21,6 @@ export default function HomeHeader() {
         placeholder="Enter your search term and click enter."
         value={searchQuery}
         onKeyUp={({ detail }) => {
-          console.log("clicked");
           if (detail.keyCode === 13) {
             router.push(`/browse?query=${searchQuery}`);
           }
