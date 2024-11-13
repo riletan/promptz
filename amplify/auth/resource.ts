@@ -23,8 +23,11 @@ export const auth = defineAuth({
         },
         scopes: ["email", "openid", "profile"],
       },
-      callbackUrls: ["http://localhost:3000/auth", "https://promptz.dev/auth"],
-      logoutUrls: ["http://localhost:3000/", "https://promptz.dev/"],
+      callbackUrls: [
+        "https://promptz.dev/auth",
+        "https://www.promptz.dev/auth",
+      ],
+      logoutUrls: ["https://promptz.dev/", "https://www.promptz.dev"],
     },
   },
   senders: {
