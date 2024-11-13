@@ -1,4 +1,4 @@
-import { defineAuth } from "@aws-amplify/backend";
+import { defineAuth, secret } from "@aws-amplify/backend";
 import { verificationEmailTemplate } from "./email-templates";
 /**
  * Define and configure your auth resource
@@ -12,6 +12,20 @@ export const auth = defineAuth({
       verificationEmailBody: (createCode) =>
         verificationEmailTemplate(createCode),
     },
+    externalProviders: {
+      google: {
+        clientId: secret("GOOGLE_CLIENT_ID"),
+        clientSecret: secret("GOOGLE_CLIENT_SECRET"),
+        attributeMapping: {
+          email: "email",
+          emailVerified: "email_verified",
+          preferredUsername: "name",
+        },
+        scopes: ["email", "openid", "profile"],
+      },
+      callbackUrls: ["http://localhost:3000/auth", "https://promptz.dev/auth"],
+      logoutUrls: ["http://localhost:3000/", "https://promptz.dev/"],
+    },
   },
   senders: {
     email: {
@@ -21,7 +35,6 @@ export const auth = defineAuth({
   userAttributes: {
     preferredUsername: {
       required: true,
-      mutable: false,
     },
   },
 });
