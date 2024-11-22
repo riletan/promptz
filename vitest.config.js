@@ -5,17 +5,22 @@ export default defineConfig({
   plugins: [react()],
   test: {
     coverage: {
-      reporter: ["json", "text"],
+      reporter: ["json", "text", "json-summary"],
+      reportOnFailure: true,
       exclude: [
-        "API.ts",
-        "mutations.ts",
         "next.config.js",
-        "queries.ts",
-        "subscriptions.ts",
         "commitlint.config.js",
         "amplify/**",
         ...coverageConfigDefaults.exclude,
       ],
+      coverage: {
+        thresholds: {
+          lines: 45,
+          branches: 80,
+          functions: 60,
+          statements: 45,
+        },
+      },
     },
     environment: "jsdom",
     setupFiles: ["./vitest.setup.js"],
