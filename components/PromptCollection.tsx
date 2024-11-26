@@ -20,7 +20,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { usePromptCollection } from "../hooks/usePromptCollection";
 import { Facets } from "@/repositories/PromptRepository";
 import { useState } from "react";
-import { PromptCategory, SdlcPhase } from "@/models/PromptViewModel";
+import { PromptCategory, SdlcActivity } from "@/models/PromptViewModel";
 import { createSelectOptions } from "@/utils/formatters";
 
 interface PromptCollectionProps {
@@ -58,7 +58,7 @@ export default function PromptCollection(props: PromptCollectionProps) {
   };
 
   const getSDLCFilter = () => {
-    return createSelectOptions(SdlcPhase, [SdlcPhase.UNKNOWN]);
+    return createSelectOptions(SdlcActivity, [SdlcActivity.UNKNOWN]);
   };
 
   const handleCategoryFilterChange = (option: SelectProps.Option) => {
@@ -107,7 +107,9 @@ export default function PromptCollection(props: PromptCollectionProps) {
           header: (item) => (
             <SpaceBetween size="xs">
               <SpaceBetween size="xs" direction="horizontal">
-                <Badge color="blue">{item.sdlcPhase}</Badge>
+                {item.hasSDLCPhaseAssigned() && (
+                  <Badge color="blue">{item.sdlcPhase}</Badge>
+                )}
                 <Badge color="green">{item.interface}</Badge>
                 <Badge color="grey">{item.category}</Badge>
               </SpaceBetween>
