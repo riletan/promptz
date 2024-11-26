@@ -11,17 +11,22 @@ import {
   Input,
   Textarea,
   Select,
+  Tiles,
 } from "@cloudscape-design/components";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import {
-  PromptCategory,
   PromptViewModel,
+  QInterface,
   SdlcPhase,
 } from "@/models/PromptViewModel";
-import { createSelectOptions } from "@/utils/formatters";
+import {
+  createSelectOptions,
+  createTilesItems,
+  switchCategories,
+} from "@/utils/formatters";
 import { useRouter } from "next/navigation";
 
 interface PromptFormProps {
@@ -34,6 +39,7 @@ interface PromptFormProps {
 export interface PromptFormInputs {
   name: string;
   description: string;
+  interface?: string;
   instruction: string;
   sdlc: string;
   category: string;
@@ -46,6 +52,10 @@ const schema = yup
     description: yup.string().required().min(10).max(500),
     instruction: yup.string().required().min(10).max(4000),
     howto: yup.string().max(4000),
+    interface: yup
+      .string()
+      .required()
+      .matches(/^IDE|CLI|Management Console$/),
     sdlc: yup
       .string()
       .required()
@@ -53,14 +63,12 @@ const schema = yup
     category: yup
       .string()
       .required()
-      .matches(/^Chat|Dev Agent|Inline$/),
+      .matches(/^Chat|Dev Agent|Inline|Translate$/),
   })
   .required();
 
-const categoryOptions = createSelectOptions(PromptCategory, [
-  PromptCategory.UNKNOWN,
-]);
 const sdlcOptions = createSelectOptions(SdlcPhase, [SdlcPhase.UNKNOWN]);
+const interfaceTiles = createTilesItems(QInterface, [QInterface.UNKNOWN]);
 
 export default function PromptForm(props: PromptFormProps) {
   const {
@@ -74,6 +82,7 @@ export default function PromptForm(props: PromptFormProps) {
     defaultValues: {
       name: props.prompt.name,
       description: props.prompt.description,
+      interface: props.prompt.interface,
       instruction: props.prompt.instruction,
       sdlc: props.prompt.sdlcPhase,
       category: props.prompt.category,
@@ -81,6 +90,9 @@ export default function PromptForm(props: PromptFormProps) {
     },
   });
   const router = useRouter();
+
+  const qInterface = useWatch({ control, name: "interface" });
+  const categoryOptions = switchCategories(qInterface as QInterface);
 
   return (
     <form onSubmit={handleSubmit(props.onSubmit)} id="prompt-form">
@@ -202,6 +214,30 @@ export default function PromptForm(props: PromptFormProps) {
                       field.onChange(detail.selectedOption?.value)
                     }
                     options={sdlcOptions}
+                  />
+                )}
+              />
+            </FormField>
+            <FormField
+              data-testid="formfield-interface"
+              label="Amazon Q Developer Interface"
+              description="Is the prompt related to Amazon Q Developer in your IDE, your CLI or the AWS Management Console?"
+              stretch
+              errorText={errors.interface?.message}
+            >
+              <Controller
+                name="interface"
+                control={control}
+                render={({ field }) => (
+                  <Tiles
+                    {...field}
+                    data-testid="tiles-interface"
+                    value={
+                      interfaceTiles.find((opt) => opt.value === field.value)
+                        ?.value || ""
+                    }
+                    onChange={({ detail }) => field.onChange(detail.value)}
+                    items={interfaceTiles}
                   />
                 )}
               />

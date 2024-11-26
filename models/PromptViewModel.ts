@@ -23,6 +23,14 @@ export enum PromptCategory {
   CHAT = "Chat",
   DEV_AGENT = "Dev Agent",
   INLINE = "Inline",
+  TRANSLATE = "Translate",
+  UNKNOWN = "Unknown",
+}
+
+export enum QInterface {
+  IDE = "IDE",
+  CLI = "CLI",
+  CONSOLE = "Management Console",
   UNKNOWN = "Unknown",
 }
 
@@ -37,6 +45,7 @@ export class PromptViewModel {
   private _id: string;
   private _name: string;
   private _description: string;
+  private _interface: QInterface;
   private _sdlcPhase: SdlcPhase;
   private _category: PromptCategory;
   private _instruction: string;
@@ -49,6 +58,7 @@ export class PromptViewModel {
     this._id = `draft_${uuidv4()}`;
     this._name = "Unnamed [DRAFT]";
     this._description = "";
+    this._interface = QInterface.UNKNOWN;
     this._sdlcPhase = SdlcPhase.UNKNOWN;
     this._category = PromptCategory.UNKNOWN;
     this._instruction = "";
@@ -65,6 +75,7 @@ export class PromptViewModel {
     pvm._id = prompt.id;
     pvm._name = prompt.name;
     pvm._description = prompt.description;
+    pvm._interface = (prompt.interface as QInterface) || QInterface.UNKNOWN;
     pvm._sdlcPhase = prompt.sdlc_phase as SdlcPhase;
     pvm._category = prompt.category as PromptCategory;
     pvm._instruction = prompt.instruction;
@@ -91,6 +102,13 @@ export class PromptViewModel {
   }
   public set description(value: string) {
     this._description = value;
+  }
+
+  public get interface(): QInterface {
+    return this._interface;
+  }
+  public set interface(value: QInterface) {
+    this._interface = value;
   }
 
   public get sdlcPhase(): SdlcPhase {
@@ -144,6 +162,7 @@ export class PromptViewModel {
   ) {
     this._name = promptData.name;
     this._description = promptData.description;
+    this._interface = promptData.interface as QInterface;
     this._sdlcPhase = promptData.sdlc as SdlcPhase;
     this._category = promptData.category as PromptCategory;
     this._instruction = promptData.instruction;
@@ -171,6 +190,7 @@ export class PromptViewModel {
   saveDraft(promptData: PromptFormInputs, repository: DraftRepository) {
     this._name = promptData.name;
     this._description = promptData.description;
+    this._interface = promptData.interface as QInterface;
     this._sdlcPhase = promptData.sdlc as SdlcPhase;
     this._category = promptData.category as PromptCategory;
     this._instruction = promptData.instruction;

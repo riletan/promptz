@@ -56,6 +56,11 @@ describe("PromptForm component", () => {
     expect(
       wrapper.findFormField('[data-testid="formfield-howto"]')!.getElement(),
     ).toBeInTheDocument();
+    expect(
+      wrapper
+        .findFormField('[data-testid="formfield-interface"]')!
+        .getElement(),
+    ).toBeInTheDocument();
   });
 
   it("renders input fields correctly", () => {
@@ -87,6 +92,9 @@ describe("PromptForm component", () => {
     ).toBeInTheDocument();
     expect(
       wrapper.findTextarea('[data-testid="textarea-howto"]')!.getElement(),
+    ).toBeInTheDocument();
+    expect(
+      wrapper.findTiles('[data-testid="tiles-interface"]')!.getElement(),
     ).toBeInTheDocument();
   });
 
@@ -171,6 +179,9 @@ describe("PromptForm component", () => {
         .findFormField('[data-testid="formfield-instruction"]')!
         .findError(),
     ).toBeTruthy();
+    expect(
+      wrapper.findFormField('[data-testid="formfield-interface"]')!.findError(),
+    ).toBeTruthy();
   });
 
   it("displays validation error", async () => {
@@ -223,6 +234,12 @@ describe("PromptForm component", () => {
       .setTextareaValue(
         "This is the prompt that will solve all my developer issues.",
       );
+
+    const interfaceTiles = wrapper.findTiles(
+      '[data-testid="tiles-interface"]',
+    )!;
+    interfaceTiles.findItemByValue("IDE")?.click();
+
     await waitFor(() =>
       wrapper.findButton('[data-testid="button-save"]')!.click(),
     );

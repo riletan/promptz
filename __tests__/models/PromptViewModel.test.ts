@@ -3,6 +3,7 @@ import {
   PromptViewModel,
   SdlcPhase,
   PromptCategory,
+  QInterface,
 } from "../../models/PromptViewModel";
 import { UserViewModel } from "../../models/UserViewModel";
 import { PromptFormInputs } from "@/components/PromptForm";
@@ -33,6 +34,7 @@ const schemaPrompt = {
   id: "1",
   name: "Test Prompt",
   description: "A test prompt",
+  interface: "IDE",
   sdlc_phase: "Design",
   category: "Chat",
   instruction: "Test instruction",
@@ -54,6 +56,7 @@ describe("PromptViewModel", () => {
     expect(promptViewModel.description).toBe(schemaPrompt.description);
     expect(promptViewModel.sdlcPhase).toBe(SdlcPhase.DESIGN);
     expect(promptViewModel.category).toBe(PromptCategory.CHAT);
+    expect(promptViewModel.interface).toBe(QInterface.IDE);
     expect(promptViewModel.instruction).toBe(schemaPrompt.instruction);
   });
 
@@ -107,6 +110,7 @@ describe("PromptViewModel", () => {
     const promptFormInputs: PromptFormInputs = {
       name: "Test Prompt",
       description: "A test prompt",
+      interface: "IDE",
       sdlc: "Design",
       category: "Chat",
       instruction: "Test instruction",
@@ -128,6 +132,7 @@ describe("PromptViewModel", () => {
     const promptFormInputs: PromptFormInputs = {
       name: "Test Prompt",
       description: "A test prompt",
+      interface: "IDE",
       sdlc: "Design",
       category: "Chat",
       instruction: "Test instruction",
@@ -138,6 +143,7 @@ describe("PromptViewModel", () => {
     expect(promptViewModel.id).toBe(schemaPrompt.id);
     expect(promptViewModel.name).toBe(promptFormInputs.name);
     expect(promptViewModel.description).toBe(promptFormInputs.description);
+    expect(promptViewModel.interface).toBe(QInterface.IDE);
     expect(promptViewModel.sdlcPhase).toBe(SdlcPhase.DESIGN);
     expect(promptViewModel.category).toBe(PromptCategory.CHAT);
     expect(promptViewModel.instruction).toBe(promptFormInputs.instruction);
@@ -152,6 +158,7 @@ describe("PromptViewModel", () => {
     const promptFormInputs: PromptFormInputs = {
       name: "Updated",
       description: "Updated",
+      interface: "IDE",
       sdlc: "Plan",
       category: "Inline",
       instruction: "Updated",
@@ -163,6 +170,7 @@ describe("PromptViewModel", () => {
     expect(promptViewModel.id).toBe(schemaPrompt.id);
     expect(promptViewModel.name).toBe(promptFormInputs.name);
     expect(promptViewModel.description).toBe(promptFormInputs.description);
+    expect(promptViewModel.interface).toBe(QInterface.IDE);
     expect(promptViewModel.sdlcPhase).toBe(SdlcPhase.PLAN);
     expect(promptViewModel.category).toBe(PromptCategory.INLINE);
     expect(promptViewModel.instruction).toBe(promptFormInputs.instruction);
@@ -177,6 +185,7 @@ describe("PromptViewModel", () => {
     const promptFormInputs: PromptFormInputs = {
       name: "Draft",
       description: "Draft",
+      interface: "CLI",
       sdlc: "Plan",
       category: "Inline",
       instruction: "Draft",
@@ -188,6 +197,7 @@ describe("PromptViewModel", () => {
     expect(promptViewModel.id.startsWith("draft")).toBeTruthy();
     expect(promptViewModel.name).toBe(promptFormInputs.name);
     expect(promptViewModel.description).toBe(promptFormInputs.description);
+    expect(promptViewModel.interface).toBe(QInterface.CLI);
     expect(promptViewModel.sdlcPhase).toBe(SdlcPhase.PLAN);
     expect(promptViewModel.category).toBe(PromptCategory.INLINE);
     expect(promptViewModel.instruction).toBe(promptFormInputs.instruction);
