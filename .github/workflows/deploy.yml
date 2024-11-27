@@ -45,3 +45,6 @@ jobs:
 
       - name: build frontend
         run: npm run build
+
+      - name: deploy frontend
+        run: curl -X POST -d {} ${{ secrets.AMPLIFY_INCOMING_WEBHOOK }} -H "Content-Type:application/json"
