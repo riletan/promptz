@@ -349,4 +349,128 @@ describe("PromptForm component", () => {
       wrapper.findFormField('[data-testid="formfield-sdlc"]')!.findError(),
     ).toBeFalsy();
   });
+
+  it("adds context modifier to prompt", async () => {
+    const initPrompt =
+      "This is the prompt that will solve all my developer issues.";
+    const { container } = render(
+      <PromptForm
+        prompt={new PromptViewModel()}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
+    const wrapper = createWrapper(container);
+
+    const interfaceTiles = wrapper.findTiles(
+      '[data-testid="tiles-interface"]',
+    )!;
+    interfaceTiles.findItemByValue("IDE")?.click();
+
+    wrapper
+      .findTextarea('[data-testid="textarea-instruction"]')!
+      .setTextareaValue(initPrompt);
+
+    await waitFor(() =>
+      wrapper.findButton('[data-testid="button-ctxmod-workspace"]')!.click(),
+    );
+    const nativeInputInstruction = wrapper
+      .findTextarea('[data-testid="textarea-instruction"]')!
+      .findNativeTextarea()
+      .getElement();
+    expect(nativeInputInstruction.value).toBe(initPrompt + " @workspace");
+  });
+
+  it("disables not applicable context identifier for IDE", async () => {
+    const { container } = render(
+      <PromptForm
+        prompt={new PromptViewModel()}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
+    const wrapper = createWrapper(container);
+
+    const interfaceTiles = wrapper.findTiles(
+      '[data-testid="tiles-interface"]',
+    )!;
+    interfaceTiles.findItemByValue("IDE")?.click();
+
+    expect(
+      wrapper.findButton('[data-testid="button-ctxmod-git"]')!.isDisabled(),
+    ).toBeTruthy();
+    expect(
+      wrapper.findButton('[data-testid="button-ctxmod-env"]')!.isDisabled(),
+    ).toBeTruthy();
+    expect(
+      wrapper.findButton('[data-testid="button-ctxmod-history"]')!.isDisabled(),
+    ).toBeTruthy();
+    expect(
+      wrapper
+        .findButton('[data-testid="button-ctxmod-workspace"]')!
+        .isDisabled(),
+    ).toBeFalsy();
+  });
+
+  it("disables not applicable context identifier for CLI", async () => {
+    const { container } = render(
+      <PromptForm
+        prompt={new PromptViewModel()}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
+    const wrapper = createWrapper(container);
+
+    const interfaceTiles = wrapper.findTiles(
+      '[data-testid="tiles-interface"]',
+    )!;
+    interfaceTiles.findItemByValue("CLI")?.click();
+
+    expect(
+      wrapper.findButton('[data-testid="button-ctxmod-git"]')!.isDisabled(),
+    ).toBeFalsy();
+    expect(
+      wrapper.findButton('[data-testid="button-ctxmod-env"]')!.isDisabled(),
+    ).toBeFalsy();
+    expect(
+      wrapper.findButton('[data-testid="button-ctxmod-history"]')!.isDisabled(),
+    ).toBeFalsy();
+    expect(
+      wrapper
+        .findButton('[data-testid="button-ctxmod-workspace"]')!
+        .isDisabled(),
+    ).toBeTruthy();
+  });
+
+  it("disables not applicable context identifier for Management Console", async () => {
+    const { container } = render(
+      <PromptForm
+        prompt={new PromptViewModel()}
+        onSubmit={onSubmitMock}
+        onDelete={onDeleteMock}
+      />,
+    );
+    const wrapper = createWrapper(container);
+
+    const interfaceTiles = wrapper.findTiles(
+      '[data-testid="tiles-interface"]',
+    )!;
+    interfaceTiles.findItemByValue("Management Console")?.click();
+
+    expect(
+      wrapper.findButton('[data-testid="button-ctxmod-git"]')!.isDisabled(),
+    ).toBeTruthy();
+    expect(
+      wrapper.findButton('[data-testid="button-ctxmod-env"]')!.isDisabled(),
+    ).toBeTruthy();
+    expect(
+      wrapper.findButton('[data-testid="button-ctxmod-history"]')!.isDisabled(),
+    ).toBeTruthy();
+    expect(
+      wrapper
+        .findButton('[data-testid="button-ctxmod-workspace"]')!
+        .isDisabled(),
+    ).toBeTruthy();
+  });
 });
