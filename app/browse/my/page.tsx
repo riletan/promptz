@@ -48,7 +48,7 @@ export default function Browse() {
         </Header>
       }
     >
-      {user && (
+      {user && !user?.isGuest && (
         <PromptCollection
           showLoadMore={true}
           showFilters={false}
