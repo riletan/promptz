@@ -71,6 +71,8 @@
 - Copy to clipboard functionality for prompt instructions
 - Draft system allows saving work-in-progress prompts
 - Form validation using Zod schema ensures data quality
+- Search functionality supports case-insensitive text search across name and description
+- Filtering system allows filtering by tags, categories, SDLC activities, and interfaces
 
 ### Navigation
 
@@ -128,6 +130,15 @@
 - Form validation using React Hook Form with Zod schemas
 - Complex validation with custom error messages
 - Form state management with useActionState hook
+
+### Search and Filtering
+
+- Text search uses case variations (lowercase, uppercase, capitalized) for better matching
+- Filter conditions are built using a consistent pattern with FilterCondition type
+- Tag-based filtering supports both single tags and arrays of tags
+- Search parameters are validated using Zod schema
+- Filters can be combined (text search + tags + categories)
+- Sort options include creation date (ascending/descending)
 
 ### Draft System
 

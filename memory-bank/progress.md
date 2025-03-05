@@ -40,13 +40,15 @@
 - ✅ Draft system for work-in-progress prompts
 - ✅ Prompt deletion with confirmation
 - ✅ Tagging and categorization system
+- ✅ Search functionality with text search
+- ✅ Filter system for tags, categories, and SDLC activities
 
 ## In Progress Features
 
 ### Prompt Management
 
 - 🔄 Advanced prompt creation form with enhanced validation
-- 🔄 Search and filtering capabilities
+- 🔄 Enhanced search relevance and filter optimization
 - 🔄 Prompt versioning
 
 ### Authentication Enhancements

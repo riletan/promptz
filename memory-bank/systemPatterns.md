@@ -154,6 +154,35 @@ The application implements the following server actions for data operations:
 - `updatePrompt(prevState, data)`: Updates an existing prompt and deletes any associated draft
 - `saveDraft(draft)`: Creates or updates a draft version of a prompt
 - `deletePrompt(id)`: Deletes a prompt and any associated draft
+- `searchPrompts(params)`: Searches and filters prompts based on query parameters
+
+### Search and Filter Pattern
+
+```mermaid
+flowchart TD
+    SearchParams[Search Parameters] --> Validation[Zod Schema Validation]
+    Validation --> FilterBuilder[Filter Builder]
+    FilterBuilder --> TextSearch[Text Search Filter]
+    FilterBuilder --> TagFilters[Tag-based Filters]
+    FilterBuilder --> UserFilter[User-specific Filter]
+    TextSearch --> AppSync[AppSync Query]
+    TagFilters --> AppSync
+    UserFilter --> AppSync
+    AppSync --> Results[Search Results]
+    Results --> Sorting[Result Sorting]
+    Sorting --> FinalResults[Final Results]
+```
+
+The search and filter system follows these steps:
+
+1. Validate search parameters using Zod schema
+2. Build base filter conditions for public prompts
+3. Add text search conditions if query parameter is provided
+4. Add tag-based filters for interface, category, and SDLC phase
+5. Add user-specific filter if "my" parameter is provided
+6. Execute AppSync query with combined filters
+7. Sort results based on sort parameter
+8. Return mapped prompt results
 
 ## Error Handling Strategy
 
