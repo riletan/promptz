@@ -77,13 +77,24 @@ export async function searchPrompts(
 
     // Handle all tag-based filters
     if (params.interface) {
-      facets.push(...buildTagFilter(params.interface));
+      // Convert to array if it's a string
+      const interfaceParams = Array.isArray(params.interface)
+        ? params.interface
+        : [params.interface];
+      facets.push(...buildTagFilter(interfaceParams));
     }
     if (params.category) {
-      facets.push(...buildTagFilter(params.category));
+      const categoryParams = Array.isArray(params.category)
+        ? params.category
+        : [params.category];
+      facets.push(...buildTagFilter(categoryParams));
     }
+
     if (params.sdlc) {
-      facets.push(...buildTagFilter(params.sdlc));
+      const sdlcParams = Array.isArray(params.sdlc)
+        ? params.sdlc
+        : [params.sdlc];
+      facets.push(...buildTagFilter(sdlcParams));
     }
 
     // Handle user-specific filter

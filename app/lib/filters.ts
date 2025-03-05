@@ -21,9 +21,7 @@ export function buildTextSearchFilter(query: string): FilterCondition {
 }
 
 // Handle tag-based filtering
-export function buildTagFilter(params: string | string[]): FilterCondition[] {
-  const tags = Array.isArray(params) ? params : [params];
-  return tags.map((tag) => ({
-    tags: { contains: tag },
-  }));
+export function buildTagFilter(tags: string | string[]): FilterCondition[] {
+  const tagArray = Array.isArray(tags) ? tags : [tags];
+  return tagArray.map((tag) => ({ tags: { contains: tag } }));
 }
