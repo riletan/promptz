@@ -1,43 +1,21 @@
 // middleware.ts
-import { NextRequest, NextResponse } from "next/server";
-import { fetchAuthSession } from "aws-amplify/auth/server";
-import { runWithAmplifyServerContext } from "@/utils/amplify-utils";
+import { fetchCurrentAuthUserFromRequestContext } from "@/app/lib/actions/cognito-server";
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
-
-  const authenticated = await runWithAmplifyServerContext({
-    nextServerContext: { request, response },
-    operation: async (contextSpec) => {
-      try {
-        const session = await fetchAuthSession(contextSpec, {});
-        return session.tokens !== undefined;
-      } catch (error) {
-        console.log(error);
-        return false;
-      }
-    },
+  const user = await fetchCurrentAuthUserFromRequestContext({
+    request,
+    response,
   });
 
-  if (authenticated) {
+  if (user) {
     return response;
   }
 
-  return NextResponse.redirect(new URL("/auth", request.url));
+  return NextResponse.redirect(new URL("/login", request.url));
 }
 
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - auth
-     */
-    "/((?!api|_next/static|_next/image|images|favicon.ico|auth|browse(?!my)|prompt/(?!create)|$).*)",
-    "/prompt/create",
-    "/browse/my",
-  ],
+  matcher: ["/prompt/create", "/favorites", "/my", "/prompt/(.*)/edit"],
 };

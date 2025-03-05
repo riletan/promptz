@@ -1,11 +1,11 @@
-import ConfigureAmplifyClientSide from "@/components/ConfigureAmplify";
+import ConfigureAmplifyClientSide from "@/app/configure-amplify";
 import type { Metadata, Viewport } from "next";
-import "@cloudscape-design/global-styles/index.css";
-import "./globals.css";
-import TopNav from "@/components/TopNav";
-import { AuthProvider } from "@/contexts/AuthContext";
-import { Suspense } from "react";
-import Footer from "@/components/Footer";
+import { geistMono, geistSans } from "@/app/ui/fonts";
+import "@/app/globals.css";
+import TopNav from "@/app/ui/navigation/topnav";
+import { ThemeProvider } from "@/app/ui/navigation/theme-provider";
+import Footer from "@/app/ui/footer/footer";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "PROMPTZ - Discover, Create, and Share Prompts for Amazon Q Developer",
@@ -42,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link
           rel="icon"
@@ -59,13 +59,30 @@ export default function RootLayout({
         />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body>
-        <ConfigureAmplifyClientSide />
-        <AuthProvider>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          disableTransitionOnChange
+        >
+          <ConfigureAmplifyClientSide />
+          <div className="max-w-7xl mx-auto px-4">
+            <TopNav />
+          </div>
+          <div className="min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4">{children}</div>
+          </div>
+          <Toaster />
+
+          <Footer />
+        </ThemeProvider>
+        {/* <AuthProvider>
           <TopNav />
           <Suspense>{children}</Suspense>
           <Footer />
-        </AuthProvider>
+        </AuthProvider> */}
       </body>
     </html>
   );

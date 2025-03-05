@@ -19,14 +19,16 @@ const schema = a
         description: a.string().required(),
         sdlc_phase: a.string(),
         interface: a.string(),
-        category: a.string().required(),
+        category: a.string(),
+        tags: a.string().array(),
         instruction: a.string().required(),
         howto: a.string(),
+        public: a.boolean(),
         owner_username: a.string().required(),
         stars: a.hasMany("stars", "promptId"),
       })
       .authorization((allow) => [
-        allow.publicApiKey(),
+        allow.publicApiKey(), //TODO: verify if public user can do more than reading
         allow.authenticated().to(["read"]),
         allow.owner().to(["create", "update", "delete"]),
       ]),
