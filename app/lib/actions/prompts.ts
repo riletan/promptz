@@ -5,14 +5,20 @@ import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/ap
 import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
 import { Prompt, searchParamsSchema } from "@/app/lib/definitions";
-import { SearchParams } from "next/dist/server/request/search-params";
-import console from "console";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import {
   FilterCondition,
   buildTextSearchFilter,
   buildTagFilter,
 } from "@/app/lib/filters";
+import { z } from "zod";
+
+interface FetchPromptsResult {
+  prompts: Prompt[];
+  nextToken?: string | null;
+}
+
+type SearchSchema = z.output<typeof searchParamsSchema>;
 
 const appsync = generateServerClientUsingCookies<Schema>({
   config: outputs,
@@ -50,13 +56,8 @@ export async function fetchPrompt(id: string) {
   return mapToPrompt(prompt);
 }
 
-interface FetchPromptsResult {
-  prompts: Prompt[];
-  nextToken?: string | null;
-}
-
 export async function searchPrompts(
-  params: SearchParams,
+  params: SearchSchema,
 ): Promise<FetchPromptsResult> {
   try {
     // Validate search params
@@ -96,6 +97,7 @@ export async function searchPrompts(
       filter.and = facets;
     }
 
+    console.log(filter);
     const {
       data: prompts,
       errors,

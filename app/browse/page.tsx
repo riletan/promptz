@@ -9,24 +9,26 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 interface BrowsePageProps {
-  searchParams: {
+  searchParams?: Promise<{
     query?: string;
     sort?: string;
     my?: string;
     "interface[]": string[];
     "category[]": string[];
     "sdlc[]": string[];
-  };
+  }>;
 }
 
-export default async function Browse({ searchParams }: BrowsePageProps) {
+export default async function Browse(props: BrowsePageProps) {
+  const searchParams = await props.searchParams;
+
   const { prompts } = await searchPrompts({
-    query: searchParams.query,
-    sort: searchParams.sort,
-    my: searchParams.my,
-    interface: searchParams["interface[]"],
-    category: searchParams["category[]"],
-    sdlc: searchParams["sdlc[]"],
+    query: searchParams?.query,
+    sort: searchParams?.sort,
+    my: searchParams?.my,
+    interface: searchParams ? searchParams["interface[]"] : [],
+    category: searchParams ? searchParams["category[]"] : [],
+    sdlc: searchParams ? searchParams["sdlc[]"] : [],
   });
 
   return (

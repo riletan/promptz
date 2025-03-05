@@ -7,15 +7,17 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 interface BrowsePageProps {
-  searchParams: {
+  searchParams?: Promise<{
     query?: string;
     my?: string;
-  };
+  }>;
 }
 
-export default async function MyPrompts({ searchParams }: BrowsePageProps) {
+export default async function MyPrompts(props: BrowsePageProps) {
+  const searchParams = await props.searchParams;
+
   const { prompts } = await searchPrompts({
-    query: searchParams.query,
+    query: searchParams?.query,
     my: "true",
   });
 

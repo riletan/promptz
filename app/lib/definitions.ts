@@ -87,4 +87,7 @@ export const searchParamsSchema = z.object({
   query: z.string().optional(),
   sort: z.string().optional(),
   my: z.string().optional(),
+  interface: z.string().array().optional(),
+  category: z.string().array().optional(),
+  sdlc: z.string().array().optional(),
 });

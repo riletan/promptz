@@ -3,11 +3,11 @@ import { fetchPrompt } from "@/app/lib/actions/prompts";
 import PromptForm from "@/app/ui/prompts/form";
 import { redirect, notFound } from "next/navigation";
 
-export default async function EditPrompt({
-  params,
-}: {
-  params: { id: string };
+export default async function EditPrompt(props: {
+  params: Promise<{ id: string }>;
 }) {
+  const params = await props.params;
+
   const user = await fetchCurrentAuthUser();
   const prompt = await fetchPrompt(params.id);
 
