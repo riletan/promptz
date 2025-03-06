@@ -147,23 +147,15 @@ export async function searchPrompts(
 }
 
 function mapToPrompt(prompt: Schema["prompt"]["type"]): Prompt {
-  // Create an array of potential tags
-  const mappedTags: (string | null | undefined)[] = [
-    prompt.category,
-    prompt.sdlc_phase,
-    prompt.interface,
-  ];
-
-  // Use the provided tags if they exist, otherwise use the mapped tags
-  const finalTags: string[] = (prompt.tags || mappedTags).filter(
-    (tag): tag is NonNullable<typeof tag> => tag != null,
-  );
+  const tags: string[] = prompt.tags
+    ? prompt.tags.filter((tag): tag is NonNullable<typeof tag> => tag != null)
+    : [];
 
   return {
     id: prompt.id,
     title: prompt.name,
     description: prompt.description,
-    tags: finalTags,
+    tags: tags,
     author: prompt.owner_username,
     authorId: prompt.owner || "",
     instruction: prompt.instruction,
