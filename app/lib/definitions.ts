@@ -52,12 +52,49 @@ export type Prompt = {
   author?: string;
   authorId?: string;
   public?: boolean;
+  sourceURL?: string;
   createdAt?: string;
   updatedAt?: string;
 };
 
+const ALLOWED_DOMAINS = [
+  "github.com",
+  "dev.to",
+  "hashnode.com",
+  "medium.com",
+  "stackoverflow.com",
+  "community.aws",
+  "linkedin.com",
+  "aws.amazon.com",
+  "docs.aws.amazon.com",
+  "amazon.com",
+  "amazon.science",
+  "huggingface.co",
+  "kaggle.com",
+  "paperswithcode.com",
+  "readthedocs.io",
+  "gitbook.io",
+];
+
 export const promptFormSchema = z.object({
   id: z.string().uuid().optional(),
+  sourceURL: z
+    .string()
+    .max(2048, "URL must not exceed 2048 characters")
+    .url()
+    .regex(/^https:\/\/.+/, "Only HTTPS URLs are allowed")
+    .refine((url) => {
+      try {
+        const domain = new URL(url).hostname;
+        return ALLOWED_DOMAINS.some(
+          (allowed) => domain === allowed || domain.endsWith(`.${allowed}`),
+        );
+      } catch {
+        return false;
+      }
+    }, "Domain not allowed. Please use a supported content platform.")
+    .optional()
+    .or(z.literal("")),
   title: z
     .string()
     .trim()

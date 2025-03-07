@@ -147,6 +147,31 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
               </div>
             </div>
             <div
+              class="space-y-2"
+            >
+              <label
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2"
+                for=":r6:-form-item"
+              >
+                Source URL
+              </label>
+              <input
+                aria-describedby=":r6:-form-item-description"
+                aria-invalid="false"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-white placeholder-opacity-50"
+                id=":r6:-form-item"
+                name="sourceURL"
+                placeholder="Optional: Link to original source or inspiration"
+                value=""
+              />
+              <p
+                class="text-sm text-muted-foreground"
+                id=":r6:-form-item-description"
+              >
+                If this prompt was inspired by or adapted from another source, provide the URL here
+              </p>
+            </div>
+            <div
               class="space-y-2 flex flex-row items-center justify-between"
             >
               <div
@@ -154,21 +179,21 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
               >
                 <label
                   class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  for=":r6:-form-item"
+                  for=":r7:-form-item"
                 >
                   Visibility
                 </label>
                 <p
                   class="text-sm text-muted-foreground pr-10"
-                  id=":r6:-form-item-description"
+                  id=":r7:-form-item-description"
                 >
                   Keep your prompt private as a draft or just for you. A private prompt can still be shared via URL but will not be listed on promptz.dev. Make your prompt public to share it with the community.
                 </p>
               </div>
               <div
-                aria-describedby=":r6:-form-item-description"
+                aria-describedby=":r7:-form-item-description"
                 aria-invalid="false"
-                id=":r6:-form-item"
+                id=":r7:-form-item"
               >
                 <button
                   aria-checked="true"
@@ -248,10 +273,10 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
               class="space-y-2"
             >
               <textarea
-                aria-describedby=":r7:-form-item-description"
+                aria-describedby=":r8:-form-item-description"
                 aria-invalid="false"
                 class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[450px] text-white placeholder-opacity-50"
-                id=":r7:-form-item"
+                id=":r8:-form-item"
                 name="instruction"
               >
                 What is the meaning of life?
@@ -309,10 +334,10 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
           class="space-y-2"
         >
           <textarea
-            aria-describedby=":r8:-form-item-description"
+            aria-describedby=":r9:-form-item-description"
             aria-invalid="false"
             class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[200px] text-white placeholder-opacity-50"
-            id=":r8:-form-item"
+            id=":r9:-form-item"
             name="howto"
           >
             this is cool
@@ -352,7 +377,7 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
         Save Prompt
       </button>
       <button
-        aria-controls="radix-:r9:"
+        aria-controls="radix-:ra:"
         aria-expanded="false"
         aria-haspopup="dialog"
         class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 h-9 px-4 py-2 ml-auto"

@@ -10,6 +10,7 @@ import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { Badge } from "@/components/ui/badge";
 import StarPromptButton from "@/app/ui/prompts/star-prompt";
 import { isStarredByUser } from "@/app/lib/actions/stars";
+import { PromptSource } from "@/app/ui/prompts/prompt-source";
 
 interface PromptProps {
   promptId: string;
@@ -63,13 +64,6 @@ export default async function Prompt(props: PromptProps) {
           </Badge>
         </div>
       </div>
-      {/* {prompt.description && (
-        <AttributeCard
-          title="Description"
-          icon={FileText}
-          text={prompt.description}
-        />
-      )} */}
       {prompt.howto && (
         <AttributeCard
           title="How to Use"
@@ -85,6 +79,8 @@ export default async function Prompt(props: PromptProps) {
           text={prompt.instruction}
         />
       )}
+
+      {prompt.sourceURL && <PromptSource url={prompt.sourceURL} />}
     </div>
   );
 }

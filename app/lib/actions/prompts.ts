@@ -161,6 +161,7 @@ function mapToPrompt(prompt: Schema["prompt"]["type"]): Prompt {
     instruction: prompt.instruction,
     howto: prompt.howto || "",
     public: prompt.public || false,
+    sourceURL: prompt.sourceURL || "",
     createdAt: prompt.createdAt || "",
     updatedAt: prompt.updatedAt || "",
   };

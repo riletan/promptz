@@ -99,6 +99,7 @@ export default function PromptForm({ prompt }: PromptFormProps) {
       instruction: prompt?.instruction || "",
       tags: prompt?.tags || [],
       howto: prompt?.howto || "",
+      sourceURL: prompt?.sourceURL || "",
       public: prompt?.public || false,
     },
   });
@@ -285,6 +286,29 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                           </Sheet>
                         </div>
                       </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="sourceURL"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-2">
+                        Source URL
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Optional: Link to original source or inspiration"
+                          {...field}
+                          className="text-white placeholder-white placeholder-opacity-50"
+                        />
+                      </FormControl>
+                      <FormMessage>{state.errors?.sourceURL}</FormMessage>
+                      <FormDescription>
+                        If this prompt was inspired by or adapted from another
+                        source, provide the URL here
+                      </FormDescription>
                     </FormItem>
                   )}
                 />

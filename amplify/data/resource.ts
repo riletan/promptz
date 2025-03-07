@@ -19,6 +19,7 @@ const schema = a
         description: a.string().required(),
         tags: a.string().array(),
         instruction: a.string().required(),
+        sourceURL: a.string(),
         howto: a.string(),
         public: a.boolean(),
         owner_username: a.string().required(),

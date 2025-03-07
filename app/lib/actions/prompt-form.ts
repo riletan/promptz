@@ -18,6 +18,7 @@ export type FormState = {
     instruction?: string[];
     tags?: string[];
     api?: string[];
+    sourceURL?: string[];
   };
   message?: string;
   success?: boolean;
@@ -39,7 +40,10 @@ export async function onSubmitAction(
     instruction: data.get("instruction") as string,
     tags: data.getAll("tags"),
     public: data.get("public") === "true" ? true : false,
+    sourceURL: data.get("sourceURL") as string,
   };
+
+  console.log(formData);
 
   const mode = formData.id ? "update" : "create";
   formData.id = formData.id || uuidv4();
@@ -61,6 +65,7 @@ export async function onSubmitAction(
     instruction: parsed.data.instruction,
     tags: parsed.data.tags,
     public: parsed.data.public,
+    sourceURL: parsed.data.sourceURL,
   };
 
   let response;
