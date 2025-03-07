@@ -1,11 +1,10 @@
 import { fetchPrompt } from "@/app/lib/actions/prompts";
 import Prompt from "@/app/ui/prompts/prompt";
-import { ResolvingMetadata, Metadata } from "next";
+import { Metadata } from "next";
 
-export async function generateMetadata(
-  props: { params: Promise<{ id: string }> },
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata(props: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
   // Get prompt ID from params
   const params = await props.params;
 
