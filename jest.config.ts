@@ -29,8 +29,7 @@ const config: Config = {
     "<rootDir>/components/ui/*",
   ],
   moduleNameMapper: {
-    "@/app/lib/amplify-utils": "<rootDir>/app/lib/__mocks__/amplify-utils.ts",
-    "@/app/*": ["./app/*"],
+    "^@/(.*)$": "<rootDir>/$1",
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testMatch: ["<rootDir>/app/**/*.test.[jt]s?(x)"],
