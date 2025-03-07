@@ -49,8 +49,6 @@ export async function fetchPrompt(id: string) {
     throw new Error(errors[0].message);
   }
 
-  console.log(prompt);
-
   if (!prompt) {
     throw new Error("Prompt not found");
   }

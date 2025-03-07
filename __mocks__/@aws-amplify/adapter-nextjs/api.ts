@@ -15,11 +15,15 @@ export const mockPrompt = {
   updatedAt: "2024-01-01",
 };
 
+export const getPromptMock = jest
+  .fn()
+  .mockReturnValue(Promise.resolve({ data: mockPrompt }));
+
 export const generateServerClientUsingCookies = jest.fn().mockReturnValue({
   models: {
     prompt: {
       list: jest.fn(),
-      get: jest.fn().mockReturnValue(Promise.resolve({ data: mockPrompt })),
+      get: getPromptMock,
     },
   },
 });

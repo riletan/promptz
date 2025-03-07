@@ -1,7 +1,10 @@
 import { describe, expect, test, jest, beforeEach } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import Prompt from "@/app/ui/prompts/prompt";
-import { mockPrompt } from "@/__mocks__/@aws-amplify/adapter-nextjs/api";
+import {
+  getPromptMock,
+  mockPrompt,
+} from "@/__mocks__/@aws-amplify/adapter-nextjs/api";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -27,5 +30,33 @@ describe("Prompt Component", () => {
     mockPrompt.tags.forEach((tag) => {
       expect(screen.getByText(tag)).toBeInTheDocument();
     });
+  });
+
+  test("renders prompt without sourceurl correctly", async () => {
+    const mockPromptWithoutSourceUrl = { ...mockPrompt };
+    mockPromptWithoutSourceUrl.sourceURL = "";
+
+    getPromptMock.mockReturnValueOnce(
+      Promise.resolve({ data: mockPromptWithoutSourceUrl }),
+    );
+
+    render(await Prompt({ promptId: "123" }));
+
+    // Verify basic content rendering
+    expect(screen.queryByText(mockPrompt.sourceURL)).not.toBeInTheDocument();
+  });
+
+  test("renders private badge", async () => {
+    const privateMockPrompt = { ...mockPrompt };
+    privateMockPrompt.public = false;
+
+    getPromptMock.mockReturnValueOnce(
+      Promise.resolve({ data: privateMockPrompt }),
+    );
+
+    render(await Prompt({ promptId: "123" }));
+
+    // Verify basic content rendering
+    expect(screen.getByText("Private")).toBeInTheDocument();
   });
 });
