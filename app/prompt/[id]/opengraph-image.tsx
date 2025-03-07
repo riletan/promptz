@@ -3,7 +3,8 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export const alt = "PROMPTZ - The Ultimate Prompt Hub for Amazon Q Developer";
+export const alt =
+  "Image of a community prompt for Amazon Q Developer from promptz.dev";
 export const size = {
   width: 1200,
   height: 630,
@@ -37,7 +38,7 @@ export default async function Image({ params }: { params: { id: string } }) {
             style={{ marginRight: "20px" }}
             src="https://promptz.dev/images/promptz_logo.png"
             width="40"
-            alt="Amazon Q Developer Logo"
+            alt="Promptz logo"
           ></img>
           <div style={{ color: "white", fontSize: 24, fontWeight: "bold" }}>
             PROMPTZ

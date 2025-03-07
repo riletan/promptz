@@ -12,16 +12,12 @@ export async function generateMetadata(
   // Fetch prompt data
   const prompt = await fetchPrompt(params.id);
 
-  // Optionally access and extend parent metadata
-  const previousImages = (await parent).openGraph?.images || [];
-
   return {
     title: prompt.title,
     description: prompt.description,
     openGraph: {
       title: prompt.title,
       description: prompt.description,
-      images: [...previousImages],
     },
   };
 }
