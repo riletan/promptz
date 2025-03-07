@@ -19,11 +19,17 @@ export const getPromptMock = jest
   .fn()
   .mockReturnValue(Promise.resolve({ data: mockPrompt }));
 
+export const createPromptMock = jest.fn().mockReturnValue(Promise.resolve({}));
+export const updatePromptMock = jest.fn().mockReturnValue(Promise.resolve({}));
+
 export const generateServerClientUsingCookies = jest.fn().mockReturnValue({
   models: {
     prompt: {
       list: jest.fn(),
       get: getPromptMock,
+      create: createPromptMock,
+      update: updatePromptMock,
+      delete: jest.fn(),
     },
   },
 });

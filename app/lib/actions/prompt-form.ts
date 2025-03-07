@@ -43,8 +43,6 @@ export async function onSubmitAction(
     sourceURL: data.get("sourceURL") as string,
   };
 
-  console.log(formData);
-
   const mode = formData.id ? "update" : "create";
   formData.id = formData.id || uuidv4();
 
