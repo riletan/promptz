@@ -11,6 +11,12 @@
 - **Form Handling**: React Hook Form 7.54.2 with Zod 3.24.2 validation
 - **Notifications**: Sonner 1.7.4
 - **Theming**: next-themes 0.4.4
+- **Clipboard**: Browser Clipboard API
+
+### Integration
+
+- **MCP Server**: Model Context Protocol server for AI assistant integration
+- **API Access**: GraphQL API access via API key authentication
 
 ### Backend
 
@@ -115,6 +121,13 @@ promptz/
 - Comprehensive test coverage for components
 - Reusable patterns across the application
 
+### 6. MCP Server Integration
+
+- Model Context Protocol server for AI assistant integration
+- Provides access to prompt repository via GraphQL API
+- Configuration page for easy setup
+- API key authentication for secure access
+
 ## Technical Constraints
 
 ### 1. AWS Ecosystem Integration
@@ -161,6 +174,7 @@ promptz/
 - AWS AppSync for GraphQL API
 - Amazon DynamoDB for data storage
 - AWS Lambda for serverless functions
+- MCP server for AI assistant integration
 
 ## Deployment Strategy
 

@@ -63,6 +63,13 @@
 - Password reset flow with email confirmation
 - Protected routes redirect to login
 
+### MCP Server Integration
+
+- MCP server configuration page provides API URL and API Key
+- Copy-to-clipboard functionality for configuration details
+- Configuration snippet for easy setup in MCP settings
+- Dark theme UI for better readability of configuration details
+
 ### Prompt Management
 
 - Prompts have title, description, instruction, and optional howto
@@ -130,6 +137,7 @@
 - Form validation using React Hook Form with Zod schemas
 - Complex validation with custom error messages
 - Form state management with useActionState hook
+- Copy-to-clipboard functionality for sharing configuration and code snippets
 
 ### Search and Filtering
 
@@ -155,6 +163,7 @@
 - Monitor DynamoDB capacity
 - Consider caching strategies as data grows
 - Plan for increased user authentication load
+- Prepare for MCP server scaling as adoption increases
 
 ### Feature Expansion
 
@@ -162,3 +171,4 @@
 - Advanced search and filtering
 - Analytics and insights
 - Integration capabilities
+- Enhanced MCP server features (custom tools, resource templates)

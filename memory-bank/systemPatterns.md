@@ -10,11 +10,14 @@ flowchart TD
     API[AWS AppSync API]
     Auth[Amazon Cognito]
     DB[DynamoDB]
+    MCP[MCP Server]
 
     Client <--> API
     Client <--> Auth
     API <--> DB
     API --> Auth
+    Client <--> MCP
+    MCP <--> API
 ```
 
 ## Core Design Patterns
@@ -144,6 +147,27 @@ The application uses GraphQL via AWS AppSync with the following core operations:
 - `updateDraft(input: UpdateDraftInput!): Draft`
 - `deleteDraft(id: ID!): Draft`
 
+### MCP Server Integration
+
+The application implements Model Context Protocol (MCP) server integration to enable AI assistants to access prompt data:
+
+```mermaid
+flowchart TD
+    AI[AI Assistant]
+    MCP[MCP Server]
+    API[Promptz API]
+
+    AI <--> MCP
+    MCP <--> API
+    API --> Prompts[Prompt Repository]
+```
+
+The MCP server configuration provides:
+
+- API URL for connecting to the Promptz GraphQL endpoint
+- API Key for authentication
+- Configuration snippet for easy setup
+
 ### Server Actions
 
 The application implements the following server actions for data operations:
@@ -205,3 +229,4 @@ The search and filter system follows these steps:
 3. **Input Validation**: All user inputs are validated before processing
 4. **HTTPS**: All communication is encrypted in transit
 5. **Resource Protection**: DynamoDB tables have appropriate access controls
+6. **API Key Authentication**: MCP server uses API key for secure access to prompt data

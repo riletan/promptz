@@ -2,16 +2,19 @@
 
 ## Current Focus
 
-The project is currently in the initial development phase with a strong focus on enhancing the prompt discovery and filtering functionality. The primary focus areas are:
+The project is currently in the initial development phase with a strong focus on enhancing the prompt discovery and filtering functionality, as well as adding MCP (Model Context Protocol) server integration. The primary focus areas are:
 
-1. **Search and Filtering**: Implementing and refining search capabilities and filters for prompt discovery
-2. **Prompt Management**: Refining CRUD operations and improving the user experience for prompt creation, editing, and sharing
-3. **UI Components**: Enhancing prompt-related UI components for better usability
-4. **Core Platform Setup**: Continuing to establish the Next.js application with AWS Amplify backend
-5. **Authentication System**: Refining user authentication with Amazon Cognito
+1. **MCP Server Integration**: Implementing MCP server configuration and connection capabilities
+2. **Search and Filtering**: Implementing and refining search capabilities and filters for prompt discovery
+3. **Prompt Management**: Refining CRUD operations and improving the user experience for prompt creation, editing, and sharing
+4. **UI Components**: Enhancing prompt-related UI components for better usability
+5. **Core Platform Setup**: Continuing to establish the Next.js application with AWS Amplify backend
+6. **Authentication System**: Refining user authentication with Amazon Cognito
 
 ## Recent Developments
 
+- Implemented MCP server configuration page to enable integration with AI assistants
+- Created copy-to-clipboard functionality for MCP server configuration details
 - Implemented search and filtering functionality for prompts with text search and tag-based filtering
 - Enhanced prompt management functionality with improved form components
 - Implemented draft system for saving work-in-progress prompts
@@ -23,13 +26,14 @@ The project is currently in the initial development phase with a strong focus on
 
 ## Current Challenges
 
-1. **Search and Filter Optimization**: Improving search relevance and filter performance
-2. **Prompt Management UX**: Creating an intuitive and efficient interface for prompt creation and editing
-3. **Data Modeling**: Continuing to refine the prompt data model to support all required use cases
-4. **Code Migration**: Updating legacy code to use the new component structure and server actions
-5. **Performance Optimization**: Ensuring efficient data fetching and rendering for prompt operations
-6. **Testing Coverage**: Expanding test coverage for prompt-related components and filter functionality
-7. **Authentication Flow**: Addressing edge cases in authentication experience with proper error handling
+1. **MCP Server Integration**: Ensuring seamless integration with various AI assistants
+2. **Search and Filter Optimization**: Improving search relevance and filter performance
+3. **Prompt Management UX**: Creating an intuitive and efficient interface for prompt creation and editing
+4. **Data Modeling**: Continuing to refine the prompt data model to support all required use cases
+5. **Code Migration**: Updating legacy code to use the new component structure and server actions
+6. **Performance Optimization**: Ensuring efficient data fetching and rendering for prompt operations
+7. **Testing Coverage**: Expanding test coverage for prompt-related components and filter functionality
+8. **Authentication Flow**: Addressing edge cases in authentication experience with proper error handling
 
 ## Decision Points
 
@@ -55,12 +59,13 @@ The project is currently in the initial development phase with a strong focus on
 
 ### Short-term (Current Sprint)
 
-1. Enhance search and filtering capabilities with additional filter options
-2. Optimize filter performance and search relevance
-3. Complete prompt editing functionality with improved validation
-4. Implement advanced prompt creation features
-5. Enhance test coverage for filter-related components
-6. Address authentication edge cases and error handling
+1. Complete MCP server integration with documentation and testing
+2. Enhance search and filtering capabilities with additional filter options
+3. Optimize filter performance and search relevance
+4. Complete prompt editing functionality with improved validation
+5. Implement advanced prompt creation features
+6. Enhance test coverage for filter-related components
+7. Address authentication edge cases and error handling
 
 ### Medium-term (Next 2-3 Sprints)
 

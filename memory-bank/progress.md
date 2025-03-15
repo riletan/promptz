@@ -10,6 +10,7 @@
 - ✅ Testing framework with Jest and React Testing Library
 - ✅ CI/CD setup with GitHub Actions
 - ✅ Sandbox environment deployment
+- ✅ MCP server configuration page
 
 ### Authentication
 
@@ -28,6 +29,7 @@
 - ✅ Landing page components
 - ✅ Theme support (light/dark mode)
 - ✅ Responsive layout
+- ✅ Copy-to-clipboard functionality
 
 ### Prompt Management
 
@@ -44,6 +46,11 @@
 - ✅ Filter system for tags, categories, and SDLC activities
 
 ## In Progress Features
+
+### Integration Features
+
+- 🔄 MCP server integration with AI assistants
+- 🔄 API documentation and usage examples
 
 ### Prompt Management
 
@@ -77,6 +84,7 @@
 - 📝 Recommendation engine
 - 📝 IDE integration capabilities
 - 📝 Export/import functionality
+- 📝 Advanced MCP server features and integrations
 
 ### Platform Growth
 
