@@ -66,6 +66,7 @@ import SelectableTags from "@/app/ui/prompts/selectable-tag";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
+import { PromptTextarea } from "@/app/ui/prompts/prompt-textarea";
 
 interface PromptFormProps {
   prompt?: Prompt;
@@ -359,20 +360,10 @@ export default function PromptForm({ prompt }: PromptFormProps) {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <FormField
-                  control={form.control}
+                <PromptTextarea
                   name="instruction"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Textarea
-                          className="min-h-[450px] text-white placeholder-white placeholder-opacity-50"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage>{state.errors?.instruction}</FormMessage>
-                    </FormItem>
-                  )}
+                  description="Type @ to add placeholders for workspace, folders, or files that must be added to the prompt context."
+                  placeholder="Write your prompt here..."
                 />
               </CardContent>
             </Card>

@@ -270,17 +270,58 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
             class="p-6 pt-0 space-y-4"
           >
             <div
-              class="space-y-2"
+              class="space-y-2 relative"
             >
-              <textarea
+              <div
                 aria-describedby=":r8:-form-item-description"
                 aria-invalid="false"
-                class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[450px] text-white placeholder-opacity-50"
+                class="relative"
                 id=":r8:-form-item"
-                name="instruction"
               >
-                What is the meaning of life?
-              </textarea>
+                <textarea
+                  class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[250px] resize-y"
+                  name="instruction"
+                  placeholder="Write your prompt here..."
+                >
+                  What is the meaning of life?
+                </textarea>
+                <button
+                  aria-controls="radix-:r9:"
+                  aria-expanded="false"
+                  aria-haspopup="dialog"
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 absolute opacity-0 pointer-events-none"
+                  data-state="closed"
+                  role="combobox"
+                  style="top: 0px; left: 0px;"
+                  type="button"
+                >
+                  <svg
+                    class="lucide lucide-chevrons-up-down ml-2 h-4 w-4 shrink-0 opacity-50"
+                    fill="none"
+                    height="24"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m7 15 5 5 5-5"
+                    />
+                    <path
+                      d="m7 9 5-5 5 5"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <p
+                class="text-sm text-muted-foreground"
+                id=":r8:-form-item-description"
+              >
+                Type @ to add placeholders for workspace, folders, or files that must be added to the prompt context.
+              </p>
             </div>
           </div>
         </div>
@@ -334,10 +375,10 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
           class="space-y-2"
         >
           <textarea
-            aria-describedby=":r9:-form-item-description"
+            aria-describedby=":ra:-form-item-description"
             aria-invalid="false"
             class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[200px] text-white placeholder-opacity-50"
-            id=":r9:-form-item"
+            id=":ra:-form-item"
             name="howto"
           >
             this is cool
@@ -377,7 +418,7 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
         Save Prompt
       </button>
       <button
-        aria-controls="radix-:ra:"
+        aria-controls="radix-:rb:"
         aria-expanded="false"
         aria-haspopup="dialog"
         class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 h-9 px-4 py-2 ml-auto"
