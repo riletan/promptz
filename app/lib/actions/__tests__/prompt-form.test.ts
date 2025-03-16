@@ -57,6 +57,7 @@ describe("onSubmitAction", () => {
       {
         id: id,
         name: "Updated Prompt",
+        slug: "updated-prompt",
         description: "Updated Description",
         howto: "Updated How To",
         instruction: "Updated Instruction",

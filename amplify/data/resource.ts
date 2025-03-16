@@ -16,6 +16,7 @@ const schema = a
       .model({
         id: a.id().required(),
         name: a.string().required(),
+        slug: a.string().required(),
         description: a.string().required(),
         tags: a.string().array(),
         instruction: a.string().required(),

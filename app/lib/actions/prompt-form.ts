@@ -8,6 +8,7 @@ import { promptFormSchema } from "@/app/lib/definitions";
 import { redirect } from "next/navigation";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { revalidatePath } from "next/cache";
+import { slugify } from "@/app/lib/formatter";
 
 export type FormState = {
   errors?: {
@@ -58,6 +59,7 @@ export async function onSubmitAction(
   const payload = {
     id: parsed.data.id!,
     name: parsed.data.title,
+    slug: slugify(parsed.data.title),
     description: parsed.data.description,
     howto: parsed.data.howto,
     instruction: parsed.data.instruction,
