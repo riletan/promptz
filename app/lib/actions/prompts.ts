@@ -63,9 +63,7 @@ export async function searchPrompts(
     // Validate search params
     const validatedParams = searchParamsSchema.parse(params);
 
-    // Base filter
-    let filter: FilterCondition = {};
-
+    const filter: FilterCondition = {};
     const facets: FilterCondition[] = [];
 
     // Handle user-specific filter
