@@ -64,11 +64,17 @@ export async function searchPrompts(
     const validatedParams = searchParamsSchema.parse(params);
 
     // Base filter
-    const filter: FilterCondition = {
-      public: { eq: true },
-    };
+    let filter: FilterCondition = {};
 
     const facets: FilterCondition[] = [];
+
+    // Handle user-specific filter
+    if (validatedParams.my) {
+      const user = await fetchCurrentAuthUser();
+      facets.push({ owner: { eq: `${user.id}::${user.username}` } });
+    } else {
+      filter.public = { eq: true };
+    }
 
     // Build query filter
     if (validatedParams.query) {
@@ -95,12 +101,6 @@ export async function searchPrompts(
         ? params.sdlc
         : [params.sdlc];
       facets.push(...buildTagFilter(sdlcParams));
-    }
-
-    // Handle user-specific filter
-    if (validatedParams.my) {
-      const user = await fetchCurrentAuthUser();
-      facets.push({ owner: { eq: `${user.id}::${user.username}` } });
     }
 
     // Add facets to filter
