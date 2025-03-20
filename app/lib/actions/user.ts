@@ -40,6 +40,7 @@ export async function fetchFavoritePrompts(userId: string): Promise<Prompt[]> {
         author: p.prompt.owner_username,
         authorId: p.prompt.owner || "",
         tags: p.prompt.tags || [],
+        slug: p.prompt.slug || "",
         instruction: p.prompt.instruction,
         howto: p.prompt.howto || "",
         public: p.prompt.public || false,
