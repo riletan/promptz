@@ -1,4 +1,4 @@
-import AttributeCard from "@/app/ui/prompts/attribute-card";
+import HowTo from "@/app/ui/prompts/howto";
 import { describe, expect, test } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
@@ -12,7 +12,7 @@ describe("AttributeCard", () => {
   };
 
   test("renders the card with all provided props", () => {
-    render(<AttributeCard {...defaultProps} />);
+    render(<HowTo {...defaultProps} />);
 
     // Check if title is rendered
     expect(screen.getByText("Test Title")).toBeInTheDocument();

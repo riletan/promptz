@@ -1,8 +1,7 @@
 import Author from "@/app/ui/prompts/author";
 import Tags from "@/app/ui/prompts/tags";
 import { HelpCircle, Terminal } from "lucide-react";
-import AttributeCard from "@/app/ui/prompts/attribute-card";
-import AttributeCardCopy from "@/app/ui/prompts/attribute-card-copy";
+import PromptInstruction from "@/app/ui/prompts/prompt-instruction";
 import CopyClipBoardButton from "@/app/ui/prompts/copy-clipboard";
 import EditPromptButton from "@/app/ui/prompts/edit-prompt-button";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
@@ -11,6 +10,7 @@ import StarPromptButton from "@/app/ui/prompts/star-prompt";
 import { isStarredByUser } from "@/app/lib/actions/stars";
 import { PromptSource } from "@/app/ui/prompts/prompt-source";
 import { Prompt } from "@/app/lib/definitions";
+import HowTo from "@/app/ui/prompts/howto";
 
 interface PromptProps {
   prompt: Prompt;
@@ -64,21 +64,28 @@ export default async function PromptDetail(props: PromptProps) {
           </Badge>
         </div>
       </div>
-      {props.prompt.howto && (
-        <AttributeCard
-          title="How to Use"
-          icon={HelpCircle}
-          text={props.prompt.howto}
-        />
-      )}
-
-      {props.prompt.instruction && (
-        <AttributeCardCopy
-          title="Prompt"
-          icon={Terminal}
-          text={props.prompt.instruction}
-        />
-      )}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {props.prompt.instruction && (
+          <div
+            className={`overflow-hidden gap-4 ${props.prompt.howto ? "lg:col-span-2" : "lg:col-span-3"}`}
+          >
+            <PromptInstruction
+              title="Prompt"
+              icon={Terminal}
+              text={props.prompt.instruction!}
+            />
+          </div>
+        )}
+        {props.prompt.howto && (
+          <div className="lg:col-span-1">
+            <HowTo
+              title="How to Use"
+              icon={HelpCircle}
+              text={props.prompt.howto}
+            />
+          </div>
+        )}
+      </div>
 
       {props.prompt.sourceURL && <PromptSource url={props.prompt.sourceURL} />}
     </div>

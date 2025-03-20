@@ -7,11 +7,7 @@ interface AttributeProps {
   icon: LucideIcon;
 }
 
-export default function AttributeCard({
-  title,
-  text,
-  icon: Icon,
-}: AttributeProps) {
+export default function HowTo({ title, text, icon: Icon }: AttributeProps) {
   return (
     <Card className="mb-8">
       <CardHeader className="flex flex-row items-center gap-2">
@@ -19,7 +15,9 @@ export default function AttributeCard({
         <h2 className="text-xl font-semibold">{title}</h2>
       </CardHeader>
       <CardContent>
-        <pre className="text-gray-400">{text}</pre>
+        <div className="text-neutral-400 text-sm whitespace-pre-wrap">
+          {text}
+        </div>
       </CardContent>
     </Card>
   );
