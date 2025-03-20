@@ -28,6 +28,7 @@ const schema = a
       })
       .secondaryIndexes((index) => [
         index("slug").queryField("listBySlug").name("slugIndex"),
+        index("name").queryField("listByName").name("nameIndex"),
       ])
       .authorization((allow) => [
         allow.publicApiKey(), //TODO: verify if public user can do more than reading
