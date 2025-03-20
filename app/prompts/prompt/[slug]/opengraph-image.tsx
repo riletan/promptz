@@ -1,4 +1,5 @@
 import { fetchPromptBySlug } from "@/app/lib/actions/prompts";
+import { notFound } from "next/navigation";
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
@@ -13,6 +14,10 @@ export const contentType = "image/png";
 
 export default async function Image({ params }: { params: { slug: string } }) {
   const prompt = await fetchPromptBySlug(params.slug);
+
+  if (!prompt) {
+    notFound();
+  }
 
   return new ImageResponse(
     (
