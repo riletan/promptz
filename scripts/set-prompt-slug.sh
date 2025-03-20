@@ -44,8 +44,12 @@ aws dynamodb scan \
         id=$(echo $item | jq -r '.id.S')
         title=$(echo $item | jq -r '.name.S')
 
-        # Generate slug from title
-        slug=$(slugify "$title")
+        # Get the first segment of the UUID (before first hyphen)
+        id_prefix=$(echo $id | cut -d'-' -f1)
+
+        # Generate slug from title and append the ID prefix
+        base_slug=$(slugify "$title")
+        slug="${base_slug}-${id_prefix}"
 
         # Update the item with new slug attribute
         aws dynamodb update-item \
