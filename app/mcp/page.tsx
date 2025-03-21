@@ -24,7 +24,7 @@ export default function MCPSettingsPage() {
   "command": "npx",
   "args": [
     "-y",
-    "@promptz.dev/mcp"
+    "@promptz/mcp"
   ],
   "env": {
     "API_URL": "${apiUrl}",
