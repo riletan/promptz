@@ -1,14 +1,14 @@
-import Author from "@/app/ui/prompts/author";
-import Tags from "@/app/ui/prompts/tags";
+import Author from "@/app/ui/common/author";
+import Tags from "@/app/ui/common/tags";
 import { HelpCircle, Terminal } from "lucide-react";
 import PromptInstruction from "@/app/ui/prompts/prompt-instruction";
-import CopyClipBoardButton from "@/app/ui/prompts/copy-clipboard";
+import CopyClipBoardButton from "@/app/ui/common/copy-clipboard";
 import EditPromptButton from "@/app/ui/prompts/edit-prompt-button";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { Badge } from "@/components/ui/badge";
 import StarPromptButton from "@/app/ui/prompts/star-prompt";
 import { isStarredByUser } from "@/app/lib/actions/stars";
-import { PromptSource } from "@/app/ui/prompts/prompt-source";
+import { SourceURL } from "@/app/ui/common/source-url";
 import { Prompt } from "@/app/lib/definitions";
 import HowTo from "@/app/ui/prompts/howto";
 
@@ -87,7 +87,7 @@ export default async function PromptDetail(props: PromptProps) {
         )}
       </div>
 
-      {props.prompt.sourceURL && <PromptSource url={props.prompt.sourceURL} />}
+      {props.prompt.sourceURL && <SourceURL url={props.prompt.sourceURL} />}
     </div>
   );
 }
