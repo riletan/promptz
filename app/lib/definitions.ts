@@ -177,7 +177,7 @@ export const projectRuleFormSchema = z.object({
     .string()
     .trim()
     .min(10, "Content must be more than 10 characters")
-    .max(10000, "Content must be less than 10000 characters"),
+    .max(20000, "Content must be less than 20000 characters"),
   tags: tagSchema,
   public: publicSchema,
 });
