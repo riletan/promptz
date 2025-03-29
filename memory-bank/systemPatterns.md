@@ -59,11 +59,20 @@ flowchart TD
     Main --> PromptList[Prompt List]
     Main --> PromptDetail[Prompt Detail]
     Main --> PromptForm[Prompt Form]
+    Main --> ProjectRulesList[Project Rules List]
+    Main --> ProjectRuleDetail[Project Rule Detail]
+    Main --> ProjectRuleForm[Project Rule Form]
 
     PromptList --> PromptCard[Prompt Card]
     PromptCard --> Tags[Tags]
     PromptCard --> Author[Author]
     PromptCard --> StarButton[Star Button]
+    PromptCard --> PopularityIndicator[Popularity Indicator]
+
+    ProjectRulesList --> ProjectRuleCard[Project Rule Card]
+    ProjectRuleCard --> Tags
+    ProjectRuleCard --> Author
+    ProjectRuleCard --> DownloadButton[Download Button]
 ```
 
 ## Design Patterns
@@ -87,15 +96,56 @@ flowchart TD
 - **Protected Routes**: Middleware for route protection
 - **Role-Based Access**: Different capabilities for authenticated users
 
+### New Feature Patterns
+
+#### Project Rules Management
+
+```mermaid
+flowchart TD
+    User[User] --> Create[Create Rule]
+    User --> Browse[Browse Rules]
+    User --> Download[Download Rule]
+
+    Create --> Validation[Validate Rule]
+    Validation --> Storage[Store Rule]
+
+    Browse --> Filter[Filter Rules]
+    Filter --> Display[Display Rules]
+
+    Download --> Format[Format as Markdown]
+    Format --> Deliver[Deliver File]
+```
+
+#### Popularity Tracking
+
+```mermaid
+flowchart TD
+    UserInteraction[User Interaction] --> CopyAction[Copy Action]
+    UserInteraction --> StarAction[Star Action]
+
+    CopyAction --> UpdateCopyCount[Update Copy Count]
+    StarAction --> UpdateStarCount[Update Star Count]
+
+    UpdateCopyCount --> CalculateScore[Calculate Popularity Score]
+    UpdateStarCount --> CalculateScore
+
+    ScheduledJob[Scheduled Job] --> RecalculateAllScores[Recalculate All Scores]
+    RecalculateAllScores --> UpdateDatabase[Update Database]
+
+    CalculateScore --> DisplayIndicator[Display Popularity Indicator]
+```
+
 ## Testing Strategy
 
 - **Unit Testing**: Jest for testing individual components and functions
 - **Component Testing**: React Testing Library for component behavior
 - **Snapshot Testing**: For UI component verification
 - **Mock Services**: For testing components with external dependencies
+- **Coverage Reporting**: Jest coverage reporting in CI/CD pipeline
 
 ## Deployment and Infrastructure
 
 - **AWS Amplify**: For hosting, authentication, and data storage
-- **CI/CD Pipeline**: Automated testing and deployment
+- **CI/CD Pipeline**: Automated testing and deployment via GitHub Actions
 - **Environment Configuration**: Different settings for development, testing, and production
+- **Scheduled Jobs**: AWS Step Functions for periodic tasks like popularity score calculation

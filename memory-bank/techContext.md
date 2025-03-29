@@ -18,6 +18,7 @@
 - **Authentication**: AWS Cognito via Amplify
 - **Database**: AWS DynamoDB (via Amplify)
 - **Storage**: AWS S3 (via Amplify)
+- **Scheduled Jobs**: AWS Step Functions (for popularity score calculation)
 
 ### Infrastructure
 
@@ -64,12 +65,18 @@
 4. Build process
 5. Deployment to AWS Amplify
 
+### CI/CD Improvements
+
+- Jest coverage reporting in pull requests
+- Automated validation checks
+- Performance optimization
+
 ## Testing Framework
 
 - **Unit Testing**: Jest
 - **Component Testing**: React Testing Library
 - **E2E Testing**: Cypress (if implemented)
-- **Test Coverage**: Jest Coverage
+- **Test Coverage**: Jest Coverage with reporting in CI/CD
 
 ## Key Dependencies
 
@@ -100,6 +107,41 @@
 - husky (git hooks)
 - lint-staged
 
+## Data Models
+
+### Prompt Model
+
+```typescript
+type Prompt = {
+  id: string;
+  title: string;
+  description: string;
+  content: string;
+  tags: string[];
+  isPublic: boolean;
+  sourceURL?: string;
+  owner_username: string;
+  copyCount: number;
+  starCount: number;
+  popularityScore: number;
+};
+```
+
+### Project Rule Model
+
+```typescript
+type ProjectRule = {
+  id: string;
+  title: string;
+  description: string;
+  content: string;
+  tags: string[];
+  isPublic: boolean;
+  sourceURL?: string;
+  owner_username: string;
+};
+```
+
 ## Performance Considerations
 
 - Server Components for improved initial load
@@ -107,6 +149,7 @@
 - Code splitting and lazy loading
 - Optimized bundle sizes
 - Caching strategies
+- Efficient popularity tracking implementation
 
 ## Security Measures
 

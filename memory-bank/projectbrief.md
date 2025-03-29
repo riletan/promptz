@@ -2,7 +2,7 @@
 
 ## Overview
 
-Promptz is a platform for creating, sharing, and discovering AI prompts. It allows users to browse, create, and manage prompts for various AI applications. The platform includes user authentication, prompt management, and social features like favoriting prompts.
+Promptz is a platform for creating, sharing, and discovering AI prompts and project rules. It allows users to browse, create, and manage prompts for various AI applications, as well as share Amazon Q Developer project rules that help enforce coding standards and best practices. The platform includes user authentication, content management, and social features like favoriting prompts and tracking popularity.
 
 ## Core Requirements
 
@@ -19,11 +19,19 @@ Promptz is a platform for creating, sharing, and discovering AI prompts. It allo
 - Filter prompts by tags and other criteria
 - Copy prompts to clipboard
 
+### Project Rules Management
+
+- Create, edit, and delete project rules
+- Browse and search for project rules
+- Filter rules by tags and other criteria
+- Download rules as markdown files
+
 ### Social Features
 
 - Star/favorite prompts
 - View favorite prompts
 - Author attribution
+- Popularity tracking for prompts
 
 ### MCP Integration
 
@@ -35,15 +43,19 @@ Promptz is a platform for creating, sharing, and discovering AI prompts. It allo
 - Implement secure authentication
 - Create an intuitive user interface
 - Ensure good performance and SEO
+- Implement robust CI/CD pipeline
 
 ## Target Audience
 
 - AI enthusiasts
 - Prompt engineers
+- Development teams
 - General users looking for effective prompts
+- Teams looking to standardize coding practices
 
 ## Success Metrics
 
-- User engagement (signups, prompt creation)
-- Prompt usage and sharing
+- User engagement (signups, content creation)
+- Prompt and rule usage and sharing
 - Platform growth and retention
+- Popularity of content (copy and star counts)

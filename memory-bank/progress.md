@@ -36,25 +36,41 @@
 - ✅ Landing page components
 - ✅ Search and filter components
 
-## In Progress
-
 ### MCP Integration
 
-- 🔄 MCP page implementation
-- 🔄 MCP server connections
-- 🔄 MCP tool usage interface
+- ✅ MCP page implementation
+- ✅ MCP server connections
+- ✅ MCP tool usage interface
 
-### Landing Page Enhancements
+## In Progress
 
-- 🔄 Benefits section refinement
-- 🔄 User onboarding improvements
+### Project Rules Feature
 
-### Prompt Management
+- 🔄 Data model for project rules
+- 🔄 CRUD operations for project rules
+- 🔄 UI for browsing and managing project rules
+- 🔄 Authorization rules for project rules
 
-- 🔄 Enhanced prompt actions
-- 🔄 Additional prompt metadata
+### Popularity Tracking
+
+- 🔄 Data model updates for tracking copy and star counts
+- 🔄 Interaction tracking implementation
+- 🔄 Popularity score calculation
+- 🔄 UI indicators for popular prompts
+
+### CI/CD Improvements
+
+- 🔄 GitHub Actions workflow optimization
+- 🔄 Jest coverage reporting
+- 🔄 Pull request validation
 
 ## Planned Features
+
+### Project Rules Enhancements
+
+- ⬜ Download functionality for project rules
+- ⬜ OpenGraph image generation for project rules
+- ⬜ Social sharing optimization
 
 ### User Experience
 
@@ -66,7 +82,6 @@
 ### Social Features
 
 - ⬜ Comments on prompts
-- ⬜ Prompt ratings
 - ⬜ User following
 - ⬜ Prompt collections/lists
 
@@ -75,7 +90,7 @@
 - ⬜ Analytics dashboard
 - ⬜ Admin tools
 - ⬜ Featured prompts section
-- ⬜ Trending prompts
+- ⬜ Trending prompts based on popularity scores
 
 ### Technical Improvements
 
@@ -104,23 +119,25 @@
 
 ## Current Status
 
-The project is in active development with core functionality implemented. The focus is currently on enhancing the MCP integration and improving the landing page experience. The application is functional for basic prompt creation, browsing, and management.
+The project is in active development with core functionality implemented. The current focus is on implementing the Project Rules feature and Popularity Tracking system. The MCP integration has been completed, and work is ongoing to improve the CI/CD pipeline.
 
 ## Next Milestones
 
-1. **Complete MCP Integration** - Target: TBD
+1. **Complete Project Rules Feature** - Target: TBD
 
-   - Finalize MCP page implementation
-   - Test with various MCP servers
-   - Document usage for users
+   - Finalize data model and schema
+   - Implement CRUD operations
+   - Create UI components for browsing and managing rules
+   - Add download functionality
 
-2. **Landing Page Optimization** - Target: TBD
+2. **Complete Popularity Tracking** - Target: TBD
 
-   - Complete benefits section
-   - Improve conversion flow
-   - Enhance visual appeal
+   - Update prompt model with new fields
+   - Implement interaction tracking
+   - Create scheduled job for popularity score calculation
+   - Add UI indicators for popular prompts
 
-3. **Prompt Discovery Enhancements** - Target: TBD
-   - Implement advanced filtering
-   - Add recommendations
-   - Optimize search performance
+3. **Enhance CI/CD Pipeline** - Target: TBD
+   - Improve test coverage
+   - Optimize workflow performance
+   - Add additional validation checks
