@@ -1,10 +1,16 @@
 "use client";
 
+import { Schema } from "@/amplify/data/resource";
 import { Button } from "@/components/ui/button";
+import { generateClient } from "aws-amplify/api";
 import { Download } from "lucide-react";
 import { useState } from "react";
 
 interface DownloadButtonProps {
+  /**
+   * The ID of the content to be downloaded
+   */
+  id: string;
   /**
    * The content to be downloaded
    */
@@ -37,10 +43,13 @@ interface DownloadButtonProps {
   label?: string;
 }
 
+const api = generateClient<Schema>();
+
 /**
  * A button component that triggers a download of content as a file
  */
 export function DownloadButton({
+  id,
   content,
   filename,
   variant = "outline",
@@ -52,7 +61,7 @@ export function DownloadButton({
   /**
    * Handles the click event to download the content
    */
-  const handleDownload = () => {
+  async function handleDownload() {
     setIsDownloading(true);
 
     try {
@@ -78,8 +87,11 @@ export function DownloadButton({
       console.error("Error downloading file:", error);
     } finally {
       setIsDownloading(false);
+      await api.mutations.publishRuleDownloaded({
+        ruleId: id,
+      });
     }
-  };
+  }
 
   return (
     <Button

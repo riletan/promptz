@@ -25,6 +25,8 @@ const schema = a
         public: a.boolean(),
         owner_username: a.string().required(),
         stars: a.hasMany("stars", "promptId"),
+        copyCount: a.integer().default(0),
+        starCount: a.integer().default(0),
       })
       .secondaryIndexes((index) => [
         index("slug").queryField("listBySlug").name("slugIndex"),
@@ -67,6 +69,86 @@ const schema = a
         allow.authenticated().to(["read"]),
         allow.owner().to(["create", "update", "delete"]),
       ]),
+    PromptCopied: a.customType({
+      promptId: a.id().required(),
+    }),
+    PromptStarred: a.customType({
+      promptId: a.id().required(),
+    }),
+    PromptUnstarred: a.customType({
+      promptId: a.id().required(),
+    }),
+    RuleCopied: a.customType({
+      ruleId: a.id().required(),
+    }),
+    RuleDownloaded: a.customType({
+      ruleId: a.id().required(),
+    }),
+    publishPromptCopied: a
+      .mutation()
+      .arguments({
+        promptId: a.id().required(),
+      })
+      .returns(a.ref("PromptCopied"))
+      .authorization((allow) => [allow.publicApiKey()])
+      .handler(
+        a.handler.custom({
+          dataSource: "PromptzEventBusDataSource",
+          entry: "./handler/publishPromptCopied.js",
+        }),
+      ),
+    publishRuleCopied: a
+      .mutation()
+      .arguments({
+        ruleId: a.id().required(),
+      })
+      .returns(a.ref("RuleCopied"))
+      .authorization((allow) => [allow.publicApiKey()])
+      .handler(
+        a.handler.custom({
+          dataSource: "PromptzEventBusDataSource",
+          entry: "./handler/publishRuleCopied.js",
+        }),
+      ),
+    publishRuleDownloaded: a
+      .mutation()
+      .arguments({
+        ruleId: a.id().required(),
+      })
+      .returns(a.ref("RuleDownloaded"))
+      .authorization((allow) => [allow.publicApiKey()])
+      .handler(
+        a.handler.custom({
+          dataSource: "PromptzEventBusDataSource",
+          entry: "./handler/publishRuleDownloaded.js",
+        }),
+      ),
+    publishPromptStarred: a
+      .mutation()
+      .arguments({
+        promptId: a.id().required(),
+      })
+      .returns(a.ref("PromptStarred"))
+      .authorization((allow) => [allow.publicApiKey()])
+      .handler(
+        a.handler.custom({
+          dataSource: "PromptzEventBusDataSource",
+          entry: "./handler/publishPromptStarred.js",
+        }),
+      ),
+    publishPromptUnstarred: a
+      .mutation()
+      .arguments({
+        promptId: a.id().required(),
+      })
+      .returns(a.ref("PromptUnstarred"))
+      .authorization((allow) => [allow.publicApiKey()])
+      .handler(
+        a.handler.custom({
+          dataSource: "PromptzEventBusDataSource",
+          entry: "./handler/publishPromptUnstarred.js",
+        }),
+      ),
   })
   .authorization((allow) => [allow.resource(postAuthenticationFunction)]);
 

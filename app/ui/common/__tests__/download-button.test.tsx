@@ -1,6 +1,7 @@
 import { describe, expect, test, beforeEach, jest } from "@jest/globals";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { DownloadButton } from "../download-button";
+import { publishRuleDownloadedMock } from "@/__mocks__/@aws-amplify/api";
 
 describe("DownloadButton", () => {
   const mockContent = "# Test Content\nThis is test content";
@@ -13,7 +14,9 @@ describe("DownloadButton", () => {
   });
 
   test("renders with default props", () => {
-    render(<DownloadButton content={mockContent} filename={mockFilename} />);
+    render(
+      <DownloadButton id="1" content={mockContent} filename={mockFilename} />,
+    );
 
     const button = screen.getByRole("button");
     expect(button).toBeInTheDocument();
@@ -23,6 +26,7 @@ describe("DownloadButton", () => {
   test("renders with custom label", () => {
     render(
       <DownloadButton
+        id="1"
         content={mockContent}
         filename={mockFilename}
         label="Custom Label"
@@ -37,7 +41,9 @@ describe("DownloadButton", () => {
     const appendChildSpy = jest.spyOn(document.body, "appendChild");
     const removeChildSpy = jest.spyOn(document.body, "removeChild");
 
-    render(<DownloadButton content={mockContent} filename={mockFilename} />);
+    render(
+      <DownloadButton id="1" content={mockContent} filename={mockFilename} />,
+    );
 
     fireEvent.click(screen.getByRole("button"));
 
@@ -46,18 +52,6 @@ describe("DownloadButton", () => {
     expect(removeChildSpy).toHaveBeenCalled();
     expect(URL.createObjectURL).toHaveBeenCalled();
     expect(URL.revokeObjectURL).toHaveBeenCalled();
+    expect(publishRuleDownloadedMock).toHaveBeenCalled();
   });
-
-  // test("adds .md extension if not present", () => {
-  //   const mockClickEvent = jest.fn();
-  //   Object.defineProperty(HTMLAnchorElement.prototype, "click", {
-  //     value: mockClickEvent,
-  //   });
-
-  //   render(<DownloadButton content={mockContent} filename="test-file" />);
-  //   fireEvent.click(screen.getByRole("button"));
-
-  //   const anchorElements = document.getElementsByTagName("a");
-  //   expect(anchorElements[0].download).toBe("test-file.md");
-  // });
 });

@@ -35,6 +35,11 @@ export enum QInterface {
   CONSOLE = "Management Console",
 }
 
+export enum ModelType {
+  PROMPT = "Prompt",
+  RULE = "Rule",
+}
+
 export enum ProjectRuleTag {
   NEXTJS = "NextJS",
   REACT = "React",
@@ -79,6 +84,9 @@ export type Prompt = {
   sourceURL?: string;
   createdAt?: string;
   updatedAt?: string;
+  copyCount?: number;
+  starCount?: number;
+  popularityScore?: number;
 };
 
 export type ProjectRule = {

@@ -6,6 +6,7 @@ import { Mail } from "lucide-react";
 
 describe("PromptInstruction", () => {
   const defaultProps = {
+    promptId: "test-id",
     title: "Test Title",
     text: "Test description text",
     icon: Mail,

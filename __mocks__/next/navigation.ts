@@ -1,8 +1,8 @@
 import { jest } from "@jest/globals";
-
+export const useRouterPush = jest.fn();
 export const redirect = jest.fn();
 export const useRouter = jest.fn().mockReturnValue({
-  push: jest.fn(),
+  push: useRouterPush,
   replace: jest.fn(),
   back: jest.fn(),
   forward: jest.fn(),

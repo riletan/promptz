@@ -1,14 +1,17 @@
+import { ModelType } from "@/app/lib/definitions";
 import CopyClipBoardButton from "@/app/ui/common/copy-clipboard";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
 
 interface PromptInstructionProps {
+  promptId: string;
   title: string;
   text: string;
   icon: LucideIcon;
 }
 
 export default function PromptInstruction({
+  promptId,
   title,
   text,
   icon: Icon,
@@ -20,7 +23,12 @@ export default function PromptInstruction({
           <Icon className="h-6 w-6 text-violet-400" />
           <h2 className="text-xl font-semibold">{title}</h2>
         </div>
-        <CopyClipBoardButton text={text} showButtonText={true} />
+        <CopyClipBoardButton
+          id={promptId}
+          type={ModelType.PROMPT}
+          text={text}
+          showButtonText={true}
+        />
       </CardHeader>
       <CardContent>
         <pre className="text-gray-400">{text}</pre>

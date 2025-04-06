@@ -3,30 +3,41 @@ import { auth } from "./auth/resource.js";
 import { data } from "./data/resource.js";
 import { aws_iam as iam, aws_logs as logs } from "aws-cdk-lib";
 import { ServicePrincipal, PolicyStatement } from "aws-cdk-lib/aws-iam";
+import { defineMessaging } from "./messaging/resource.js";
+import { defineWorkflows } from "./workflows/resource.js";
 
 const backend = defineBackend({
   auth,
   data,
 });
 
-const { cfnResources } = backend.auth.resources;
-const { cfnUserPool, cfnUserPoolClient } = cfnResources;
+const messaging = defineMessaging(backend);
+backend.data.addEventBridgeDataSource(
+  "PromptzEventBusDataSource",
+  messaging.eventBus,
+);
 
-cfnUserPool.addPropertyOverride(
+const dataResources = backend.data.resources;
+const authResources = backend.auth.resources;
+
+defineWorkflows(backend, messaging, dataResources.tables);
+
+authResources.cfnResources.cfnUserPool.addPropertyOverride(
   "Policies.SignInPolicy.AllowedFirstAuthFactors",
   ["PASSWORD", "EMAIL_OTP"],
 );
 
-cfnUserPoolClient.explicitAuthFlows = [
+authResources.cfnResources.cfnUserPoolClient.explicitAuthFlows = [
   "ALLOW_REFRESH_TOKEN_AUTH",
   "ALLOW_USER_AUTH",
 ];
 
 if (process.env["PROMPTZ_ENV"] !== "sandbox") {
-  cfnUserPool.deletionProtection = "ACTIVE";
+  authResources.cfnResources.cfnUserPool.deletionProtection = "ACTIVE";
 
-  const { cfnResources } = backend.data.resources;
-  for (const table of Object.values(cfnResources.amplifyDynamoDbTables)) {
+  for (const table of Object.values(
+    dataResources.cfnResources.amplifyDynamoDbTables,
+  )) {
     table.deletionProtectionEnabled = true;
     table.pointInTimeRecoveryEnabled = true;
   }
@@ -46,8 +57,8 @@ if (process.env["PROMPTZ_ENV"] !== "sandbox") {
     }),
   );
 
-  cfnResources.cfnGraphqlApi.xrayEnabled = true;
-  cfnResources.cfnGraphqlApi.logConfig = {
+  dataResources.cfnResources.cfnGraphqlApi.xrayEnabled = true;
+  dataResources.cfnResources.cfnGraphqlApi.logConfig = {
     fieldLogLevel: "INFO",
     excludeVerboseContent: true,
     cloudWatchLogsRoleArn: role.roleArn,
@@ -56,7 +67,7 @@ if (process.env["PROMPTZ_ENV"] !== "sandbox") {
   const logGroup = logs.LogGroup.fromLogGroupName(
     backend.stack,
     "AppsyncApiLogGroup",
-    `/aws/appsync/apis/${cfnResources.cfnGraphqlApi.attrApiId}`,
+    `/aws/appsync/apis/${dataResources.cfnResources.cfnGraphqlApi.attrApiId}`,
   );
 
   new logs.MetricFilter(backend.stack, "CreatePromptMetricFilter", {

@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import StarPromptButton from "@/app/ui/prompts/star-prompt";
 import { isStarredByUser } from "@/app/lib/actions/stars";
 import { SourceURL } from "@/app/ui/common/source-url";
-import { Prompt } from "@/app/lib/definitions";
+import { ModelType, Prompt } from "@/app/lib/definitions";
 import HowTo from "@/app/ui/prompts/howto";
 
 interface PromptProps {
@@ -45,7 +45,11 @@ export default async function PromptDetail(props: PromptProps) {
             <EditPromptButton slug={props.prompt.slug} />
           )}
           {props.prompt.instruction && (
-            <CopyClipBoardButton text={props.prompt.instruction} />
+            <CopyClipBoardButton
+              id={props.prompt.id!}
+              type={ModelType.PROMPT}
+              text={props.prompt.instruction}
+            />
           )}
         </div>
       </div>
@@ -71,6 +75,7 @@ export default async function PromptDetail(props: PromptProps) {
           >
             <PromptInstruction
               title="Prompt"
+              promptId={props.prompt.id!}
               icon={Terminal}
               text={props.prompt.instruction!}
             />

@@ -25,7 +25,7 @@ export default function StarPromptButton({
     if (user.guest) {
       router.push("/login");
     } else if (isStarred) {
-      await appsync.models.stars.delete(
+      const deleteStarPromise = appsync.models.stars.delete(
         {
           userId: user.id,
           promptId: prompt.id!,
@@ -34,10 +34,15 @@ export default function StarPromptButton({
           authMode: "userPool",
         },
       );
+      const sendEventPromise = appsync.mutations.publishPromptUnstarred({
+        promptId: prompt.id!,
+      });
+      Promise.all([deleteStarPromise, sendEventPromise]);
+
       setIsStarred(isStarred ? false : true);
       toast("Prompt removed from your favorites");
     } else {
-      await appsync.models.stars.create(
+      const createStarPromise = appsync.models.stars.create(
         {
           userId: user.id,
           promptId: prompt.id!,
@@ -46,6 +51,12 @@ export default function StarPromptButton({
           authMode: "userPool",
         },
       );
+
+      const sendEventPromise = appsync.mutations.publishPromptStarred({
+        promptId: prompt.id!,
+      });
+      Promise.all([createStarPromise, sendEventPromise]);
+
       setIsStarred(isStarred ? false : true);
       toast("Prompt added to your favorites");
     }

@@ -1,18 +1,38 @@
 "use client";
+import { Schema } from "@/amplify/data/resource";
+import { ModelType } from "@/app/lib/definitions";
 import { Button } from "@/components/ui/button";
+import { generateClient } from "aws-amplify/api";
 import { Copy } from "lucide-react";
 import { toast } from "sonner";
 
+const api = generateClient<Schema>();
+
 export default function CopyClipBoardButton({
+  id,
   text,
+  type,
   showButtonText = false,
 }: {
+  id: string;
   text: string;
+  type: ModelType;
   showButtonText?: boolean;
 }) {
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(text);
+      const clipboardPromise = navigator.clipboard.writeText(text);
+      let apiPromise;
+      if (type === ModelType.PROMPT) {
+        apiPromise = api.mutations.publishPromptCopied({
+          promptId: id,
+        });
+      } else if (type === ModelType.RULE) {
+        apiPromise = api.mutations.publishRuleCopied({
+          ruleId: id,
+        });
+      }
+      Promise.all([clipboardPromise, apiPromise]);
       toast("Copied.", {
         description: "Now, go build.",
       });
@@ -31,7 +51,7 @@ export default function CopyClipBoardButton({
       onClick={copyToClipboard}
     >
       <Copy className="h-4 w-4" />
-      {showButtonText && <span>Copy Prompt</span>}
+      {showButtonText && <span>Copy {type}</span>}
     </Button>
   );
 }

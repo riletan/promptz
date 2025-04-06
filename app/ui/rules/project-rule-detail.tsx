@@ -1,4 +1,4 @@
-import { ProjectRule } from "@/app/lib/definitions";
+import { ModelType, ProjectRule } from "@/app/lib/definitions";
 import Tags from "@/app/ui/common/tags";
 import Author from "@/app/ui/common/author";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
@@ -49,8 +49,13 @@ export default function ProjectRuleDetail({
             )}
             {projectRule.content && (
               <>
-                <CopyClipBoardButton text={projectRule.content} />
+                <CopyClipBoardButton
+                  id={projectRule.id!}
+                  type={ModelType.RULE}
+                  text={projectRule.content}
+                />
                 <DownloadButton
+                  id={projectRule.id!}
                   content={projectRule.content}
                   filename={`promptz-rule-${projectRule.slug}.md`}
                   label="Download"

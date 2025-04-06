@@ -68,7 +68,8 @@ exports[`PromptInstruction renders the prompt instruction with all provided prop
           />
         </svg>
         <span>
-          Copy Prompt
+          Copy 
+          Prompt
         </span>
       </button>
     </div>

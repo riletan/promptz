@@ -1,0 +1,54 @@
+{
+  "Comment": "Workflow to process prompt interaction events and update counters in DynamoDB",
+  "StartAt": "DecrementStarCount",
+  "States": {
+    "DecrementStarCount": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::dynamodb:updateItem",
+      "Arguments": {
+        "TableName": "${PromptTable}",
+        "Key": {
+          "id": {
+            "S": "{% $states.input.detail.promptId %}"
+          }
+        },
+        "UpdateExpression": "SET starCount = if_not_exists(starCount, :zero) - :dec",
+        "ConditionExpression": "attribute_exists(id) AND starCount > :zero",
+        "ExpressionAttributeValues": {
+          ":dec": {
+            "N": "1"
+          },
+          ":zero": {
+            "N": "0"
+          }
+        },
+        "ReturnValues": "UPDATED_NEW"
+      },
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "DynamoDB.ConditionalCheckFailedException",
+            "DynamoDB.ProvisionedThroughputExceededException"
+          ],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 3,
+          "BackoffRate": 2
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "Fail"
+        }
+      ],
+      "Next": "Success"
+    },
+    "Success": {
+      "Type": "Succeed"
+    },
+    "Fail": {
+      "Type": "Fail"
+    }
+  },
+  "QueryLanguage": "JSONata"
+}
