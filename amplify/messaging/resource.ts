@@ -7,9 +7,7 @@ export type MessagingResources = {
 
 export function defineMessaging(backend: BackendBase): MessagingResources {
   const eventStack = backend.createStack("PromptzMessagingStack");
-  const eventBus = new events.EventBus(eventStack, "PromptzEventBus", {
-    eventBusName: `PromptzEventBus-${process.env["PROMPTZ_ENV"]}`,
-  });
+  const eventBus = new events.EventBus(eventStack, "PromptzEventBus");
 
   return {
     eventBus,
