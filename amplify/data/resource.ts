@@ -59,6 +59,8 @@ const schema = a
         public: a.boolean(),
         sourceURL: a.string(),
         owner_username: a.string().required(),
+        copyCount: a.integer().default(0),
+        downloadCount: a.integer().default(0),
       })
       .secondaryIndexes((index) => [
         index("slug").queryField("listRuleBySlug").name("slugIndex"),
