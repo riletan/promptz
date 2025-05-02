@@ -25,6 +25,7 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
               class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2"
             >
               <svg
+                aria-hidden="true"
                 class="lucide lucide-file-text w-4 h-4"
                 fill="none"
                 height="24"
@@ -68,15 +69,15 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
             >
               <label
                 class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2"
-                for=":r0:-form-item"
+                for="«r0»-form-item"
               >
                 Title
               </label>
               <input
-                aria-describedby=":r0:-form-item-description"
+                aria-describedby="«r0»-form-item-description"
                 aria-invalid="false"
                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-white placeholder-opacity-50"
-                id=":r0:-form-item"
+                id="«r0»-form-item"
                 name="title"
                 placeholder="A clear and descriptive title for your prompt"
                 value="Test Prompt"
@@ -87,15 +88,15 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
             >
               <label
                 class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2"
-                for=":r1:-form-item"
+                for="«r1»-form-item"
               >
                 Description
               </label>
               <textarea
-                aria-describedby=":r1:-form-item-description"
+                aria-describedby="«r1»-form-item-description"
                 aria-invalid="false"
                 class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[140px] text-white placeholder-opacity-50"
-                id=":r1:-form-item"
+                id="«r1»-form-item"
                 name="description"
                 placeholder="What is this prompt doing? What is the goal?"
               >
@@ -107,15 +108,15 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
             >
               <label
                 class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2"
-                for=":r2:-form-item"
+                for="«r2»-form-item"
               >
                 Tags
               </label>
               <div
-                aria-describedby=":r2:-form-item-description"
+                aria-describedby="«r2»-form-item-description"
                 aria-invalid="false"
                 class="flex flex-wrap gap-2"
-                id=":r2:-form-item"
+                id="«r2»-form-item"
               >
                 <input
                   name="tags"
@@ -132,7 +133,7 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
                   </div>
                 </div>
                 <button
-                  aria-controls="radix-:r3:"
+                  aria-controls="radix-«r3»"
                   aria-expanded="false"
                   aria-haspopup="dialog"
                   data-state="closed"
@@ -151,22 +152,22 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
             >
               <label
                 class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2"
-                for=":r6:-form-item"
+                for="«r6»-form-item"
               >
                 Source URL
               </label>
               <input
-                aria-describedby=":r6:-form-item-description"
+                aria-describedby="«r6»-form-item-description"
                 aria-invalid="false"
                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-white placeholder-opacity-50"
-                id=":r6:-form-item"
+                id="«r6»-form-item"
                 name="sourceURL"
                 placeholder="Optional: Link to original source or inspiration"
                 value=""
               />
               <p
                 class="text-sm text-muted-foreground"
-                id=":r6:-form-item-description"
+                id="«r6»-form-item-description"
               >
                 If this prompt was inspired by or adapted from another source, provide the URL here
               </p>
@@ -179,21 +180,21 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
               >
                 <label
                   class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  for=":r7:-form-item"
+                  for="«r7»-form-item"
                 >
                   Visibility
                 </label>
                 <p
                   class="text-sm text-muted-foreground pr-10"
-                  id=":r7:-form-item-description"
+                  id="«r7»-form-item-description"
                 >
                   Keep your prompt private as a draft or just for you. A private prompt can still be shared via URL but will not be listed on promptz.dev. Make your prompt public to share it with the community.
                 </p>
               </div>
               <div
-                aria-describedby=":r7:-form-item-description"
+                aria-describedby="«r7»-form-item-description"
                 aria-invalid="false"
-                id=":r7:-form-item"
+                id="«r7»-form-item"
               >
                 <button
                   aria-checked="true"
@@ -237,6 +238,7 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
               class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2"
             >
               <svg
+                aria-hidden="true"
                 class="lucide lucide-terminal w-4 h-4"
                 fill="none"
                 height="24"
@@ -273,10 +275,10 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
               class="space-y-2 relative"
             >
               <div
-                aria-describedby=":r8:-form-item-description"
+                aria-describedby="«r8»-form-item-description"
                 aria-invalid="false"
                 class="relative"
-                id=":r8:-form-item"
+                id="«r8»-form-item"
               >
                 <textarea
                   class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[250px] resize-y"
@@ -286,7 +288,7 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
                   What is the meaning of life?
                 </textarea>
                 <button
-                  aria-controls="radix-:r9:"
+                  aria-controls="radix-«r9»"
                   aria-expanded="false"
                   aria-haspopup="dialog"
                   class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 absolute opacity-0 pointer-events-none"
@@ -296,6 +298,7 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
                   type="button"
                 >
                   <svg
+                    aria-hidden="true"
                     class="lucide lucide-chevrons-up-down ml-2 h-4 w-4 shrink-0 opacity-50"
                     fill="none"
                     height="24"
@@ -318,7 +321,7 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
               </div>
               <p
                 class="text-sm text-muted-foreground"
-                id=":r8:-form-item-description"
+                id="«r8»-form-item-description"
               >
                 Type @ to add placeholders for workspace, folders, or files that must be added to the prompt context.
               </p>
@@ -337,6 +340,7 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
           class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2"
         >
           <svg
+            aria-hidden="true"
             class="lucide lucide-circle-help w-4 h-4"
             fill="none"
             height="24"
@@ -375,10 +379,10 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
           class="space-y-2"
         >
           <textarea
-            aria-describedby=":ra:-form-item-description"
+            aria-describedby="«ra»-form-item-description"
             aria-invalid="false"
             class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm min-h-[200px] text-white placeholder-opacity-50"
-            id=":ra:-form-item"
+            id="«ra»-form-item"
             name="howto"
           >
             this is cool
@@ -394,6 +398,7 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
         type="submit"
       >
         <svg
+          aria-hidden="true"
           class="lucide lucide-save w-4 h-4 mr-2"
           fill="none"
           height="24"
@@ -418,7 +423,7 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
         Save Prompt
       </button>
       <button
-        aria-controls="radix-:rb:"
+        aria-controls="radix-«rb»"
         aria-expanded="false"
         aria-haspopup="dialog"
         class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 h-9 px-4 py-2 ml-auto"
@@ -429,7 +434,8 @@ exports[`Prompt Form renders the prompt form component unchanged 1`] = `
           class="flex items-center"
         >
           <svg
-            class="lucide lucide-trash2 w-4 h-4 mr-2"
+            aria-hidden="true"
+            class="lucide lucide-trash2 lucide-trash-2 w-4 h-4 mr-2"
             fill="none"
             height="24"
             stroke="currentColor"

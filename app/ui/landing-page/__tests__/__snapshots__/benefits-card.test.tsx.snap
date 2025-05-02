@@ -12,6 +12,7 @@ exports[`Benefits Card renders benefits card unchanged 1`] = `
         class="text-2xl font-semibold leading-none tracking-tight items-center flex flex-col"
       >
         <svg
+          aria-hidden="true"
           class="lucide lucide-code w-12 h-12 text-violet-500 mb-4"
           fill="none"
           height="24"

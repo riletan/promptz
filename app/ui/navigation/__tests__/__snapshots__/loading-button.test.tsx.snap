@@ -7,6 +7,7 @@ exports[`Loading Button renders loading button unchanged 1`] = `
     disabled=""
   >
     <svg
+      aria-hidden="true"
       class="lucide lucide-loader-circle animate-spin"
       fill="none"
       height="24"

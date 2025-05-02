@@ -10,6 +10,7 @@ exports[`Mobile Menu Navigation  renders mobile menu unchanged 1`] = `
       data-testid="menu-button"
     >
       <svg
+        aria-hidden="true"
         class="lucide lucide-menu h-6 w-6"
         data-testid="menu-button-burger"
         fill="none"

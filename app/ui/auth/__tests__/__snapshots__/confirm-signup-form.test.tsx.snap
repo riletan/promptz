@@ -15,6 +15,7 @@ exports[`Confirm Signup Form renders confirm signup form unchanged 1`] = `
           class="font-semibold tracking-tight text-2xl flex items-center"
         >
           <svg
+            aria-hidden="true"
             class="lucide lucide-mail mr-2"
             fill="none"
             height="24"

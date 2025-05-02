@@ -46,6 +46,7 @@ exports[`Footer renders footer unchanged 1`] = `
             target="_blank"
           >
             <svg
+              aria-hidden="true"
               class="lucide lucide-github h-6 w-6"
               fill="none"
               height="24"
