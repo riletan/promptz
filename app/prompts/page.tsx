@@ -46,7 +46,7 @@ export default async function PromptsPage(props: BrowsePageProps) {
         </div>
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Filters sidebar - hidden on mobile */}
-          <div className="hidden lg:block w-64 flex-shrink-0">
+          <div className="hidden lg:block w-64 shrink-0">
             <FilterSidebar />
           </div>
 

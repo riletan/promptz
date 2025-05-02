@@ -35,7 +35,7 @@ exports[`Benefits renders benefits unchanged 1`] = `
         class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3"
       >
         <div
-          class="rounded-lg border bg-neutral-800 text-card-foreground shadow-sm text-center"
+          class="rounded-lg border bg-neutral-800 text-card-foreground shadow-xs text-center"
         >
           <div
             class="flex flex-col space-y-1.5 p-6"
@@ -73,7 +73,7 @@ exports[`Benefits renders benefits unchanged 1`] = `
           </div>
         </div>
         <div
-          class="rounded-lg border bg-neutral-800 text-card-foreground shadow-sm text-center"
+          class="rounded-lg border bg-neutral-800 text-card-foreground shadow-xs text-center"
         >
           <div
             class="flex flex-col space-y-1.5 p-6"
@@ -119,7 +119,7 @@ exports[`Benefits renders benefits unchanged 1`] = `
           </div>
         </div>
         <div
-          class="rounded-lg border bg-neutral-800 text-card-foreground shadow-sm text-center"
+          class="rounded-lg border bg-neutral-800 text-card-foreground shadow-xs text-center"
         >
           <div
             class="flex flex-col space-y-1.5 p-6"
@@ -161,7 +161,7 @@ exports[`Benefits renders benefits unchanged 1`] = `
         class="mt-12 max-w-2xl mx-auto"
       >
         <div
-          class="rounded-lg border bg-neutral-800 text-card-foreground shadow-sm text-center"
+          class="rounded-lg border bg-neutral-800 text-card-foreground shadow-xs text-center"
         >
           <div
             class="flex flex-col space-y-1.5 p-6"
