@@ -32,11 +32,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   } while (hasMorePages);
 
-  // Generate sitemap entries for static pages
+  // Generate sitemap entries for static pages changing on a weekly bases
   const routes = ["", "/prompts"].map((route) => ({
     url: `${baseUrl}${route}`,
     changeFrequency: "weekly" as const,
-    priority: 0.8,
+    priority: 0.7,
   }));
 
   // Add entries for each prompt
@@ -47,5 +47,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 1,
   }));
 
-  return [...routes, ...promptRoutes];
+  // Generate sitemap entries for static pages changing on a monthly bases
+  const monthlyRoutes = ["/mcp"].map((route) => ({
+    url: `${baseUrl}${route}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.3,
+  }));
+
+  return [...routes, ...promptRoutes, ...monthlyRoutes];
 }
