@@ -27,8 +27,8 @@ export default function MCPSettingsPage() {
     "@promptz/mcp"
   ],
   "env": {
-    "API_URL": "${apiUrl}",
-    "API_KEY": "${apiKey}"
+    "PROMPTZ_API_URL": "${apiUrl}",
+    "PROMPTZ_API_URL": "${apiKey}"
   },
   "disabled": false,
   "autoApprove": []
