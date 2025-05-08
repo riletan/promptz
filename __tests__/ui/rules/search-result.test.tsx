@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import SearchResults from "../browse/search-result";
+import SearchResults from "../../../app/ui/rules/browse/search-result";
 
 describe("SearchResults", () => {
   test("renders empty state when no project rules are provided", () => {

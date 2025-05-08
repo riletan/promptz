@@ -3,7 +3,7 @@ import {
   fetchProjectRule,
   fetchProjectRuleBySlug,
   searchProjectRules,
-} from "../project-rules";
+} from "@/app/lib/actions/project-rules";
 
 describe("Project Rules Actions", () => {
   test("fetchProjectRule should return a project rule by ID", async () => {

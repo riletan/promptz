@@ -1,5 +1,8 @@
 import { describe, expect, test, jest } from "@jest/globals";
-import { onSubmitAction, deleteProjectRule } from "../project-rules-form";
+import {
+  onSubmitAction,
+  deleteProjectRule,
+} from "@/app/lib/actions/project-rules-form";
 import {
   createProjectRuleMock,
   updateProjectRuleMock,

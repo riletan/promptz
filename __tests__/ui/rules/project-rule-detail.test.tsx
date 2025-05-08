@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import ProjectRuleDetail from "../project-rule-detail";
+import ProjectRuleDetail from "../../../app/ui/rules/project-rule-detail";
 
 describe("ProjectRuleDetail", () => {
   const mockProjectRule = {

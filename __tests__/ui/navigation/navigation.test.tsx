@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@jest/globals";
-import { links } from "../navigation";
+import { links } from "@/app/ui/navigation/navigation";
 
 describe("Navigation Links", () => {
   test("should contain all required navigation links", () => {

@@ -80,7 +80,6 @@ Follow these rules when you write code:
 - Use snapshot tests to validate the rendering output of a component
 - Use fine-grained assertions to test component behaviour and state management.
 - When testing components, test the actual component behavior rather than mocking child components.
-- Use the existing `./__mocks__` folder to mock AWS Amplify and next.js libraries.
+- Use the existing `__mocks__` folder to mock AWS Amplify and next.js libraries.
 - Always import jest globals `import { describe, expect, test } from "@jest/globals";`
 - Use `test()` instead of `it()`
-- Add tests into `__tests__` folder in the same folder where the unit to test is located.

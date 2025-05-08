@@ -1,4 +1,4 @@
-import { onSubmitAction, type FormState } from "../prompt-form";
+import { onSubmitAction, type FormState } from "@/app/lib/actions/prompt-form";
 import { redirect } from "next/navigation";
 import { beforeEach, describe, expect, test, jest } from "@jest/globals";
 import { revalidatePath } from "next/cache";

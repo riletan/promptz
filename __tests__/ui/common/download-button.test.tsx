@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach, jest } from "@jest/globals";
 import { render, fireEvent, screen } from "@testing-library/react";
-import { DownloadButton } from "../download-button";
 import { publishRuleDownloadedMock } from "@/__mocks__/@aws-amplify/api";
+import { DownloadButton } from "@/app/ui/common/download-button";
 
 describe("DownloadButton", () => {
   const mockContent = "# Test Content\nThis is test content";

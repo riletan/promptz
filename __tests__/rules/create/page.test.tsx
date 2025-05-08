@@ -1,5 +1,5 @@
+import CreateProjectRulePage from "@/app/rules/create/page";
 import { describe, expect, test } from "@jest/globals";
-import CreateProjectRulePage from "../page";
 import { redirect } from "next/navigation";
 
 describe("CreateProjectRulePage", () => {
