@@ -1,4 +1,4 @@
-import { Prompt } from "@/app/lib/definitions";
+import { Prompt } from "@/app/lib/prompt-model";
 import PromptForm from "@/app/ui/prompts/form";
 import { describe, expect, test } from "@jest/globals";
 import "@testing-library/jest-dom";

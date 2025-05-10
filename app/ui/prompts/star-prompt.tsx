@@ -1,5 +1,6 @@
 "use client";
-import { Prompt, User } from "@/app/lib/definitions";
+import { User } from "@/app/lib/definitions";
+import { Prompt } from "@/app/lib/prompt-model";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 import { useState } from "react";

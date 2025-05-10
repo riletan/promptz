@@ -1,7 +1,7 @@
 import { describe, expect, test, jest, beforeEach } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import PromptDetail from "@/app/ui/prompts/prompt";
-import { Prompt } from "@/app/lib/definitions";
+import { Prompt } from "@/app/lib/prompt-model";
 
 const mockPrompt: Prompt = {
   id: "123",

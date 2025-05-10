@@ -70,25 +70,6 @@ export type User = {
   guest: boolean;
 };
 
-export type Prompt = {
-  id?: string;
-  title?: string;
-  description?: string;
-  tags?: string[];
-  instruction?: string;
-  howto?: string;
-  author?: string;
-  authorId?: string;
-  public?: boolean;
-  slug?: string;
-  sourceURL?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  copyCount?: number;
-  starCount?: number;
-  popularityScore?: number;
-};
-
 export type ProjectRule = {
   id?: string;
   title?: string;
@@ -123,8 +104,8 @@ const ALLOWED_DOMAINS = [
   "gitbook.io",
 ];
 
-const idSchema = z.string().uuid().optional();
-const sourceURLSchema = z
+export const idSchema = z.string().uuid().optional();
+export const sourceURLSchema = z
   .string()
   .max(2048, "URL must not exceed 2048 characters")
   .url()
@@ -142,39 +123,20 @@ const sourceURLSchema = z
   .optional()
   .or(z.literal(""));
 
-const titleSchema = z
+export const titleSchema = z
   .string()
   .trim()
   .max(100, "Title must be less than 100 characters")
   .min(3, "Title must be more than 3 characters");
 
-const descriptionSchema = z
+export const descriptionSchema = z
   .string()
   .trim()
   .min(10, "Description must be more than 10 characters")
   .max(500, "Description must be less than 500 characters");
 
-const tagSchema = z.array(z.string()).optional();
-const publicSchema = z.boolean();
-
-export const promptFormSchema = z.object({
-  id: idSchema,
-  sourceURL: sourceURLSchema,
-  title: titleSchema,
-  description: descriptionSchema,
-  howto: z
-    .string()
-    .trim()
-    .max(4000, "How to must be less than 4000 characters")
-    .optional(),
-  instruction: z
-    .string()
-    .trim()
-    .min(10, "Prompt must be more than 10 characters")
-    .max(4000, "Prompt must be less than 4000 characters"),
-  tags: tagSchema,
-  public: publicSchema,
-});
+export const tagSchema = z.array(z.string()).optional();
+export const publicSchema = z.boolean();
 
 export const projectRuleFormSchema = z.object({
   id: z.string().uuid().optional(),

@@ -1,5 +1,6 @@
 "use client";
-import { Prompt, promptFormSchema } from "@/app/lib/definitions";
+import { promptFormSchema } from "@/app/lib/prompt-model";
+import { Prompt } from "@/app/lib/prompt-model";
 import {
   Form,
   FormControl,

@@ -9,7 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import StarPromptButton from "@/app/ui/prompts/star-prompt";
 import { isStarredByUser } from "@/app/lib/actions/stars";
 import { SourceURL } from "@/app/ui/common/source-url";
-import { ModelType, Prompt } from "@/app/lib/definitions";
+import { ModelType } from "@/app/lib/definitions";
+import { Prompt } from "@/app/lib/prompt-model";
 import HowTo from "@/app/ui/prompts/howto";
 
 interface PromptProps {

@@ -1,4 +1,5 @@
-import { promptFormSchema, searchParamsSchema } from "@/app/lib/definitions";
+import { searchParamsSchema } from "@/app/lib/definitions";
+import { promptFormSchema } from "@/app/lib/prompt-model";
 import { describe, expect, test } from "@jest/globals";
 
 describe("promptFormSchema Validation", () => {

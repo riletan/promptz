@@ -1,4 +1,4 @@
-import { Prompt } from "@/app/lib/definitions";
+import { Prompt } from "@/app/lib/prompt-model";
 import PromptCard from "@/app/ui/prompts/prompt-card";
 
 type SearchResultsProps = {

@@ -4,7 +4,8 @@ import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/ap
 
 import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
-import { Prompt, searchParamsSchema } from "@/app/lib/definitions";
+import { searchParamsSchema } from "@/app/lib/definitions";
+import { Prompt } from "../prompt-model";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import {
   FilterCondition,
