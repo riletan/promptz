@@ -8,7 +8,7 @@ import {
   confirmSignIn,
 } from "@aws-amplify/auth";
 import { redirect } from "next/navigation";
-import { User } from "@/app/lib/definitions";
+import { User } from "../user-model";
 
 const SignUpFormSchema = z.object({
   email: z.string().email({

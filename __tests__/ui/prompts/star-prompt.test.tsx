@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, jest, it } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import StarPromptButton from "@/app/ui/prompts/star-prompt";
-import { User } from "@/app/lib/definitions";
+import { User } from "@/app/lib/user-model";
 import { Prompt } from "@/app/lib/prompt-model";
 
 import { useRouterPush } from "@/__mocks__/next/navigation";

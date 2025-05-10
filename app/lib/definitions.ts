@@ -5,13 +5,6 @@ export enum ModelType {
   RULE = "Rule",
 }
 
-export type User = {
-  id: string;
-  username: string;
-  displayName: string;
-  guest: boolean;
-};
-
 export type ProjectRule = {
   id?: string;
   title?: string;

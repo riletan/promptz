@@ -8,7 +8,7 @@ import {
 } from "aws-amplify/auth/server";
 
 import outputs from "@/amplify_outputs.json";
-import { User } from "@/app/lib/definitions";
+import { User } from "../user-model";
 
 const { runWithAmplifyServerContext } = createServerRunner({
   config: outputs,

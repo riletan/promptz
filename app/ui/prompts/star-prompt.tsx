@@ -1,5 +1,5 @@
 "use client";
-import { User } from "@/app/lib/definitions";
+import { User } from "@/app/lib/user-model";
 import { Prompt } from "@/app/lib/prompt-model";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
