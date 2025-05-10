@@ -1,4 +1,4 @@
-import { ModelType } from "@/app/lib/definitions";
+import { ModelType } from "@/app/lib/schema-definitions";
 import CopyClipBoardButton from "@/app/ui/common/copy-clipboard";
 import { beforeEach, describe, expect, test, jest } from "@jest/globals";
 import "@testing-library/jest-dom";

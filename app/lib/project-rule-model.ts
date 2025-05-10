@@ -4,7 +4,7 @@ import {
   descriptionSchema,
   tagSchema,
   publicSchema,
-} from "@/app/lib/definitions";
+} from "@/app/lib/schema-definitions";
 import { z } from "zod";
 
 export type ProjectRule = {
