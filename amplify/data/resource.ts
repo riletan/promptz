@@ -11,6 +11,7 @@ const schema = a
         owner: a.string().required(),
         stars: a.hasMany("stars", "userId"),
       })
+      .disableOperations(["subscriptions", "list", "delete", "update"])
       .authorization((allow) => [allow.owner().to(["read"])]),
     prompt: a
       .model({
