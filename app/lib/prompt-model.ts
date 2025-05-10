@@ -43,4 +43,13 @@ export const promptFormSchema = z.object({
     .max(4000, "Prompt must be less than 4000 characters"),
   tags: tagSchema,
   public: publicSchema,
+}); // Validation schema for search and filter params
+
+export const promptSearchParamsSchema = z.object({
+  query: z.string().optional(),
+  sort: z.string().optional(),
+  my: z.string().optional(),
+  interface: z.union([z.string(), z.array(z.string())]).optional(),
+  category: z.union([z.string(), z.array(z.string())]).optional(),
+  sdlc: z.union([z.string(), z.array(z.string())]).optional(),
 });

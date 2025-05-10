@@ -57,13 +57,3 @@ export const descriptionSchema = z
 
 export const tagSchema = z.array(z.string()).optional();
 export const publicSchema = z.boolean();
-
-// Validation schema for search and filter params
-export const searchParamsSchema = z.object({
-  query: z.string().optional(),
-  sort: z.string().optional(),
-  my: z.string().optional(),
-  interface: z.union([z.string(), z.array(z.string())]).optional(),
-  category: z.union([z.string(), z.array(z.string())]).optional(),
-  sdlc: z.union([z.string(), z.array(z.string())]).optional(),
-});

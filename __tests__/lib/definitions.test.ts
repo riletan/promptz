@@ -1,4 +1,4 @@
-import { searchParamsSchema } from "@/app/lib/definitions";
+import { promptSearchParamsSchema } from "@/app/lib/prompt-model";
 import { promptFormSchema } from "@/app/lib/prompt-model";
 import { describe, expect, test } from "@jest/globals";
 
@@ -116,7 +116,7 @@ describe("promptFormSchema Validation", () => {
 
 describe("searchParamsSchema Validation", () => {
   test("should validate empty search params", () => {
-    const result = searchParamsSchema.safeParse({});
+    const result = promptSearchParamsSchema.safeParse({});
     expect(result.success).toBe(true);
   });
 
@@ -129,7 +129,7 @@ describe("searchParamsSchema Validation", () => {
       category: "Chat",
       sdlc: "Test",
     };
-    const result = searchParamsSchema.safeParse(validParams);
+    const result = promptSearchParamsSchema.safeParse(validParams);
     expect(result.success).toBe(true);
   });
 
@@ -139,7 +139,7 @@ describe("searchParamsSchema Validation", () => {
       category: ["Chat", "Dev Agent"],
       sdlc: ["Test", "Debug"],
     };
-    const result = searchParamsSchema.safeParse(arrayParams);
+    const result = promptSearchParamsSchema.safeParse(arrayParams);
     expect(result.success).toBe(true);
   });
 });
