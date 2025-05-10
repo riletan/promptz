@@ -1,4 +1,4 @@
-import { ProjectRuleTag } from "@/app/lib/definitions";
+import { ProjectRuleTag } from "@/app/lib/tags-model";
 import { FilterSection } from "@/app/ui/common/filter-section";
 
 export function FilterSidebar() {

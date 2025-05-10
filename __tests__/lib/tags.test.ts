@@ -1,15 +1,13 @@
 import { describe, expect, test } from "@jest/globals";
 
-import {
-  QInterface,
-  PromptCategory,
-  SdlcActivity,
-} from "@/app/lib/definitions";
+import { QInterface } from "@/app/lib/tags-model";
+import { PromptCategory } from "@/app/lib/tags-model";
+import { SdlcActivity } from "@/app/lib/tags-model";
 import {
   getQInterfaceTags,
   getCategoryTags,
   getSdlcTags,
-} from "@/app/lib/tags";
+} from "@/app/lib/tags-model";
 
 describe("Data utility functions", () => {
   describe("getQInterfaceTags", () => {

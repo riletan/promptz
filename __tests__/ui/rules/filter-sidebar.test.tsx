@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import { FilterSidebar } from "../../../app/ui/rules/browse/filter-sidebar";
-import { ProjectRuleTag } from "@/app/lib/definitions";
+import { ProjectRuleTag } from "@/app/lib/tags-model";
 
 describe("FilterSidebar", () => {
   test("renders filter sidebar with project rule tags", () => {

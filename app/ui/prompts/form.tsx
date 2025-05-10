@@ -52,7 +52,7 @@ import {
   getCategoryTags,
   getQInterfaceTags,
   getSdlcTags,
-} from "@/app/lib/tags";
+} from "@/app/lib/tags-model";
 import Tags from "@/app/ui/common/tags";
 import { Badge } from "@/components/ui/badge";
 import {

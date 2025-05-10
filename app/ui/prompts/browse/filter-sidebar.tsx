@@ -1,10 +1,8 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
-import {
-  PromptCategory,
-  QInterface,
-  SdlcActivity,
-} from "@/app/lib/definitions";
+import { QInterface } from "@/app/lib/tags-model";
+import { PromptCategory } from "@/app/lib/tags-model";
+import { SdlcActivity } from "@/app/lib/tags-model";
 import { FilterSection } from "@/app/ui/common/filter-section";
 
 export function FilterSidebar() {
