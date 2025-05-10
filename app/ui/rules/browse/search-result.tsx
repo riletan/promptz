@@ -1,4 +1,4 @@
-import { ProjectRule } from "@/app/lib/definitions";
+import { ProjectRule } from "@/app/lib/project-rule-model";
 import ProjectRuleCard from "@/app/ui/rules/project-rule-card";
 
 type SearchResultsProps = {

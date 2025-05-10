@@ -4,10 +4,8 @@ import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/ap
 
 import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
-import {
-  ProjectRule,
-  projectRuleSearchParamsSchema,
-} from "@/app/lib/definitions";
+import { projectRuleSearchParamsSchema } from "../project-rule-model";
+import { ProjectRule } from "../project-rule-model";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import {
   FilterCondition,

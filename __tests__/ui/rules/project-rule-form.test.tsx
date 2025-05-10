@@ -1,4 +1,4 @@
-import { ProjectRule } from "@/app/lib/definitions";
+import { ProjectRule } from "@/app/lib/project-rule-model";
 import ProjectRuleForm from "@/app/ui/rules/project-rule-form";
 import { describe, expect, test } from "@jest/globals";
 import "@testing-library/jest-dom";

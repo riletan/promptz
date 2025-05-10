@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
-import { projectRuleFormSchema } from "@/app/lib/definitions";
+import { projectRuleFormSchema } from "../project-rule-model";
 import { redirect } from "next/navigation";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { revalidatePath } from "next/cache";

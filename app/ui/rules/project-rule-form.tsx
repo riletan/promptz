@@ -1,5 +1,6 @@
 "use client";
-import { ProjectRule, projectRuleFormSchema } from "@/app/lib/definitions";
+import { projectRuleFormSchema } from "@/app/lib/project-rule-model";
+import { ProjectRule } from "@/app/lib/project-rule-model";
 import { ProjectRuleTag } from "@/app/lib/tags-model";
 import {
   Form,

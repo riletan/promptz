@@ -5,21 +5,6 @@ export enum ModelType {
   RULE = "Rule",
 }
 
-export type ProjectRule = {
-  id?: string;
-  title?: string;
-  description?: string;
-  tags?: string[];
-  content?: string;
-  author?: string;
-  authorId?: string;
-  public?: boolean;
-  slug?: string;
-  sourceURL?: string;
-  createdAt?: string;
-  updatedAt?: string;
-};
-
 const ALLOWED_DOMAINS = [
   "github.com",
   "dev.to",
@@ -73,20 +58,6 @@ export const descriptionSchema = z
 export const tagSchema = z.array(z.string()).optional();
 export const publicSchema = z.boolean();
 
-export const projectRuleFormSchema = z.object({
-  id: z.string().uuid().optional(),
-  sourceURL: sourceURLSchema,
-  title: titleSchema,
-  description: descriptionSchema,
-  content: z
-    .string()
-    .trim()
-    .min(10, "Content must be more than 10 characters")
-    .max(30000, "Content must be less than 30000 characters"),
-  tags: tagSchema,
-  public: publicSchema,
-});
-
 // Validation schema for search and filter params
 export const searchParamsSchema = z.object({
   query: z.string().optional(),
@@ -95,12 +66,4 @@ export const searchParamsSchema = z.object({
   interface: z.union([z.string(), z.array(z.string())]).optional(),
   category: z.union([z.string(), z.array(z.string())]).optional(),
   sdlc: z.union([z.string(), z.array(z.string())]).optional(),
-});
-
-// Validation schema for project rule search and filter params
-export const projectRuleSearchParamsSchema = z.object({
-  query: z.string().optional(),
-  sort: z.string().optional(),
-  my: z.string().optional(),
-  tags: z.union([z.string(), z.array(z.string())]).optional(),
 });
