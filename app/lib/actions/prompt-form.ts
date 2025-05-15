@@ -95,9 +95,6 @@ export async function onSubmitAction(
         success: false,
       };
     }
-
-    revalidatePath(`/prompts/prompt/${payload.slug}`);
-    redirect(`/prompts/prompt/${payload.slug}`);
   } catch (error) {
     return {
       errors: {
@@ -107,6 +104,9 @@ export async function onSubmitAction(
       success: false,
     };
   }
+
+  revalidatePath(`/prompts/prompt/${payload.slug}`);
+  redirect(`/prompts/prompt/${payload.slug}`);
 }
 
 export async function deletePrompt(
