@@ -4,8 +4,7 @@ import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/ap
 
 import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
-import { promptSearchParamsSchema } from "../prompt-model";
-import { Prompt } from "../prompt-model";
+import { Prompt, promptSearchParamsSchema } from "../prompt-model";
 import {
   FilterCondition,
   buildTextSearchFilter,
@@ -41,25 +40,46 @@ export async function fetchFeaturedPrompts(): Promise<Prompt[]> {
   return mapToPrompts(prompts);
 }
 
-export async function fetchPrompt(id: string) {
-  const { data: prompt, errors } = await appsync.models.prompt.get({
-    id,
-  });
+export async function fetchPromptSlug(id: string) {
+  const { data, errors } = await appsync.models.prompt.get(
+    {
+      id,
+    },
+    {
+      selectionSet: ["slug"],
+    },
+  );
 
   if (errors && errors.length > 0) {
     throw new Error(errors[0].message);
   }
 
-  if (!prompt) {
+  if (!data) {
     return;
   }
 
-  return mapToPrompt(prompt);
+  return data.slug;
 }
 
 interface PromptBySlugResponse {
   listBySlug: {
-    items: Schema["prompt"]["type"][];
+    items: {
+      id?: string;
+      name?: string;
+      slug?: string;
+      description?: string;
+      tags?: string[];
+      instruction?: string;
+      sourceURL?: string;
+      howto?: string;
+      public?: string;
+      author: {
+        id?: string;
+        displayName?: string;
+      };
+      createdAt?: string;
+      updatedAt?: string;
+    }[];
     nextToken?: string;
   };
 }
@@ -78,8 +98,10 @@ export async function fetchPromptBySlug(slug: string) {
         sourceURL
         howto
         public
-        owner_username
-        owner
+        author {
+          id
+          displayName
+        }
         createdAt
         updatedAt
       }
@@ -106,7 +128,19 @@ export async function fetchPromptBySlug(slug: string) {
     return;
   }
 
-  return mapToPrompt(prompt);
+  return {
+    id: prompt.id,
+    title: prompt.name,
+    slug: prompt.slug,
+    description: prompt.description,
+    tags: prompt.tags,
+    instruction: prompt.instruction,
+    sourceURL: prompt.sourceURL,
+    howto: prompt.howto,
+    public: prompt.public,
+    author: prompt.author.displayName,
+    authorId: prompt.author.id,
+  } as Prompt;
 }
 
 export async function searchPrompts(
@@ -199,7 +233,6 @@ function mapToPrompt(prompt: Schema["prompt"]["type"]): Prompt {
     title: prompt.name,
     description: prompt.description,
     tags: tags,
-    author: prompt.owner_username,
     authorId: prompt.owner || "",
     instruction: prompt.instruction,
     howto: prompt.howto || "",

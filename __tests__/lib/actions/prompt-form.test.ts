@@ -2,11 +2,10 @@ import { onSubmitAction, type FormState } from "@/app/lib/actions/prompt-form";
 import { redirect } from "next/navigation";
 import { beforeEach, describe, expect, test, jest } from "@jest/globals";
 import { revalidatePath } from "next/cache";
-import { v4 as uuidv4 } from "uuid";
 
 import {
-  createPromptMock,
-  updatePromptMock,
+  newPromptFixture,
+  savePromptMock,
 } from "@/__mocks__/@aws-amplify/adapter-nextjs/api";
 
 describe("onSubmitAction", () => {
@@ -17,63 +16,55 @@ describe("onSubmitAction", () => {
   test("should create a new prompt successfully", async () => {
     // Create test form data
     const formData = new FormData();
-    formData.append("title", "Test Prompt");
-    formData.append("description", "Test Description");
-    formData.append("howto", "Test How To");
-    formData.append("instruction", "Test Instruction");
-    formData.append("tags", "tag1");
-    formData.append("tags", "tag2");
-    formData.append("public", "true");
-    formData.append("sourceURL", "");
+    formData.append("title", newPromptFixture.name);
+    formData.append("description", newPromptFixture.description);
+    formData.append("howto", newPromptFixture.howto);
+    formData.append("instruction", newPromptFixture.instruction);
+    formData.append("tags", newPromptFixture.tags[0]);
+    formData.append("tags", newPromptFixture.tags[1]);
+    formData.append("public", `${newPromptFixture.public}`);
+    formData.append("sourceURL", newPromptFixture.sourceURL);
 
     // Execute the action
     await onSubmitAction({} as FormState, formData);
     // Verify the create function was called with correct parameters
-    expect(createPromptMock).toHaveBeenCalled();
+    expect(savePromptMock).toHaveBeenCalled();
 
     // Verify redirect and revalidation
-    expect(revalidatePath).toHaveBeenCalled();
-    expect(redirect).toHaveBeenCalled();
+    expect(revalidatePath).toHaveBeenCalledWith(
+      `/prompts/prompt/test-project-rule-1`,
+    );
+    expect(redirect).toHaveBeenCalledWith(
+      `/prompts/prompt/test-project-rule-1`,
+    );
   });
 
   test("should update an existing prompt successfully", async () => {
     // Create test form data with an existing ID
-    const id = uuidv4();
+
     const formData = new FormData();
-    formData.append("id", id);
-    formData.append("title", "Updated Prompt");
-    formData.append("description", "Updated Description");
-    formData.append("howto", "Updated How To");
-    formData.append("instruction", "Updated Instruction");
-    formData.append("tags", "tag1");
-    formData.append("public", "false");
-    formData.append("sourceURL", "");
+    formData.append("id", newPromptFixture.id);
+    formData.append("title", newPromptFixture.name);
+    formData.append("description", newPromptFixture.description);
+    formData.append("howto", newPromptFixture.howto);
+    formData.append("instruction", newPromptFixture.instruction);
+    formData.append("tags", newPromptFixture.tags[0]);
+    formData.append("tags", newPromptFixture.tags[1]);
+    formData.append("public", `${newPromptFixture.public}`);
+    formData.append("sourceURL", newPromptFixture.sourceURL);
 
     // Execute the action
-    await onSubmitAction({} as FormState, formData);
+    const result = await onSubmitAction({} as FormState, formData);
 
     // Verify the update function was called with correct parameters
-    expect(updatePromptMock).toHaveBeenCalledWith(
-      {
-        id: id,
-        name: "Updated Prompt",
-        slug: `updated-prompt-${id.split("-")[0]}`,
-        description: "Updated Description",
-        howto: "Updated How To",
-        instruction: "Updated Instruction",
-        tags: ["tag1"],
-        public: false,
-        sourceURL: "",
-      },
-      { authMode: "userPool" },
-    );
+    expect(savePromptMock).toHaveBeenCalled();
 
     // Verify redirect and revalidation
     expect(revalidatePath).toHaveBeenCalledWith(
-      `/prompts/prompt/updated-prompt-${id.split("-")[0]}`,
+      `/prompts/prompt/test-project-rule-1`,
     );
     expect(redirect).toHaveBeenCalledWith(
-      `/prompts/prompt/updated-prompt-${id.split("-")[0]}`,
+      `/prompts/prompt/test-project-rule-1`,
     );
   });
 
@@ -93,8 +84,7 @@ describe("onSubmitAction", () => {
 
   test("should handle API errors", async () => {
     // Mock the AppSync client with an error response
-
-    createPromptMock.mockReturnValueOnce(
+    savePromptMock.mockReturnValueOnce(
       Promise.resolve({ errors: [{ message: "API Error" }] }),
     );
 

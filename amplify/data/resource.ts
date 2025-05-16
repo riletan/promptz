@@ -4,15 +4,24 @@ const schema = a
   .schema({
     user: a
       .model({
-        id: a.id().required(),
-        username: a.string().required(),
-        email: a.string().required(),
-        displayName: a.string().required(),
-        owner: a.string().required(),
+        id: a
+          .id()
+          .authorization((allow) => [
+            allow.publicApiKey().to(["read"]),
+            allow.owner().to(["read"]),
+          ]),
+        username: a.string(),
+        email: a.string(),
+        displayName: a
+          .string()
+          .authorization((allow) => [allow.publicApiKey().to(["read"])]),
+        owner: a.string(),
         stars: a.hasMany("stars", "userId"),
-        prompts: a.hasMany("prompt", "owner"),
+        prompts: a
+          .hasMany("prompt", "owner")
+          .authorization((allow) => [allow.owner().to(["read"])]),
       })
-      .disableOperations(["subscriptions", "list", "delete", "update"])
+      .disableOperations(["subscriptions", "delete", "update"])
       .authorization((allow) => [allow.owner().to(["read"])]),
     prompt: a
       .model({
@@ -26,8 +35,9 @@ const schema = a
         howto: a.string(),
         public: a.boolean(),
         owner: a.string().required(),
-        author: a.belongsTo("user", "owner"),
-        owner_username: a.string().required(),
+        author: a
+          .belongsTo("user", "owner")
+          .authorization((allow) => [allow.publicApiKey().to(["read"])]),
         stars: a.hasMany("stars", "promptId"),
         copyCount: a.integer().default(0),
         starCount: a.integer().default(0),
@@ -37,10 +47,32 @@ const schema = a
         index("name").queryField("listByName").name("nameIndex"),
       ])
       .authorization((allow) => [
-        allow.publicApiKey(),
+        allow.publicApiKey().to(["read"]),
         allow.authenticated().to(["read"]),
-        allow.owner().to(["create", "update", "delete"]),
-      ]),
+        allow.owner().to(["delete"]),
+      ])
+      .disableOperations(["subscriptions", "create", "update"]),
+    savePrompt: a
+      .mutation()
+      .arguments({
+        id: a.id(),
+        name: a.string().required(),
+        description: a.string().required(),
+        howto: a.string(),
+        instruction: a.string().required(),
+        tags: a.string().array(),
+        public: a.boolean(),
+        sourceURL: a.string(),
+      })
+      .returns(a.ref("prompt"))
+      .authorization((allow) => [allow.authenticated()])
+      .handler(
+        a.handler.custom({
+          dataSource: a.ref("prompt"),
+          entry: "./handler/savePrompt.js",
+        }),
+      ),
+
     stars: a
       .model({
         userId: a.string().required(),

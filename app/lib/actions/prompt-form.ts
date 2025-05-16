@@ -1,14 +1,11 @@
 "use server";
 import { cookies } from "next/headers";
-import { v4 as uuidv4 } from "uuid";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
 import { promptFormSchema } from "../prompt-model";
 import { redirect } from "next/navigation";
-import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { revalidatePath } from "next/cache";
-import { slugify } from "@/app/lib/formatter";
 
 export type FormState = {
   errors?: {
@@ -44,9 +41,6 @@ export async function onSubmitAction(
     sourceURL: data.get("sourceURL") as string,
   };
 
-  const mode = formData.id ? "update" : "create";
-  formData.id = formData.id || uuidv4();
-
   const parsed = promptFormSchema.safeParse(formData);
   if (!parsed.success) {
     return {
@@ -57,9 +51,8 @@ export async function onSubmitAction(
   }
 
   const payload = {
-    id: parsed.data.id!,
+    id: parsed.data.id,
     name: parsed.data.title,
-    slug: `${slugify(parsed.data.title)}-${parsed.data.id!.split("-")[0]}`,
     description: parsed.data.description,
     howto: parsed.data.howto,
     instruction: parsed.data.instruction,
@@ -70,21 +63,9 @@ export async function onSubmitAction(
 
   let response;
   try {
-    if (mode === "create") {
-      const user = await fetchCurrentAuthUser();
-      const createPayload = {
-        ...payload,
-        owner_username: user.displayName,
-        owner: user.username,
-      };
-      response = await appsync.models.prompt.create(createPayload, {
-        authMode: "userPool",
-      });
-    } else {
-      response = await appsync.models.prompt.update(payload, {
-        authMode: "userPool",
-      });
-    }
+    response = await appsync.mutations.savePrompt(payload, {
+      authMode: "userPool",
+    });
 
     if (response.errors) {
       return {
@@ -105,8 +86,8 @@ export async function onSubmitAction(
     };
   }
 
-  revalidatePath(`/prompts/prompt/${payload.slug}`);
-  redirect(`/prompts/prompt/${payload.slug}`);
+  revalidatePath(`/prompts/prompt/${response.data!.slug}`);
+  redirect(`/prompts/prompt/${response.data!.slug}`);
 }
 
 export async function deletePrompt(

@@ -24,7 +24,13 @@ const ALLOWED_DOMAINS = [
   "gitbook.io",
 ];
 
-export const idSchema = z.string().uuid().optional();
+export const idSchema = z
+  .string()
+  .uuid()
+  .optional()
+  .nullable()
+  .or(z.literal(""));
+
 export const sourceURLSchema = z
   .string()
   .max(2048, "URL must not exceed 2048 characters")

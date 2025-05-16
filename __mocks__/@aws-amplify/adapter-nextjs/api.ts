@@ -1,8 +1,9 @@
 import { data } from "@/amplify/data/resource";
 import { jest } from "@jest/globals";
+import { v4 as uuidv4 } from "uuid";
 
-export const mockPrompt = {
-  id: "123",
+export const newPromptFixture = {
+  id: uuidv4(),
   name: "Test Prompt",
   description: "Test Description",
   instruction: "Test Instruction",
@@ -11,7 +12,7 @@ export const mockPrompt = {
   owner_username: "Test Author",
   owner: "author123",
   public: true,
-  sourceURL: "https://example.com",
+  sourceURL: "https://community.aws",
   createdAt: "2024-01-01",
   updatedAt: "2024-01-01",
 };
@@ -49,10 +50,13 @@ export const mockProjectRules = [
 
 export const getPromptMock = jest
   .fn()
-  .mockReturnValue(Promise.resolve({ data: mockPrompt }));
+  .mockReturnValue(Promise.resolve({ data: newPromptFixture }));
 
-export const createPromptMock = jest.fn().mockReturnValue(Promise.resolve({}));
-export const updatePromptMock = jest.fn().mockReturnValue(Promise.resolve({}));
+export const savePromptMock = jest.fn().mockReturnValue(
+  Promise.resolve({
+    data: { ...newPromptFixture, slug: "test-project-rule-1" },
+  }),
+);
 
 export const getProjectRuleMock = jest
   .fn()
@@ -135,8 +139,6 @@ export const generateServerClientUsingCookies = jest.fn().mockReturnValue({
     prompt: {
       list: jest.fn(),
       get: getPromptMock,
-      create: createPromptMock,
-      update: updatePromptMock,
       delete: jest.fn(),
     },
     projectRule: {
@@ -148,4 +150,7 @@ export const generateServerClientUsingCookies = jest.fn().mockReturnValue({
     },
   },
   graphql: graphqlMock,
+  mutations: {
+    savePrompt: savePromptMock,
+  },
 });
