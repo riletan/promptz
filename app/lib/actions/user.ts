@@ -17,7 +17,7 @@ export async function fetchMyPrompts(userId: string): Promise<Prompt[]> {
       id: userId,
     },
     {
-      selectionSet: ["prompts.*"],
+      selectionSet: ["prompts.*", "displayName"],
       authMode: "userPool",
     },
   );
@@ -36,7 +36,7 @@ export async function fetchMyPrompts(userId: string): Promise<Prompt[]> {
       id: p.id,
       title: p.name,
       description: p.description,
-      author: p.owner_username,
+      author: data.displayName || "",
       authorId: p.owner || "",
       tags: (p.tags || []).filter((tag): tag is string => tag !== null),
       slug: p.slug || "",

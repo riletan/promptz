@@ -14,7 +14,10 @@ const schema = a
         email: a.string(),
         displayName: a
           .string()
-          .authorization((allow) => [allow.publicApiKey().to(["read"])]),
+          .authorization((allow) => [
+            allow.publicApiKey().to(["read"]),
+            allow.owner().to(["read"]),
+          ]),
         owner: a.string(),
         stars: a.hasMany("stars", "userId"),
         prompts: a
