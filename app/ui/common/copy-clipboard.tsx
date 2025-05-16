@@ -24,15 +24,15 @@ export default function CopyClipBoardButton({
       const clipboardPromise = navigator.clipboard.writeText(text);
       let apiPromise;
       if (type === ModelType.PROMPT) {
-        apiPromise = api.mutations.publishPromptCopied({
-          promptId: id,
+        apiPromise = api.mutations.copyPrompt({
+          id,
         });
       } else if (type === ModelType.RULE) {
         apiPromise = api.mutations.publishRuleCopied({
           ruleId: id,
         });
       }
-      Promise.all([clipboardPromise, apiPromise]);
+      Promise.allSettled([clipboardPromise, apiPromise]);
       toast("Copied.", {
         description: "Now, go build.",
       });

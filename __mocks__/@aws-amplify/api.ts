@@ -1,6 +1,6 @@
 import { jest } from "@jest/globals";
 
-export const publishPromptCopiedMock = jest.fn();
+export const copyPromptMutationMock = jest.fn();
 export const publishRuleCopiedMock = jest.fn();
 export const publishRuleDownloadedMock = jest.fn();
 export const publishPromptStarredMock = jest.fn();
@@ -15,7 +15,7 @@ export const generateClient = jest.fn().mockReturnValue({
     },
   },
   mutations: {
-    publishPromptCopied: publishPromptCopiedMock,
+    copyPrompt: copyPromptMutationMock,
     publishRuleCopied: publishRuleCopiedMock,
     publishPromptStarred: publishPromptStarredMock,
     publishPromptUnstarred: publishPromptUnstarredMock,

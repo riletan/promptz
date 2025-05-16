@@ -72,6 +72,19 @@ const schema = a
           entry: "./handler/savePrompt.js",
         }),
       ),
+    copyPrompt: a
+      .mutation()
+      .arguments({
+        id: a.id(),
+      })
+      .returns(a.ref("prompt"))
+      .authorization((allow) => [allow.publicApiKey()])
+      .handler(
+        a.handler.custom({
+          dataSource: a.ref("prompt"),
+          entry: "./handler/incrementCopyCount.js",
+        }),
+      ),
     projectRule: a
       .model({
         id: a.id().required(),
@@ -95,28 +108,12 @@ const schema = a
         allow.authenticated().to(["read"]),
         allow.owner().to(["create", "update", "delete"]),
       ]),
-    PromptCopied: a.customType({
-      promptId: a.id().required(),
-    }),
     RuleCopied: a.customType({
       ruleId: a.id().required(),
     }),
     RuleDownloaded: a.customType({
       ruleId: a.id().required(),
     }),
-    publishPromptCopied: a
-      .mutation()
-      .arguments({
-        promptId: a.id().required(),
-      })
-      .returns(a.ref("PromptCopied"))
-      .authorization((allow) => [allow.publicApiKey()])
-      .handler(
-        a.handler.custom({
-          dataSource: "PromptzEventBusDataSource",
-          entry: "./handler/publishPromptCopied.js",
-        }),
-      ),
     publishRuleCopied: a
       .mutation()
       .arguments({

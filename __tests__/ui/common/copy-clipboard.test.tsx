@@ -6,7 +6,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { toast } from "sonner";
 
 import {
-  publishPromptCopiedMock,
+  copyPromptMutationMock,
   publishRuleCopiedMock,
 } from "@/__mocks__/@aws-amplify/api";
 
@@ -53,8 +53,8 @@ describe("CopyClipBoardButton", () => {
     await fireEvent.click(button);
 
     expect(mockClipboard.writeText).toHaveBeenCalledWith(testText);
-    expect(publishPromptCopiedMock).toHaveBeenCalledWith({
-      promptId: "1",
+    expect(copyPromptMutationMock).toHaveBeenCalledWith({
+      id: "1",
     });
     expect(toast).toHaveBeenCalledWith("Copied.", {
       description: "Now, go build.",
