@@ -25,21 +25,6 @@ const appsync = generateServerClientUsingCookies<Schema>({
   cookies,
 });
 
-export async function fetchFeaturedPrompts(): Promise<Prompt[]> {
-  const { data: prompts, errors } = await appsync.models.prompt.list({
-    limit: 3,
-    filter: {
-      public: { eq: true },
-    },
-  });
-
-  if (errors && errors.length > 0) {
-    throw new Error(errors[0].message);
-  }
-
-  return mapToPrompts(prompts);
-}
-
 export async function fetchPromptSlug(id: string) {
   const { data, errors } = await appsync.models.prompt.get(
     {

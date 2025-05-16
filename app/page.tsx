@@ -1,6 +1,5 @@
 import BenefitsGrid from "@/app/ui/landing-page/benefits";
 import { SearchForm } from "@/app/ui/landing-page/search-form";
-import PromptSpotlight from "@/app/ui/prompts/spotlight";
 
 export default function App() {
   return (
@@ -13,7 +12,6 @@ export default function App() {
         </h1>
         <SearchForm />
       </div>
-      <PromptSpotlight />
       <BenefitsGrid />
     </div>
   );
