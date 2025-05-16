@@ -19,7 +19,6 @@ const schema = a
             allow.owner().to(["read"]),
           ]),
         owner: a.string(),
-        stars: a.hasMany("stars", "userId"),
         prompts: a
           .hasMany("prompt", "owner")
           .authorization((allow) => [allow.owner().to(["read"])]),
@@ -41,9 +40,7 @@ const schema = a
         author: a
           .belongsTo("user", "owner")
           .authorization((allow) => [allow.publicApiKey().to(["read"])]),
-        stars: a.hasMany("stars", "promptId"),
         copyCount: a.integer().default(0),
-        starCount: a.integer().default(0),
       })
       .secondaryIndexes((index) => [
         index("slug").queryField("listBySlug").name("slugIndex"),
@@ -75,18 +72,6 @@ const schema = a
           entry: "./handler/savePrompt.js",
         }),
       ),
-
-    stars: a
-      .model({
-        userId: a.string().required(),
-        promptId: a.string().required(),
-        user: a.belongsTo("user", "userId"),
-        prompt: a.belongsTo("prompt", "promptId"),
-      })
-      .identifier(["userId", "promptId"])
-      .authorization((allow) => [
-        allow.owner().to(["create", "delete", "read"]),
-      ]),
     projectRule: a
       .model({
         id: a.id().required(),
@@ -111,12 +96,6 @@ const schema = a
         allow.owner().to(["create", "update", "delete"]),
       ]),
     PromptCopied: a.customType({
-      promptId: a.id().required(),
-    }),
-    PromptStarred: a.customType({
-      promptId: a.id().required(),
-    }),
-    PromptUnstarred: a.customType({
       promptId: a.id().required(),
     }),
     RuleCopied: a.customType({
@@ -162,32 +141,6 @@ const schema = a
         a.handler.custom({
           dataSource: "PromptzEventBusDataSource",
           entry: "./handler/publishRuleDownloaded.js",
-        }),
-      ),
-    publishPromptStarred: a
-      .mutation()
-      .arguments({
-        promptId: a.id().required(),
-      })
-      .returns(a.ref("PromptStarred"))
-      .authorization((allow) => [allow.publicApiKey()])
-      .handler(
-        a.handler.custom({
-          dataSource: "PromptzEventBusDataSource",
-          entry: "./handler/publishPromptStarred.js",
-        }),
-      ),
-    publishPromptUnstarred: a
-      .mutation()
-      .arguments({
-        promptId: a.id().required(),
-      })
-      .returns(a.ref("PromptUnstarred"))
-      .authorization((allow) => [allow.publicApiKey()])
-      .handler(
-        a.handler.custom({
-          dataSource: "PromptzEventBusDataSource",
-          entry: "./handler/publishPromptUnstarred.js",
         }),
       ),
   })

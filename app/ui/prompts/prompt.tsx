@@ -6,8 +6,6 @@ import CopyClipBoardButton from "@/app/ui/common/copy-clipboard";
 import EditPromptButton from "@/app/ui/prompts/edit-prompt-button";
 import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { Badge } from "@/components/ui/badge";
-import StarPromptButton from "@/app/ui/prompts/star-prompt";
-import { isStarredByUser } from "@/app/lib/actions/stars";
 import { SourceURL } from "@/app/ui/common/source-url";
 import { ModelType } from "@/app/lib/schema-definitions";
 import { Prompt } from "@/app/lib/prompt-model";
@@ -20,11 +18,6 @@ interface PromptProps {
 export default async function PromptDetail(props: PromptProps) {
   const user = await fetchCurrentAuthUser();
 
-  const starredByUser =
-    user.guest === false
-      ? await isStarredByUser(props.prompt.id!, user.id)
-      : false;
-
   return (
     <div>
       <div className="flex items-start justify-between">
@@ -35,13 +28,6 @@ export default async function PromptDetail(props: PromptProps) {
           <p className="text-muted-foreground">{props.prompt.description}</p>
         </div>
         <div className="flex gap-2">
-          {props.prompt.id && (
-            <StarPromptButton
-              prompt={props.prompt}
-              user={user}
-              starred={starredByUser}
-            />
-          )}
           {props.prompt.slug && props.prompt.authorId === user.id && (
             <EditPromptButton slug={props.prompt.slug} />
           )}
