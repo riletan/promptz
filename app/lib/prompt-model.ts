@@ -48,7 +48,5 @@ export const promptFormSchema = z.object({
 export const promptSearchParamsSchema = z.object({
   query: z.string().optional(),
   sort: z.string().optional(),
-  interface: z.union([z.string(), z.array(z.string())]).optional(),
-  category: z.union([z.string(), z.array(z.string())]).optional(),
-  sdlc: z.union([z.string(), z.array(z.string())]).optional(),
+  tags: z.union([z.string(), z.array(z.string())]).optional(),
 });

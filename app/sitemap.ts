@@ -16,17 +16,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let cursor: string | undefined | null;
   let hasMorePages: boolean = true;
   do {
-    const { data: p, nextToken } = await appsync.models.prompt.list({
-      limit: 1000,
-      filter: {
-        public: { eq: true },
-      },
+    const { data: searchResults } = await appsync.queries.searchPrompts({
       nextToken: cursor,
     });
-    prompts.push(...p);
+    if (searchResults?.prompts) {
+      prompts.push(...searchResults?.prompts);
+    }
 
-    if (nextToken) {
-      cursor = nextToken;
+    if (searchResults?.nextToken) {
+      cursor = searchResults.nextToken;
     } else {
       hasMorePages = false;
     }
@@ -40,12 +38,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // Add entries for each prompt
-  const promptRoutes = prompts.map((prompt) => ({
-    url: `${baseUrl}/prompts/prompt/${prompt.slug}`,
-    lastModified: prompt.updatedAt,
-    changeFrequency: "monthly" as const,
-    priority: 1,
-  }));
+  const promptRoutes = prompts
+    .filter((p) => p != null)
+    .map((prompt) => ({
+      url: `${baseUrl}/prompts/prompt/${prompt.slug}`,
+      lastModified: prompt.updatedAt,
+      changeFrequency: "monthly" as const,
+      priority: 1,
+    }));
 
   // Generate sitemap entries for static pages changing on a monthly bases
   const monthlyRoutes = ["/mcp"].map((route) => ({

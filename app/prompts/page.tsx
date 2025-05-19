@@ -10,9 +10,7 @@ interface BrowsePageProps {
   searchParams?: Promise<{
     query?: string;
     sort?: string;
-    "interface[]": string[];
-    "category[]": string[];
-    "sdlc[]": string[];
+    "tags[]": string[];
   }>;
 }
 
@@ -22,9 +20,7 @@ export default async function PromptsPage(props: BrowsePageProps) {
   const { prompts } = await searchPrompts({
     query: searchParams?.query,
     sort: searchParams?.sort,
-    interface: searchParams ? searchParams["interface[]"] : [],
-    category: searchParams ? searchParams["category[]"] : [],
-    sdlc: searchParams ? searchParams["sdlc[]"] : [],
+    tags: searchParams ? searchParams["tags[]"] : [],
   });
 
   return (

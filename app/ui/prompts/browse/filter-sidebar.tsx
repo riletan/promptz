@@ -10,7 +10,7 @@ export function FilterSidebar() {
     <div className="space-y-6">
       <FilterSection
         title="Interface"
-        filterKey="interface"
+        filterKey="tags"
         options={Object.values(QInterface)}
       />
 
@@ -18,7 +18,7 @@ export function FilterSidebar() {
 
       <FilterSection
         title="Categories"
-        filterKey="category"
+        filterKey="tags"
         options={Object.values(PromptCategory)}
         collapsible
       />
@@ -27,18 +27,10 @@ export function FilterSidebar() {
 
       <FilterSection
         title="SDLC Activity"
-        filterKey="sdlc"
+        filterKey="tags"
         options={Object.values(SdlcActivity)}
         collapsible
       />
-
-      {/* <div>
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-medium">Popularity</h3>
-          <span className="text-xs text-muted-foreground">3+ stars</span>
-        </div>
-        <Slider defaultValue={[3]} max={5} step={1} />
-      </div> */}
     </div>
   );
 }

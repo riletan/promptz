@@ -8,7 +8,7 @@ import {
 import { ChevronDown } from "lucide-react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
-type FilterKey = "interface" | "category" | "sdlc" | "tags";
+type FilterKey = "tags";
 
 interface FilterSectionProps {
   title: string;

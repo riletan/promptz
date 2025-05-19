@@ -1,6 +1,4 @@
-import page from "@/app/page";
 import { test, expect } from "@playwright/test";
-import { only } from "node:test";
 
 let now = "";
 

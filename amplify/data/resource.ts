@@ -2,6 +2,20 @@ import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 import { postAuthenticationFunction } from "../auth/post-authentication/resource";
 const schema = a
   .schema({
+    promptSearchResult: a.customType({
+      id: a.id(),
+      name: a.string(),
+      tags: a.string().array(),
+      slug: a.string(),
+      description: a.string(),
+      createdAt: a.string(),
+      updatedAt: a.string(),
+    }),
+    paginatedPrompts: a.customType({
+      prompts: a.ref("promptSearchResult").array(),
+      nextToken: a.string(),
+    }),
+
     user: a
       .model({
         id: a
@@ -51,7 +65,7 @@ const schema = a
         allow.authenticated().to(["read"]),
         allow.owner().to(["delete"]),
       ])
-      .disableOperations(["subscriptions", "create", "update"]),
+      .disableOperations(["subscriptions", "create", "update", "list"]),
     savePrompt: a
       .mutation()
       .arguments({
@@ -83,6 +97,21 @@ const schema = a
         a.handler.custom({
           dataSource: a.ref("prompt"),
           entry: "./handler/incrementCopyCount.js",
+        }),
+      ),
+    searchPrompts: a
+      .query()
+      .arguments({
+        query: a.string(),
+        tags: a.string().array(),
+        nextToken: a.string(),
+      })
+      .returns(a.ref("paginatedPrompts"))
+      .authorization((allow) => [allow.publicApiKey()])
+      .handler(
+        a.handler.custom({
+          dataSource: a.ref("prompt"),
+          entry: "./handler/searchPrompts.js",
         }),
       ),
     projectRule: a

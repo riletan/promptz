@@ -10,7 +10,7 @@ interface PromptCardProps {
 
 export default function PromptCard({ prompt }: PromptCardProps) {
   return (
-    <Card key={prompt.id} className="flex flex-col">
+    <Card key={prompt.id} className="flex flex-col" data-testid="prompt-card">
       <CardHeader className="flex-1">
         <div className="space-y-4">
           {prompt.tags && <Tags tags={prompt.tags} />}

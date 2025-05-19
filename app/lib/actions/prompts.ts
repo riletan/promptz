@@ -5,17 +5,35 @@ import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/ap
 import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
 import { Prompt, promptSearchParamsSchema } from "../prompt-model";
-import {
-  FilterCondition,
-  buildTextSearchFilter,
-  buildTagFilter,
-} from "@/app/lib/filters";
 import { z } from "zod";
 import { GraphQLResult } from "aws-amplify/api";
 
 interface FetchPromptsResult {
   prompts: Prompt[];
   nextToken?: string | null;
+}
+
+interface PromptBySlugResponse {
+  listBySlug: {
+    items: {
+      id?: string;
+      name?: string;
+      slug?: string;
+      description?: string;
+      tags?: string[];
+      instruction?: string;
+      sourceURL?: string;
+      howto?: string;
+      public?: string;
+      author: {
+        id?: string;
+        displayName?: string;
+      };
+      createdAt?: string;
+      updatedAt?: string;
+    }[];
+    nextToken?: string;
+  };
 }
 
 type SearchSchema = z.output<typeof promptSearchParamsSchema>;
@@ -44,29 +62,6 @@ export async function fetchPromptSlug(id: string) {
   }
 
   return data.slug;
-}
-
-interface PromptBySlugResponse {
-  listBySlug: {
-    items: {
-      id?: string;
-      name?: string;
-      slug?: string;
-      description?: string;
-      tags?: string[];
-      instruction?: string;
-      sourceURL?: string;
-      howto?: string;
-      public?: string;
-      author: {
-        id?: string;
-        displayName?: string;
-      };
-      createdAt?: string;
-      updatedAt?: string;
-    }[];
-    nextToken?: string;
-  };
 }
 
 export async function fetchPromptBySlug(slug: string) {
@@ -135,57 +130,44 @@ export async function searchPrompts(
     // Validate search params
     const validatedParams = promptSearchParamsSchema.parse(params);
 
-    const filter: FilterCondition = {};
-    const facets: FilterCondition[] = [];
+    // Normalize tags to always be an array or undefined
+    const normalizedTags = validatedParams.tags
+      ? Array.isArray(validatedParams.tags)
+        ? validatedParams.tags
+        : [validatedParams.tags]
+      : undefined;
 
-    filter.public = { eq: true };
-
-    // Build query filter
-    if (validatedParams.query) {
-      filter.or = buildTextSearchFilter(validatedParams.query).or;
-    }
-
-    // Handle all tag-based filters
-    if (params.interface) {
-      // Convert to array if it's a string
-      const interfaceParams = Array.isArray(params.interface)
-        ? params.interface
-        : [params.interface];
-      facets.push(...buildTagFilter(interfaceParams));
-    }
-    if (params.category) {
-      const categoryParams = Array.isArray(params.category)
-        ? params.category
-        : [params.category];
-      facets.push(...buildTagFilter(categoryParams));
-    }
-
-    if (params.sdlc) {
-      const sdlcParams = Array.isArray(params.sdlc)
-        ? params.sdlc
-        : [params.sdlc];
-      facets.push(...buildTagFilter(sdlcParams));
-    }
-
-    // Add facets to filter
-    if (facets.length > 0) {
-      filter.and = facets;
-    }
-    const {
-      data: prompts,
-      errors,
-      nextToken,
-    } = await appsync.models.prompt.list({
-      filter,
-      limit: 1000,
-    });
+    const { data: searchResults, errors } = await appsync.queries.searchPrompts(
+      {
+        query: validatedParams.query,
+        tags: normalizedTags,
+      },
+    );
 
     if (errors && errors.length > 0) {
       throw new Error(errors[0].message);
     }
 
+    if (!searchResults?.prompts) {
+      return {
+        prompts: [],
+        nextToken: undefined,
+      };
+    }
+
     // Map the prompts to our frontend model
-    let promptList = mapToPrompts(prompts);
+    let promptList = searchResults?.prompts
+      ?.filter((p) => p != null)
+      .map((p) => {
+        return {
+          id: p.id || "",
+          title: p.name || "",
+          description: p.description || "",
+          tags: p.tags,
+          createdAt: p.createdAt || "",
+          updatedAt: p.updatedAt || "",
+        } as Prompt;
+      });
 
     const sortParam = validatedParams.sort || "created_at:desc";
     const [sortField, sortDirection] = sortParam.split(":");
@@ -200,35 +182,10 @@ export async function searchPrompts(
 
     return {
       prompts: promptList,
-      nextToken,
+      nextToken: searchResults.nextToken,
     };
   } catch (error) {
     console.error("Error fetching prompts:", error);
     throw error;
   }
-}
-
-function mapToPrompt(prompt: Schema["prompt"]["type"]): Prompt {
-  const tags: string[] = prompt.tags
-    ? prompt.tags.filter((tag): tag is NonNullable<typeof tag> => tag != null)
-    : [];
-
-  return {
-    id: prompt.id,
-    title: prompt.name,
-    description: prompt.description,
-    tags: tags,
-    authorId: prompt.owner || "",
-    instruction: prompt.instruction,
-    howto: prompt.howto || "",
-    public: prompt.public || false,
-    slug: prompt.slug || "",
-    sourceURL: prompt.sourceURL || "",
-    createdAt: prompt.createdAt || "",
-    updatedAt: prompt.updatedAt || "",
-  };
-}
-
-function mapToPrompts(prompts: Schema["prompt"]["type"][]): Prompt[] {
-  return prompts.map(mapToPrompt);
 }
