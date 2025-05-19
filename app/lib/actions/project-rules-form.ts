@@ -1,14 +1,11 @@
 "use server";
 import { cookies } from "next/headers";
-import { v4 as uuidv4 } from "uuid";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
 import { projectRuleFormSchema } from "../project-rule-model";
 import { redirect } from "next/navigation";
-import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
 import { revalidatePath } from "next/cache";
-import { slugify } from "@/app/lib/formatter";
 
 export type FormState = {
   errors?: {
@@ -49,10 +46,6 @@ export async function onSubmitAction(
     sourceURL: data.get("sourceURL") as string,
   };
 
-  // Determine if we're creating or updating
-  const mode = formData.id ? "update" : "create";
-  formData.id = formData.id || uuidv4();
-
   // Validate the form data
   const parsed = projectRuleFormSchema.safeParse(formData);
   if (!parsed.success) {
@@ -65,9 +58,8 @@ export async function onSubmitAction(
 
   // Prepare the payload for the API
   const payload = {
-    id: parsed.data.id!,
+    id: parsed.data.id,
     name: parsed.data.title,
-    slug: `${slugify(parsed.data.title)}-${parsed.data.id!.split("-")[0]}`,
     description: parsed.data.description,
     content: parsed.data.content,
     tags: parsed.data.tags,
@@ -76,34 +68,33 @@ export async function onSubmitAction(
   };
 
   let response;
-  if (mode === "create") {
-    // For new project rules, get the current user and add their username
-    const user = await fetchCurrentAuthUser();
-    const createPayload = { ...payload, owner_username: user.displayName };
-    response = await appsync.models.projectRule.create(createPayload, {
+  try {
+    response = await appsync.mutations.saveProjectRule(payload, {
       authMode: "userPool",
     });
-  } else {
-    // For updates, just update the existing project rule
-    response = await appsync.models.projectRule.update(payload, {
-      authMode: "userPool",
-    });
-  }
 
-  // Handle any errors from the API
-  if (response.errors) {
+    if (response.errors) {
+      return {
+        errors: {
+          api: response.errors.map((e) => e.message),
+        },
+        message: "Error saving project rule.",
+        success: false,
+      };
+    }
+  } catch (error) {
     return {
       errors: {
-        api: response.errors.map((e) => e.message),
+        api: [`Error creating project rule: ${error}`],
       },
-      message: "Error saving project rule.",
+      message: "Error creating project rule.",
       success: false,
     };
   }
 
   // Revalidate the path and redirect to the project rule page
-  revalidatePath(`/rules/rule/${payload.slug}`);
-  redirect(`/rules/rule/${payload.slug}`);
+  revalidatePath(`/rules/rule/${response.data!.slug}`);
+  redirect(`/rules/rule/${response.data!.slug}`);
 }
 
 /**

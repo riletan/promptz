@@ -3,24 +3,14 @@ import { auth } from "./auth/resource.js";
 import { data } from "./data/resource.js";
 import { aws_iam as iam, aws_logs as logs } from "aws-cdk-lib";
 import { ServicePrincipal, PolicyStatement } from "aws-cdk-lib/aws-iam";
-import { defineMessaging } from "./messaging/resource.js";
-import { defineWorkflows } from "./workflows/resource.js";
 
 const backend = defineBackend({
   auth,
   data,
 });
 
-const messaging = defineMessaging(backend);
-backend.data.addEventBridgeDataSource(
-  "PromptzEventBusDataSource",
-  messaging.eventBus,
-);
-
 const dataResources = backend.data.resources;
 const authResources = backend.auth.resources;
-
-defineWorkflows(backend, messaging, dataResources.tables);
 
 authResources.cfnResources.cfnUserPool.addPropertyOverride(
   "Policies.SignInPolicy.AllowedFirstAuthFactors",

@@ -87,8 +87,8 @@ export function DownloadButton({
       console.error("Error downloading file:", error);
     } finally {
       setIsDownloading(false);
-      await api.mutations.publishRuleDownloaded({
-        ruleId: id,
+      await api.mutations.downloadProjectRule({
+        id,
       });
     }
   }

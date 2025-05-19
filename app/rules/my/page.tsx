@@ -1,24 +1,12 @@
-import { searchProjectRules } from "@/app/lib/actions/project-rules";
-import SearchBox from "@/app/ui/common/search";
+import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
+import { fetchMyRules } from "@/app/lib/actions/user";
 import SearchResults from "@/app/ui/rules/browse/search-result";
 import CreateProjectRuleButton from "@/app/ui/rules/create-project-rule-button";
 import { Suspense } from "react";
 
-interface BrowsePageProps {
-  searchParams?: Promise<{
-    query?: string;
-    my?: string;
-  }>;
-}
-
-export default async function MyRules(props: BrowsePageProps) {
-  const searchParams = await props.searchParams;
-
-  // Fetch project rules owned by the current user
-  const { projectRules } = await searchProjectRules({
-    query: searchParams?.query,
-    my: "true",
-  });
+export default async function MyRules() {
+  const user = await fetchCurrentAuthUser();
+  const rules = await fetchMyRules(user.id);
 
   return (
     <main className="py-8">
@@ -34,12 +22,8 @@ export default async function MyRules(props: BrowsePageProps) {
         </div>
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex-1 space-y-6">
-            {/* Search and filter bar */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <SearchBox placeholder="Search rules..." />
-            </div>
             <Suspense fallback={<div>Loading...</div>}>
-              <SearchResults initialProjectRules={projectRules} />
+              <SearchResults initialProjectRules={rules} />
             </Suspense>
           </div>
         </div>

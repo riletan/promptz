@@ -1,4 +1,3 @@
-import { data } from "@/amplify/data/resource";
 import { jest } from "@jest/globals";
 import { v4 as uuidv4 } from "uuid";
 
@@ -61,6 +60,10 @@ export const savePromptMock = jest.fn().mockReturnValue(
 export const getProjectRuleMock = jest
   .fn()
   .mockReturnValue(Promise.resolve({ data: mockProjectRules[0] }));
+
+export const getUserMock = jest
+  .fn()
+  .mockReturnValue(Promise.resolve({ data: { projectRules: [] } }));
 
 export const listProjectRuleMock = jest
   .fn()
@@ -147,6 +150,9 @@ export const generateServerClientUsingCookies = jest.fn().mockReturnValue({
       create: createProjectRuleMock,
       update: updateProjectRuleMock,
       delete: deleteProjectRuleMock,
+    },
+    user: {
+      get: getUserMock,
     },
   },
   graphql: graphqlMock,

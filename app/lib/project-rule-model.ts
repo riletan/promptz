@@ -4,6 +4,7 @@ import {
   descriptionSchema,
   tagSchema,
   publicSchema,
+  idSchema,
 } from "@/app/lib/schema-definitions";
 import { z } from "zod";
 
@@ -22,7 +23,7 @@ export type ProjectRule = {
   updatedAt?: string;
 };
 export const projectRuleFormSchema = z.object({
-  id: z.string().uuid().optional(),
+  id: idSchema,
   sourceURL: sourceURLSchema,
   title: titleSchema,
   description: descriptionSchema,
@@ -38,6 +39,5 @@ export const projectRuleFormSchema = z.object({
 export const projectRuleSearchParamsSchema = z.object({
   query: z.string().optional(),
   sort: z.string().optional(),
-  my: z.string().optional(),
   tags: z.union([z.string(), z.array(z.string())]).optional(),
 });

@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach, jest } from "@jest/globals";
 import { render, fireEvent, screen } from "@testing-library/react";
-import { publishRuleDownloadedMock } from "@/__mocks__/@aws-amplify/api";
 import { DownloadButton } from "@/app/ui/common/download-button";
+import { downloadProjectRuleMutationMock } from "@/__mocks__/@aws-amplify/api";
 
 describe("DownloadButton", () => {
   const mockContent = "# Test Content\nThis is test content";
@@ -52,6 +52,6 @@ describe("DownloadButton", () => {
     expect(removeChildSpy).toHaveBeenCalled();
     expect(URL.createObjectURL).toHaveBeenCalled();
     expect(URL.revokeObjectURL).toHaveBeenCalled();
-    expect(publishRuleDownloadedMock).toHaveBeenCalled();
+    expect(downloadProjectRuleMutationMock).toHaveBeenCalled();
   });
 });

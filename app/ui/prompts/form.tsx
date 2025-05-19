@@ -139,7 +139,9 @@ export default function PromptForm({ prompt }: PromptFormProps) {
         <FormField
           control={form.control}
           name="id"
-          render={({ field }) => <input type="hidden" {...field} />}
+          render={({ field }) => (
+            <input type="hidden" {...field} value={field.value || ""} />
+          )}
         />
         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-4">
           <div>

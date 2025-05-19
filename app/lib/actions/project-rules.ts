@@ -6,14 +6,9 @@ import { type Schema } from "@/amplify/data/resource";
 import outputs from "@/amplify_outputs.json";
 import { projectRuleSearchParamsSchema } from "../project-rule-model";
 import { ProjectRule } from "../project-rule-model";
-import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
-import {
-  FilterCondition,
-  buildTextSearchFilter,
-  buildTagFilter,
-} from "@/app/lib/filters";
 import { z } from "zod";
 import { GraphQLResult } from "aws-amplify/api";
+import { normalizeTags } from "@/app/lib/filters";
 
 interface FetchProjectRulesResult {
   projectRules: ProjectRule[];
@@ -28,32 +23,26 @@ const appsync = generateServerClientUsingCookies<Schema>({
 });
 
 /**
- * Fetches a single project rule by ID
- * @param id The ID of the project rule to fetch
- * @returns The project rule or undefined if not found
- */
-export async function fetchProjectRule(id: string) {
-  const { data: projectRule, errors } = await appsync.models.projectRule.get({
-    id,
-  });
-
-  if (errors && errors.length > 0) {
-    throw new Error(errors[0].message);
-  }
-
-  if (!projectRule) {
-    return;
-  }
-
-  return mapToProjectRule(projectRule);
-}
-
-/**
  * Interface for the GraphQL response when fetching a project rule by slug
  */
 interface ProjectRuleBySlugResponse {
   listRuleBySlug: {
-    items: Schema["projectRule"]["type"][];
+    items: {
+      id?: string;
+      name?: string;
+      slug?: string;
+      description?: string;
+      tags?: string[];
+      content?: string;
+      sourceURL?: string;
+      public?: string;
+      author: {
+        id?: string;
+        displayName?: string;
+      };
+      createdAt?: string;
+      updatedAt?: string;
+    }[];
     nextToken?: string;
   };
 }
@@ -76,8 +65,10 @@ export async function fetchProjectRuleBySlug(slug: string) {
         content
         sourceURL
         public
-        owner_username
-        owner
+        author {
+          id
+          displayName
+        }
         createdAt
         updatedAt
       }
@@ -102,7 +93,18 @@ export async function fetchProjectRuleBySlug(slug: string) {
     return;
   }
 
-  return mapToProjectRule(projectRule);
+  return {
+    id: projectRule.id,
+    title: projectRule.name,
+    slug: projectRule.slug,
+    description: projectRule.description,
+    tags: projectRule.tags,
+    content: projectRule.content,
+    sourceURL: projectRule.sourceURL,
+    public: projectRule.public,
+    author: projectRule.author?.displayName || "",
+    authorId: projectRule.author?.id || "",
+  } as ProjectRule;
 }
 
 /**
@@ -117,50 +119,39 @@ export async function searchProjectRules(
     // Validate search params
     const validatedParams = projectRuleSearchParamsSchema.parse(params);
 
-    const filter: FilterCondition = {};
-    const facets: FilterCondition[] = [];
+    const normalizedTags = normalizeTags(validatedParams.tags || []);
 
-    // Handle user-specific filter
-    if (validatedParams.my) {
-      const user = await fetchCurrentAuthUser();
-      facets.push({ owner: { eq: `${user.id}::${user.username}` } });
-    } else {
-      filter.public = { eq: true };
-    }
-
-    // Build query filter
-    if (validatedParams.query) {
-      filter.or = buildTextSearchFilter(validatedParams.query).or;
-    }
-
-    // Handle tag-based filters
-    if (params.tags) {
-      const tagParams = Array.isArray(params.tags)
-        ? params.tags
-        : [params.tags];
-      facets.push(...buildTagFilter(tagParams));
-    }
-
-    // Add facets to filter
-    if (facets.length > 0) {
-      filter.and = facets;
-    }
-
-    const {
-      data: projectRules,
-      errors,
-      nextToken,
-    } = await appsync.models.projectRule.list({
-      filter,
-      limit: 1000,
-    });
+    const { data: searchResults, errors } =
+      await appsync.queries.searchProjectRules({
+        query: validatedParams.query,
+        tags: normalizedTags,
+      });
 
     if (errors && errors.length > 0) {
       throw new Error(errors[0].message);
     }
 
+    if (!searchResults?.results) {
+      return {
+        projectRules: [],
+        nextToken: undefined,
+      };
+    }
+
     // Map the project rules to our frontend model
-    let projectRulesList = mapToProjectRules(projectRules);
+    let projectRulesList = searchResults?.results
+      ?.filter((p) => p != null)
+      .map((p) => {
+        return {
+          id: p.id || "",
+          title: p.name || "",
+          description: p.description || "",
+          tags: p.tags,
+          slug: p.slug || "",
+          createdAt: p.createdAt || "",
+          updatedAt: p.updatedAt || "",
+        } as ProjectRule;
+      });
 
     const sortParam = validatedParams.sort || "created_at:desc";
     const [sortField, sortDirection] = sortParam.split(":");
@@ -175,51 +166,10 @@ export async function searchProjectRules(
 
     return {
       projectRules: projectRulesList,
-      nextToken,
+      nextToken: searchResults.nextToken,
     };
   } catch (error) {
     console.error("Error fetching project rules:", error);
     throw error;
   }
-}
-
-/**
- * Maps a project rule from the database schema to the frontend model
- * @param projectRule The project rule from the database
- * @returns The mapped project rule for the frontend
- */
-function mapToProjectRule(
-  projectRule: Schema["projectRule"]["type"],
-): ProjectRule {
-  const tags: string[] = projectRule.tags
-    ? projectRule.tags.filter(
-        (tag): tag is NonNullable<typeof tag> => tag != null,
-      )
-    : [];
-
-  return {
-    id: projectRule.id,
-    title: projectRule.name,
-    description: projectRule.description || "",
-    tags: tags,
-    content: projectRule.content,
-    author: projectRule.owner_username,
-    authorId: projectRule.owner || "",
-    public: projectRule.public || false,
-    slug: projectRule.slug || "",
-    sourceURL: projectRule.sourceURL || "",
-    createdAt: projectRule.createdAt || "",
-    updatedAt: projectRule.updatedAt || "",
-  };
-}
-
-/**
- * Maps an array of project rules from the database schema to frontend models
- * @param projectRules Array of project rules from the database
- * @returns Array of mapped project rules for the frontend
- */
-function mapToProjectRules(
-  projectRules: Schema["projectRule"]["type"][],
-): ProjectRule[] {
-  return projectRules.map(mapToProjectRule);
 }

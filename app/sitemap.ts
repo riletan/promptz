@@ -19,8 +19,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const { data: searchResults } = await appsync.queries.searchPrompts({
       nextToken: cursor,
     });
-    if (searchResults?.prompts) {
-      prompts.push(...searchResults?.prompts);
+    if (searchResults?.results) {
+      prompts.push(...searchResults?.results);
     }
 
     if (searchResults?.nextToken) {

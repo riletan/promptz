@@ -7,6 +7,7 @@ import outputs from "@/amplify_outputs.json";
 import { Prompt, promptSearchParamsSchema } from "../prompt-model";
 import { z } from "zod";
 import { GraphQLResult } from "aws-amplify/api";
+import { normalizeTags } from "@/app/lib/filters";
 
 interface FetchPromptsResult {
   prompts: Prompt[];
@@ -131,11 +132,7 @@ export async function searchPrompts(
     const validatedParams = promptSearchParamsSchema.parse(params);
 
     // Normalize tags to always be an array or undefined
-    const normalizedTags = validatedParams.tags
-      ? Array.isArray(validatedParams.tags)
-        ? validatedParams.tags
-        : [validatedParams.tags]
-      : undefined;
+    const normalizedTags = normalizeTags(validatedParams.tags || []);
 
     const { data: searchResults, errors } = await appsync.queries.searchPrompts(
       {
@@ -148,7 +145,7 @@ export async function searchPrompts(
       throw new Error(errors[0].message);
     }
 
-    if (!searchResults?.prompts) {
+    if (!searchResults?.results) {
       return {
         prompts: [],
         nextToken: undefined,
@@ -156,13 +153,14 @@ export async function searchPrompts(
     }
 
     // Map the prompts to our frontend model
-    let promptList = searchResults?.prompts
+    let promptList = searchResults?.results
       ?.filter((p) => p != null)
       .map((p) => {
         return {
           id: p.id || "",
           title: p.name || "",
           description: p.description || "",
+          slug: p.slug || "",
           tags: p.tags,
           createdAt: p.createdAt || "",
           updatedAt: p.updatedAt || "",

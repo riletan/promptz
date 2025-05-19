@@ -10,7 +10,6 @@ interface BrowsePageProps {
   searchParams?: Promise<{
     query?: string;
     sort?: string;
-    my?: string;
     "tags[]": string[];
   }>;
 }
@@ -21,7 +20,6 @@ export default async function RulesPage(props: BrowsePageProps) {
   const { projectRules } = await searchProjectRules({
     query: searchParams?.query,
     sort: searchParams?.sort,
-    my: searchParams?.my,
     tags: searchParams ? searchParams["tags[]"] : [],
   });
 

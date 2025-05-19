@@ -6,8 +6,8 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { toast } from "sonner";
 
 import {
+  copyProjectRuleMutationMock,
   copyPromptMutationMock,
-  publishRuleCopiedMock,
 } from "@/__mocks__/@aws-amplify/api";
 
 describe("CopyClipBoardButton", () => {
@@ -71,8 +71,8 @@ describe("CopyClipBoardButton", () => {
     const button = screen.getByRole("button");
     await fireEvent.click(button);
 
-    expect(publishRuleCopiedMock).toHaveBeenCalledWith({
-      ruleId: "1",
+    expect(copyProjectRuleMutationMock).toHaveBeenCalledWith({
+      id: "1",
     });
   });
 

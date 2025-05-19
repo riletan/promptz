@@ -71,7 +71,7 @@ export function response(ctx) {
 
   // Format the response according to the promptSearchResponse type
   return {
-    prompts: ctx.result.items || [],
+    results: ctx.result.items || [],
     nextToken: ctx.result.nextToken,
   };
 }

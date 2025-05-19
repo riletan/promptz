@@ -28,8 +28,8 @@ export default function CopyClipBoardButton({
           id,
         });
       } else if (type === ModelType.RULE) {
-        apiPromise = api.mutations.publishRuleCopied({
-          ruleId: id,
+        apiPromise = api.mutations.copyProjectRule({
+          id,
         });
       }
       Promise.allSettled([clipboardPromise, apiPromise]);

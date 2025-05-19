@@ -10,7 +10,7 @@ jest.mock("@/app/lib/actions/project-rules", () => ({
 describe("MyRules Page", () => {
   test("renders the page with correct title and description", async () => {
     // Render the component
-    render(await MyRules({ searchParams: Promise.resolve({}) }));
+    render(await MyRules());
 
     // Check if the title and description are rendered
     expect(screen.getByText("My Rules")).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe("MyRules Page", () => {
 
   test("renders the create button", async () => {
     // Render the component
-    render(await MyRules({ searchParams: Promise.resolve({}) }));
+    render(await MyRules());
 
     // Check if the create button is rendered
     expect(screen.getByText("Create Rule")).toBeInTheDocument();
