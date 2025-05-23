@@ -1,31 +1,17 @@
 import { redirect, notFound } from "next/navigation";
-import ProjectRuleForm from "@/app/ui/rules/project-rule-form";
-import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
-import { fetchProjectRuleBySlug } from "@/app/lib/actions/project-rules";
-
-// Define the props for the page component
-interface EditProjectRulePageProps {
-  slug: string;
-}
+import ProjectRuleForm from "@/components/rules/project-rule-form";
+import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
+import { fetchProjectRuleBySlug } from "@/lib/actions/fetch-rules-action";
 
 /**
  * Page component for editing an existing project rule
  * This component handles authentication checks, data fetching, and renders the project rule form
  */
 export default async function EditProjectRulePage(props: {
-  params: Promise<EditProjectRulePageProps>;
+  params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
-
-  // Check if the user is authenticated
   const currentUser = await fetchCurrentAuthUser();
-
-  // Redirect unauthenticated users to the login page
-  if (currentUser.guest) {
-    redirect("/login");
-  }
-
-  // Fetch the project rule by slug
   const projectRule = await fetchProjectRuleBySlug(params.slug);
 
   // If the project rule doesn't exist, return a 404 page

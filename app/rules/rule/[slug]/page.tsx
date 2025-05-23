@@ -1,8 +1,8 @@
-import { fetchProjectRuleBySlug } from "@/app/lib/actions/project-rules";
-import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
+import { fetchProjectRuleBySlug } from "@/lib/actions/fetch-rules-action";
 import { notFound } from "next/navigation";
-import ProjectRuleDetail from "@/app/ui/rules/project-rule-detail";
+import ProjectRuleDetail from "@/components/rules/project-rule-detail";
 import { Metadata } from "next";
+import { fetchCurrentAuthUser } from "@/lib/actions/cognito-auth-action";
 
 // Define the props for the page component
 interface ProjectRulePageProps {

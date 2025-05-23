@@ -1,22 +1,20 @@
 import { jest } from "@jest/globals";
-export const useRouterPush = jest.fn();
-export const redirect = jest.fn();
-export const useRouterReplace = jest.fn();
 
-export const useRouter = jest.fn().mockReturnValue({
-  push: useRouterPush,
-  replace: useRouterReplace,
-  back: jest.fn(),
-  forward: jest.fn(),
-});
-export const useSearchParams = jest.fn().mockReturnValue({
-  get: jest.fn(),
-  getAll: jest.fn().mockReturnValue([]),
-  has: jest.fn(),
-  forEach: jest.fn(),
-  entries: jest.fn(),
-  keys: jest.fn(),
-  values: jest.fn(),
-  toString: jest.fn(),
-});
-export const usePathname = jest.fn().mockReturnValue("/rules");
+export function useRouter() {
+  return {
+    push: jest.fn(),
+    replace: jest.fn(),
+    back: jest.fn(),
+    forward: jest.fn(),
+    refresh: jest.fn(),
+    prefetch: jest.fn(),
+  };
+}
+
+export function usePathname() {
+  return "/";
+}
+
+export function useSearchParams() {
+  return new URLSearchParams();
+}

@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom/jest-globals";
 import "@testing-library/jest-dom";
-import "whatwg-fetch";
 import { TextEncoder, TextDecoder } from "util";
 
 class ResizeObserver {

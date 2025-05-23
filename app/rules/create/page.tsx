@@ -1,20 +1,6 @@
-import { redirect } from "next/navigation";
-import ProjectRuleForm from "@/app/ui/rules/project-rule-form";
-import { fetchCurrentAuthUser } from "@/app/lib/actions/cognito-server";
+import ProjectRuleForm from "@/components/rules/project-rule-form";
 
-/**
- * Page component for creating a new project rule
- * This component handles authentication checks and renders the project rule form
- */
-export default async function CreateProjectRulePage() {
-  // Check if the user is authenticated
-  const currentUser = await fetchCurrentAuthUser();
-
-  // Redirect unauthenticated users to the login page
-  if (currentUser.guest) {
-    redirect("/login");
-  }
-
+export default function CreateProjectRulePage() {
   return (
     <main className="py-8">
       <div className="flex flex-col space-y-6">
@@ -27,8 +13,6 @@ export default async function CreateProjectRulePage() {
             practices
           </p>
         </div>
-
-        {/* Render the project rule form component */}
         <ProjectRuleForm />
       </div>
     </main>

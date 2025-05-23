@@ -1,5 +1,5 @@
 // middleware.ts
-import { fetchCurrentAuthUserFromRequestContext } from "@/app/lib/actions/cognito-server";
+import { fetchCurrentAuthUserFromRequestContext } from "@/lib/actions/cognito-auth-action";
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
@@ -19,8 +19,10 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/prompts/create",
+    "/rules/create",
     "/prompts/favorites",
     "/prompts/my",
     "/prompts/prompt/(.*)/edit",
+    "/rules/rule/(.*)/edit",
   ],
 };
