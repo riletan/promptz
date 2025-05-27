@@ -1,0 +1,788 @@
+{
+  "version": 1,
+  "models": {
+    "user": {
+      "name": "user",
+      "fields": {
+        "id": {
+          "name": "id",
+          "isArray": false,
+          "type": "ID",
+          "isRequired": true,
+          "attributes": []
+        },
+        "username": {
+          "name": "username",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        },
+        "email": {
+          "name": "email",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        },
+        "displayName": {
+          "name": "displayName",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        },
+        "owner": {
+          "name": "owner",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        },
+        "prompts": {
+          "name": "prompts",
+          "isArray": true,
+          "type": {
+            "model": "prompt"
+          },
+          "isRequired": false,
+          "attributes": [],
+          "isArrayNullable": true,
+          "association": {
+            "connectionType": "HAS_MANY",
+            "associatedWith": ["owner"]
+          }
+        },
+        "projectRules": {
+          "name": "projectRules",
+          "isArray": true,
+          "type": {
+            "model": "projectRule"
+          },
+          "isRequired": false,
+          "attributes": [],
+          "isArrayNullable": true,
+          "association": {
+            "connectionType": "HAS_MANY",
+            "associatedWith": ["owner"]
+          }
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "isArray": false,
+          "type": "AWSDateTime",
+          "isRequired": false,
+          "attributes": [],
+          "isReadOnly": true
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "isArray": false,
+          "type": "AWSDateTime",
+          "isRequired": false,
+          "attributes": [],
+          "isReadOnly": true
+        }
+      },
+      "syncable": true,
+      "pluralName": "users",
+      "attributes": [
+        {
+          "type": "model",
+          "properties": {
+            "subscriptions": null,
+            "mutations": {
+              "delete": null,
+              "update": null
+            }
+          }
+        },
+        {
+          "type": "key",
+          "properties": {
+            "fields": ["id"]
+          }
+        },
+        {
+          "type": "auth",
+          "properties": {
+            "rules": [
+              {
+                "provider": "userPools",
+                "ownerField": "owner",
+                "allow": "owner",
+                "operations": ["read"],
+                "identityClaim": "cognito:username"
+              }
+            ]
+          }
+        }
+      ],
+      "primaryKeyInfo": {
+        "isCustomPrimaryKey": false,
+        "primaryKeyFieldName": "id",
+        "sortKeyFieldNames": []
+      }
+    },
+    "prompt": {
+      "name": "prompt",
+      "fields": {
+        "id": {
+          "name": "id",
+          "isArray": false,
+          "type": "ID",
+          "isRequired": true,
+          "attributes": []
+        },
+        "name": {
+          "name": "name",
+          "isArray": false,
+          "type": "String",
+          "isRequired": true,
+          "attributes": []
+        },
+        "slug": {
+          "name": "slug",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        },
+        "description": {
+          "name": "description",
+          "isArray": false,
+          "type": "String",
+          "isRequired": true,
+          "attributes": []
+        },
+        "tags": {
+          "name": "tags",
+          "isArray": true,
+          "type": "String",
+          "isRequired": false,
+          "attributes": [],
+          "isArrayNullable": true
+        },
+        "instruction": {
+          "name": "instruction",
+          "isArray": false,
+          "type": "String",
+          "isRequired": true,
+          "attributes": []
+        },
+        "sourceURL": {
+          "name": "sourceURL",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        },
+        "howto": {
+          "name": "howto",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        },
+        "public": {
+          "name": "public",
+          "isArray": false,
+          "type": "Boolean",
+          "isRequired": false,
+          "attributes": []
+        },
+        "owner": {
+          "name": "owner",
+          "isArray": false,
+          "type": "String",
+          "isRequired": true,
+          "attributes": []
+        },
+        "author": {
+          "name": "author",
+          "isArray": false,
+          "type": {
+            "model": "user"
+          },
+          "isRequired": false,
+          "attributes": [],
+          "association": {
+            "connectionType": "BELONGS_TO",
+            "targetNames": ["owner"]
+          }
+        },
+        "copyCount": {
+          "name": "copyCount",
+          "isArray": false,
+          "type": "Int",
+          "isRequired": false,
+          "attributes": []
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "isArray": false,
+          "type": "AWSDateTime",
+          "isRequired": false,
+          "attributes": [],
+          "isReadOnly": true
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "isArray": false,
+          "type": "AWSDateTime",
+          "isRequired": false,
+          "attributes": [],
+          "isReadOnly": true
+        }
+      },
+      "syncable": true,
+      "pluralName": "prompts",
+      "attributes": [
+        {
+          "type": "model",
+          "properties": {
+            "subscriptions": null,
+            "mutations": {
+              "create": null,
+              "update": null
+            },
+            "queries": {
+              "list": null
+            }
+          }
+        },
+        {
+          "type": "key",
+          "properties": {
+            "fields": ["id"]
+          }
+        },
+        {
+          "type": "key",
+          "properties": {
+            "name": "nameIndex",
+            "queryField": "listByName",
+            "fields": ["name"]
+          }
+        },
+        {
+          "type": "key",
+          "properties": {
+            "name": "slugIndex",
+            "queryField": "listBySlug",
+            "fields": ["slug"]
+          }
+        },
+        {
+          "type": "auth",
+          "properties": {
+            "rules": [
+              {
+                "allow": "public",
+                "provider": "apiKey",
+                "operations": ["read"]
+              },
+              {
+                "allow": "private",
+                "operations": ["read"]
+              },
+              {
+                "provider": "userPools",
+                "ownerField": "owner",
+                "allow": "owner",
+                "operations": ["delete"],
+                "identityClaim": "cognito:username"
+              }
+            ]
+          }
+        }
+      ],
+      "primaryKeyInfo": {
+        "isCustomPrimaryKey": false,
+        "primaryKeyFieldName": "id",
+        "sortKeyFieldNames": []
+      }
+    },
+    "projectRule": {
+      "name": "projectRule",
+      "fields": {
+        "id": {
+          "name": "id",
+          "isArray": false,
+          "type": "ID",
+          "isRequired": true,
+          "attributes": []
+        },
+        "name": {
+          "name": "name",
+          "isArray": false,
+          "type": "String",
+          "isRequired": true,
+          "attributes": []
+        },
+        "slug": {
+          "name": "slug",
+          "isArray": false,
+          "type": "String",
+          "isRequired": true,
+          "attributes": []
+        },
+        "description": {
+          "name": "description",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        },
+        "content": {
+          "name": "content",
+          "isArray": false,
+          "type": "String",
+          "isRequired": true,
+          "attributes": []
+        },
+        "tags": {
+          "name": "tags",
+          "isArray": true,
+          "type": "String",
+          "isRequired": false,
+          "attributes": [],
+          "isArrayNullable": true
+        },
+        "public": {
+          "name": "public",
+          "isArray": false,
+          "type": "Boolean",
+          "isRequired": false,
+          "attributes": []
+        },
+        "sourceURL": {
+          "name": "sourceURL",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        },
+        "owner": {
+          "name": "owner",
+          "isArray": false,
+          "type": "String",
+          "isRequired": true,
+          "attributes": []
+        },
+        "author": {
+          "name": "author",
+          "isArray": false,
+          "type": {
+            "model": "user"
+          },
+          "isRequired": false,
+          "attributes": [],
+          "association": {
+            "connectionType": "BELONGS_TO",
+            "targetNames": ["owner"]
+          }
+        },
+        "copyCount": {
+          "name": "copyCount",
+          "isArray": false,
+          "type": "Int",
+          "isRequired": false,
+          "attributes": []
+        },
+        "downloadCount": {
+          "name": "downloadCount",
+          "isArray": false,
+          "type": "Int",
+          "isRequired": false,
+          "attributes": []
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "isArray": false,
+          "type": "AWSDateTime",
+          "isRequired": false,
+          "attributes": [],
+          "isReadOnly": true
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "isArray": false,
+          "type": "AWSDateTime",
+          "isRequired": false,
+          "attributes": [],
+          "isReadOnly": true
+        }
+      },
+      "syncable": true,
+      "pluralName": "projectRules",
+      "attributes": [
+        {
+          "type": "model",
+          "properties": {
+            "subscriptions": null,
+            "mutations": {
+              "create": null,
+              "update": null
+            },
+            "queries": {
+              "list": null
+            }
+          }
+        },
+        {
+          "type": "key",
+          "properties": {
+            "fields": ["id"]
+          }
+        },
+        {
+          "type": "key",
+          "properties": {
+            "name": "nameIndex",
+            "queryField": "listRuleByName",
+            "fields": ["name"]
+          }
+        },
+        {
+          "type": "key",
+          "properties": {
+            "name": "slugIndex",
+            "queryField": "listRuleBySlug",
+            "fields": ["slug"]
+          }
+        },
+        {
+          "type": "auth",
+          "properties": {
+            "rules": [
+              {
+                "allow": "public",
+                "provider": "apiKey",
+                "operations": ["read"]
+              },
+              {
+                "allow": "private",
+                "operations": ["read"]
+              },
+              {
+                "provider": "userPools",
+                "ownerField": "owner",
+                "allow": "owner",
+                "operations": ["delete"],
+                "identityClaim": "cognito:username"
+              }
+            ]
+          }
+        }
+      ],
+      "primaryKeyInfo": {
+        "isCustomPrimaryKey": false,
+        "primaryKeyFieldName": "id",
+        "sortKeyFieldNames": []
+      }
+    }
+  },
+  "enums": {},
+  "nonModels": {
+    "searchResult": {
+      "name": "searchResult",
+      "fields": {
+        "id": {
+          "name": "id",
+          "isArray": false,
+          "type": "ID",
+          "isRequired": false,
+          "attributes": []
+        },
+        "name": {
+          "name": "name",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        },
+        "tags": {
+          "name": "tags",
+          "isArray": true,
+          "type": "String",
+          "isRequired": false,
+          "attributes": [],
+          "isArrayNullable": true
+        },
+        "slug": {
+          "name": "slug",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        },
+        "description": {
+          "name": "description",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        }
+      }
+    },
+    "paginatedSearchResult": {
+      "name": "paginatedSearchResult",
+      "fields": {
+        "results": {
+          "name": "results",
+          "isArray": true,
+          "type": {
+            "nonModel": "searchResult"
+          },
+          "isRequired": false,
+          "attributes": [],
+          "isArrayNullable": true
+        },
+        "nextToken": {
+          "name": "nextToken",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "attributes": []
+        }
+      }
+    }
+  },
+  "queries": {
+    "searchPrompts": {
+      "name": "searchPrompts",
+      "isArray": false,
+      "type": {
+        "nonModel": "paginatedSearchResult"
+      },
+      "isRequired": false,
+      "arguments": {
+        "query": {
+          "name": "query",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false
+        },
+        "tags": {
+          "name": "tags",
+          "isArray": true,
+          "type": "String",
+          "isRequired": false,
+          "isArrayNullable": true
+        },
+        "nextToken": {
+          "name": "nextToken",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false
+        }
+      }
+    },
+    "searchProjectRules": {
+      "name": "searchProjectRules",
+      "isArray": false,
+      "type": {
+        "nonModel": "paginatedSearchResult"
+      },
+      "isRequired": false,
+      "arguments": {
+        "query": {
+          "name": "query",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false
+        },
+        "tags": {
+          "name": "tags",
+          "isArray": true,
+          "type": "String",
+          "isRequired": false,
+          "isArrayNullable": true
+        },
+        "nextToken": {
+          "name": "nextToken",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false
+        }
+      }
+    }
+  },
+  "mutations": {
+    "savePrompt": {
+      "name": "savePrompt",
+      "isArray": false,
+      "type": {
+        "model": "prompt"
+      },
+      "isRequired": false,
+      "arguments": {
+        "id": {
+          "name": "id",
+          "isArray": false,
+          "type": "ID",
+          "isRequired": false
+        },
+        "name": {
+          "name": "name",
+          "isArray": false,
+          "type": "String",
+          "isRequired": true
+        },
+        "description": {
+          "name": "description",
+          "isArray": false,
+          "type": "String",
+          "isRequired": true
+        },
+        "howto": {
+          "name": "howto",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false
+        },
+        "instruction": {
+          "name": "instruction",
+          "isArray": false,
+          "type": "String",
+          "isRequired": true
+        },
+        "tags": {
+          "name": "tags",
+          "isArray": true,
+          "type": "String",
+          "isRequired": false,
+          "isArrayNullable": true
+        },
+        "public": {
+          "name": "public",
+          "isArray": false,
+          "type": "Boolean",
+          "isRequired": false
+        },
+        "sourceURL": {
+          "name": "sourceURL",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false
+        }
+      }
+    },
+    "copyPrompt": {
+      "name": "copyPrompt",
+      "isArray": false,
+      "type": {
+        "model": "prompt"
+      },
+      "isRequired": false,
+      "arguments": {
+        "id": {
+          "name": "id",
+          "isArray": false,
+          "type": "ID",
+          "isRequired": false
+        }
+      }
+    },
+    "saveProjectRule": {
+      "name": "saveProjectRule",
+      "isArray": false,
+      "type": {
+        "model": "projectRule"
+      },
+      "isRequired": false,
+      "arguments": {
+        "id": {
+          "name": "id",
+          "isArray": false,
+          "type": "ID",
+          "isRequired": false
+        },
+        "name": {
+          "name": "name",
+          "isArray": false,
+          "type": "String",
+          "isRequired": true
+        },
+        "description": {
+          "name": "description",
+          "isArray": false,
+          "type": "String",
+          "isRequired": true
+        },
+        "content": {
+          "name": "content",
+          "isArray": false,
+          "type": "String",
+          "isRequired": true
+        },
+        "tags": {
+          "name": "tags",
+          "isArray": true,
+          "type": "String",
+          "isRequired": false,
+          "isArrayNullable": true
+        },
+        "public": {
+          "name": "public",
+          "isArray": false,
+          "type": "Boolean",
+          "isRequired": false
+        },
+        "sourceURL": {
+          "name": "sourceURL",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false
+        }
+      }
+    },
+    "copyProjectRule": {
+      "name": "copyProjectRule",
+      "isArray": false,
+      "type": {
+        "model": "projectRule"
+      },
+      "isRequired": false,
+      "arguments": {
+        "id": {
+          "name": "id",
+          "isArray": false,
+          "type": "ID",
+          "isRequired": false
+        }
+      }
+    },
+    "downloadProjectRule": {
+      "name": "downloadProjectRule",
+      "isArray": false,
+      "type": {
+        "model": "projectRule"
+      },
+      "isRequired": false,
+      "arguments": {
+        "id": {
+          "name": "id",
+          "isArray": false,
+          "type": "ID",
+          "isRequired": false
+        }
+      }
+    }
+  }
+}

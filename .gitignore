@@ -36,9 +36,9 @@ yarn-error.log*
 next-env.d.ts
 
 # amplify
-.amplify
-amplify_outputs*
-amplifyconfiguration*
+# .amplify
+# amplify_outputs*
+# amplifyconfiguration*
 
 # Playwright
 /.playwright/

@@ -1,0 +1,2247 @@
+{
+  "version": "41.0.0",
+  "artifacts": {
+    "amplify-promptz-rile-sandbox-e67c59884c.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "amplify-promptz-rile-sandbox-e67c59884c.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "amplify-promptz-rile-sandbox-e67c59884c": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "amplify-promptz-rile-sandbox-e67c59884c.template.json",
+        "terminationProtection": false,
+        "tags": {
+          "amplify:deployment-type": "sandbox",
+          "created-by": "amplify"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/718900ca9ff48e47aa141cdd14ec2ec99847c3b676a1acc5c42524ca52d9ad82.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "amplify-promptz-rile-sandbox-e67c59884c.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": ["amplify-promptz-rile-sandbox-e67c59884c.assets"],
+      "metadata": {
+        "/amplify-promptz-rile-sandbox-e67c59884c": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "amplify:deployment-type",
+                "Value": "sandbox"
+              },
+              {
+                "Key": "created-by",
+                "Value": "amplify"
+              }
+            ]
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/deploymentType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "deploymentType"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/region": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "region"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/amplifyAuth/UserPool/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthUserPool4BA7F805"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/amplifyAuth/UserPool/PostAuthenticationCognito": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthUserPoolPostAuthenticationCognitoE4A3DEC5"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/amplifyAuth/UserPoolAppClient/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthUserPoolAppClient2626C6F8"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/amplifyAuth/IdentityPool": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthIdentityPool3FDE84CC"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/amplifyAuth/authenticatedUserRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthauthenticatedUserRoleD8DA3689"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/amplifyAuth/unauthenticatedUserRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthunauthenticatedUserRole2B524D9E"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/amplifyAuth/IdentityPoolRoleAttachment": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthIdentityPoolRoleAttachment045F17C8"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/reference-to-amplifypromptzrilesandboxe67c59884cfunctionNestedStackfunctionNestedStackResourceA66C969AOutputs.amplifypromptzrilesandboxe67c59884cfunctionpostauthenticationlambda927A89B1Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cfunctionNestedStackfunctionNestedStackResourceA66C969AOutputsamplifypromptzrilesandboxe67c59884cfunctionpostauthenticationlambda927A89B1Arn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/amplifypromptzrilesandboxe67c59884cauthamplifyAuthUserPool790868D7Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cauthamplifyAuthUserPool790868D7Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/amplifypromptzrilesandboxe67c59884cauthamplifyAuthUserPoolAppClient21FBB7B0Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cauthamplifyAuthUserPoolAppClient21FBB7B0Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/amplifypromptzrilesandboxe67c59884cauthamplifyAuthIdentityPool68DA95B0Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cauthamplifyAuthIdentityPool68DA95B0Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/amplifypromptzrilesandboxe67c59884cauthamplifyAuthauthenticatedUserRoleD988E60BRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cauthamplifyAuthauthenticatedUserRoleD988E60BRef"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth/amplifypromptzrilesandboxe67c59884cauthamplifyAuthunauthenticatedUserRole01B6BAE3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cauthamplifyAuthunauthenticatedUserRole01B6BAE3Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/auth.NestedStack/auth.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "auth179371D7"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/userPoolId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userPoolId"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/webClientId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "webClientId"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/identityPoolId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "identityPoolId"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/authRegion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "authRegion"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/allowUnauthenticatedIdentities": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "allowUnauthenticatedIdentities"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/signupAttributes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "signupAttributes"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/usernameAttributes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "usernameAttributes"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/verificationMechanisms": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "verificationMechanisms"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/passwordPolicyMinLength": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "passwordPolicyMinLength"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/passwordPolicyRequirements": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "passwordPolicyRequirements"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/mfaConfiguration": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "mfaConfiguration"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/mfaTypes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "mfaTypes"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/socialProviders": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "socialProviders"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/oauthCognitoDomain": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthCognitoDomain"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/oauthScope": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthScope"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/oauthRedirectSignIn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthRedirectSignIn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/oauthRedirectSignOut": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthRedirectSignOut"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/oauthResponseType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthResponseType"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/oauthClientId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthClientId"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/groups": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "groups"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/function/post-authentication-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "postauthenticationlambdaServiceRole8CBBB139"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/function/post-authentication-lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "postauthenticationlambdaServiceRoleDefaultPolicyF0890095"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/function/post-authentication-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "postauthenticationlambda66305D34"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/function/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/function/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/function/amplifypromptzrilesandboxe67c59884cfunctionpostauthenticationlambda927A89B1Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cfunctionpostauthenticationlambda927A89B1Arn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/function/amplifypromptzrilesandboxe67c59884cfunctionpostauthenticationlambda927A89B1Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cfunctionpostauthenticationlambda927A89B1Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/function/amplifypromptzrilesandboxe67c59884cfunctionpostauthenticationlambdaServiceRoleF6D5FDEDRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cfunctionpostauthenticationlambdaServiceRoleF6D5FDEDRef"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/function.NestedStack/function.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "function1351588B"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/definedFunctions": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "definedFunctions"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/GraphQLAPI/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptzGraphQLAPI66D64870"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/GraphQLAPI/TransformerSchema": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptzGraphQLAPITransformerSchema34906605"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/GraphQLAPI/DefaultApiKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptzGraphQLAPIDefaultApiKey4AB0DC76"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/GraphQLAPI/NONE_DS": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "NONE_DS"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/GraphQLAPI/NONE_DS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptzGraphQLAPINONEDS1D007419"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "NONE_DS"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyTableManager/AmplifyManagedTableIsCompleteRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableIsCompleteRoleF825222C"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyTableManager/AmplifyManagedTableOnEventRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableOnEventRoleB4E71DEA"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyTableManager/AmplifyManagedTableOnEventRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableOnEventRoleDefaultPolicyF6DABCB6"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyTableManager/TableManagerCustomProvider/framework-onEvent/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TableManagerCustomProviderframeworkonEvent1DFC2ECC"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyTableManager/TableManagerCustomProvider/framework-isComplete/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TableManagerCustomProviderframeworkisComplete2E51021B"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyTableManager/AmplifyTableWaiterStateMachine/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachineRole470BE899"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyTableManager/AmplifyTableWaiterStateMachine/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachineRoleDefaultPolicy89F3836A"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyTableManager/AmplifyTableWaiterStateMachine/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachine060600BC"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyTableManager/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyTableManager/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyTableManager/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPI27DC099CApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPI27DC099CApiId"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyTableManager/amplifypromptzrilesandboxe67c59884cdatapromptzAmplifyTableManagerTableManagerCustomProviderframeworkonEvent425C1FDDArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cdatapromptzAmplifyTableManagerTableManagerCustomProviderframeworkonEvent425C1FDDArn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource02207431"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/userTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "user"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/userTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "user"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/CustomTableuserTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "user"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/GetAttuserTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttuserTableStreamArn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/GetAttuserTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttuserTableName"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/userIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "userIAMRole"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/userIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userIAMRole9D9D891C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "userIAMRole"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/userDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "userTable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/userDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "userTable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/QuerygetUserpreAuth0Function/QuerygetUserpreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetUserpreAuth0FunctionQuerygetUserpreAuth0FunctionAppSyncFunction20420340"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetUserpreAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/QuerygetUserauth0Function/QuerygetUserauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetUserauth0FunctionQuerygetUserauth0FunctionAppSyncFunction9E6250B0"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetUserauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/QuerygetUserpostAuth0Function/QuerygetUserpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetUserpostAuth0FunctionQuerygetUserpostAuth0FunctionAppSyncFunction2792AC60"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetUserpostAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/QueryGetUserDataResolverFn/QueryGetUserDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetUserDataResolverFnQueryGetUserDataResolverFnAppSyncFunction36A3E4CF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetUserDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/queryGetUserResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetuserResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getUser"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/QuerylistUserspreAuth0Function/QuerylistUserspreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistUserspreAuth0FunctionQuerylistUserspreAuth0FunctionAppSyncFunctionAB63F07E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistUserspreAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/QuerylistUsersauth0Function/QuerylistUsersauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistUsersauth0FunctionQuerylistUsersauth0FunctionAppSyncFunctionA1FF61AB"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistUsersauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/QuerylistUserspostAuth0Function/QuerylistUserspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistUserspostAuth0FunctionQuerylistUserspostAuth0FunctionAppSyncFunction37C5583D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistUserspostAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/QueryListUsersDataResolverFn/QueryListUsersDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListUsersDataResolverFnQueryListUsersDataResolverFnAppSyncFunction83574EBA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListUsersDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/queryListUsersResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListuserResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listUsers"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/MutationcreateUserinit0Function/MutationcreateUserinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateUserinit0FunctionMutationcreateUserinit0FunctionAppSyncFunctionEDF87EC6"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateUserinit0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/MutationcreateUserpreAuth0Function/MutationcreateUserpreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateUserpreAuth0FunctionMutationcreateUserpreAuth0FunctionAppSyncFunction7F885F8E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateUserpreAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/MutationcreateUserauth0Function/MutationcreateUserauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateUserauth0FunctionMutationcreateUserauth0FunctionAppSyncFunction30556A6C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateUserauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/MutationcreateUserpostAuth0Function/MutationcreateUserpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateUserpostAuth0FunctionMutationcreateUserpostAuth0FunctionAppSyncFunction176E20CB"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateUserpostAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/MutationCreateUserDataResolverFn/MutationCreateUserDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateUserDataResolverFnMutationCreateUserDataResolverFnAppSyncFunction22E7974E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateUserDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/mutationCreateUserResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateuserResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createUser"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/UserUsernameDataResolverFn/UserUsernameDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserUsernameDataResolverFnUserUsernameDataResolverFnAppSyncFunctionD6C5E9C3"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserUsernameDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/userUsernameResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userusernameResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "user.username"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/UserEmailDataResolverFn/UserEmailDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserEmailDataResolverFnUserEmailDataResolverFnAppSyncFunctionE71B86BA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserEmailDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/userEmailResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "useremailResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "user.email"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/userownerfinish0Function/userownerfinish0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userownerfinish0Functionuserownerfinish0FunctionAppSyncFunction3C7E6721"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "userownerfinish0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/UserOwnerDataResolverFn/UserOwnerDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserOwnerDataResolverFnUserOwnerDataResolverFnAppSyncFunction78EE3B72"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserOwnerDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/userOwnerResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userownerResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "user.owner"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource00205F5FOutputs.amplifypromptzrilesandboxe67c59884cdatapromptzAmplifyTableManagerTableManagerCustomProviderframeworkonEvent425C1FDDArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource00205F5FOutputsamplifypromptzrilesandboxe67c59884cdatapromptzAmplifyTableManagerTableManagerCustomProviderframework5081A752"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPI27DC099CApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPI27DC099CApiId"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPINONEDS989B1A07Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPINONEDS989B1A07Name"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthauthenticatedUserRoleD988E60BRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthauthenticatedUserRoleD988E60BRef"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthunauthenticatedUserRole01B6BAE3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthunauthenticatedUserRole01B6BAE3Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthIdentityPool68DA95B0Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthIdentityPool68DA95B0Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/amplifypromptzrilesandboxe67c59884cdatapromptzuseruserDataSource252D81DDName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cdatapromptzuseruserDataSource252D81DDName"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user/amplifypromptzrilesandboxe67c59884cdatapromptzuseruserTableF318FC51TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cdatapromptzuseruserTableF318FC51TableArn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/user.NestedStack/user.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptzuserNestedStackuserNestedStackResource876AF04B"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/promptTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "prompt"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/promptTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "prompt"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/CustomTablepromptTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "prompt"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/GetAttpromptTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttpromptTableStreamArn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/GetAttpromptTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttpromptTableName"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/promptIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "promptIAMRole"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/promptIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptIAMRoleB68203AD"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "promptIAMRole"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/promptDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "promptTable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/promptDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "promptTable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/QuerygetPromptpreAuth0Function/QuerygetPromptpreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetPromptpreAuth0FunctionQuerygetPromptpreAuth0FunctionAppSyncFunctionBE586745"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetPromptpreAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/QuerygetPromptauth0Function/QuerygetPromptauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetPromptauth0FunctionQuerygetPromptauth0FunctionAppSyncFunction0338BE3C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetPromptauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/QuerygetPromptpostAuth0Function/QuerygetPromptpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetPromptpostAuth0FunctionQuerygetPromptpostAuth0FunctionAppSyncFunction36F3D054"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetPromptpostAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/QueryGetPromptDataResolverFn/QueryGetPromptDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetPromptDataResolverFnQueryGetPromptDataResolverFnAppSyncFunction2DC16588"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetPromptDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/queryGetPromptResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetpromptResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getPrompt"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/MutationdeletePromptpreAuth0Function/MutationdeletePromptpreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeletePromptpreAuth0FunctionMutationdeletePromptpreAuth0FunctionAppSyncFunction1FB4A078"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeletePromptpreAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/MutationdeletePromptauth0Function/MutationdeletePromptauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeletePromptauth0FunctionMutationdeletePromptauth0FunctionAppSyncFunction20908340"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeletePromptauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/MutationdeletePromptpostAuth0Function/MutationdeletePromptpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeletePromptpostAuth0FunctionMutationdeletePromptpostAuth0FunctionAppSyncFunction8979216F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeletePromptpostAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/MutationDeletePromptDataResolverFn/MutationDeletePromptDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeletePromptDataResolverFnMutationDeletePromptDataResolverFnAppSyncFunctionCFC559EF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeletePromptDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/mutationDeletePromptResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeletepromptResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deletePrompt"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/QuerylistByNameauth0Function/QuerylistByNameauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistByNameauth0FunctionQuerylistByNameauth0FunctionAppSyncFunction368CDE61"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistByNameauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/QuerylistByNamepostAuth0Function/QuerylistByNamepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistByNamepostAuth0FunctionQuerylistByNamepostAuth0FunctionAppSyncFunction25AD15CC"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistByNamepostAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/QueryListByNameDataResolverFn/QueryListByNameDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListByNameDataResolverFnQueryListByNameDataResolverFnAppSyncFunctionB8675D5F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListByNameDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/queryListByNameResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistByNameResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listByName"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/QuerylistBySlugauth0Function/QuerylistBySlugauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistBySlugauth0FunctionQuerylistBySlugauth0FunctionAppSyncFunction702E07A2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistBySlugauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/QuerylistBySlugpostAuth0Function/QuerylistBySlugpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistBySlugpostAuth0FunctionQuerylistBySlugpostAuth0FunctionAppSyncFunction20B93DD2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistBySlugpostAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/QueryListBySlugDataResolverFn/QueryListBySlugDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListBySlugDataResolverFnQueryListBySlugDataResolverFnAppSyncFunction1850F5E1"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListBySlugDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/queryListBySlugResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistBySlugResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listBySlug"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/PromptOwnerDataResolverFn/PromptOwnerDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PromptOwnerDataResolverFnPromptOwnerDataResolverFnAppSyncFunction56B2AC6B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "PromptOwnerDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/promptOwnerResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptownerResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "prompt.owner"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource00205F5FOutputs.amplifypromptzrilesandboxe67c59884cdatapromptzAmplifyTableManagerTableManagerCustomProviderframeworkonEvent425C1FDDArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource00205F5FOutputsamplifypromptzrilesandboxe67c59884cdatapromptzAmplifyTableManagerTableManagerCustomProviderframework5081A752"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPI27DC099CApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPI27DC099CApiId"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPINONEDS989B1A07Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPINONEDS989B1A07Name"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthauthenticatedUserRoleD988E60BRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthauthenticatedUserRoleD988E60BRef"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthunauthenticatedUserRole01B6BAE3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthunauthenticatedUserRole01B6BAE3Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthIdentityPool68DA95B0Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthIdentityPool68DA95B0Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/amplifypromptzrilesandboxe67c59884cdatapromptzpromptpromptDataSourceF87F4228Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cdatapromptzpromptpromptDataSourceF87F4228Name"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt/amplifypromptzrilesandboxe67c59884cdatapromptzpromptpromptTable15DD5A66TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cdatapromptzpromptpromptTable15DD5A66TableArn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/prompt.NestedStack/prompt.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptzpromptNestedStackpromptNestedStackResource266C1B2E"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/projectRuleTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "projectRule"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/projectRuleTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "projectRuleTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "projectRule"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/CustomTableprojectRuleTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "projectRule"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/GetAttprojectRuleTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttprojectRuleTableStreamArn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/GetAttprojectRuleTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttprojectRuleTableName"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/projectRuleIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "projectRuleIAMRole"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/projectRuleIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "projectRuleIAMRole2AD7121F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "projectRuleIAMRole"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/projectRuleDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "projectRuleTable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/projectRuleDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "projectRuleDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "projectRuleTable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/QuerygetProjectRulepreAuth0Function/QuerygetProjectRulepreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetProjectRulepreAuth0FunctionQuerygetProjectRulepreAuth0FunctionAppSyncFunctionBD25E731"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetProjectRulepreAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/QuerygetProjectRuleauth0Function/QuerygetProjectRuleauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetProjectRuleauth0FunctionQuerygetProjectRuleauth0FunctionAppSyncFunctionADE27616"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetProjectRuleauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/QuerygetProjectRulepostAuth0Function/QuerygetProjectRulepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetProjectRulepostAuth0FunctionQuerygetProjectRulepostAuth0FunctionAppSyncFunctionC3ED9696"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetProjectRulepostAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/QueryGetProjectRuleDataResolverFn/QueryGetProjectRuleDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetProjectRuleDataResolverFnQueryGetProjectRuleDataResolverFnAppSyncFunctionAAA64536"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetProjectRuleDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/queryGetProjectRuleResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetprojectRuleResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getProjectRule"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/MutationdeleteProjectRulepreAuth0Function/MutationdeleteProjectRulepreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteProjectRulepreAuth0FunctionMutationdeleteProjectRulepreAuth0FunctionAppSyncFunction38E67643"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteProjectRulepreAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/MutationdeleteProjectRuleauth0Function/MutationdeleteProjectRuleauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteProjectRuleauth0FunctionMutationdeleteProjectRuleauth0FunctionAppSyncFunction4CBD542F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteProjectRuleauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/MutationdeleteProjectRulepostAuth0Function/MutationdeleteProjectRulepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteProjectRulepostAuth0FunctionMutationdeleteProjectRulepostAuth0FunctionAppSyncFunctionCFA06F9A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteProjectRulepostAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/MutationDeleteProjectRuleDataResolverFn/MutationDeleteProjectRuleDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteProjectRuleDataResolverFnMutationDeleteProjectRuleDataResolverFnAppSyncFunctionACE29CFE"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteProjectRuleDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/mutationDeleteProjectRuleResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteprojectRuleResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteProjectRule"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/QuerylistRuleByNameauth0Function/QuerylistRuleByNameauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistRuleByNameauth0FunctionQuerylistRuleByNameauth0FunctionAppSyncFunction3D777179"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistRuleByNameauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/QuerylistRuleByNamepostAuth0Function/QuerylistRuleByNamepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistRuleByNamepostAuth0FunctionQuerylistRuleByNamepostAuth0FunctionAppSyncFunctionC1FB3C8C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistRuleByNamepostAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/QueryListRuleByNameDataResolverFn/QueryListRuleByNameDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListRuleByNameDataResolverFnQueryListRuleByNameDataResolverFnAppSyncFunctionF084BB83"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListRuleByNameDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/queryListRuleByNameResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistRuleByNameResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listRuleByName"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/QuerylistRuleBySlugauth0Function/QuerylistRuleBySlugauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistRuleBySlugauth0FunctionQuerylistRuleBySlugauth0FunctionAppSyncFunction43107E8A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistRuleBySlugauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/QuerylistRuleBySlugpostAuth0Function/QuerylistRuleBySlugpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistRuleBySlugpostAuth0FunctionQuerylistRuleBySlugpostAuth0FunctionAppSyncFunctionAA07AC7A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistRuleBySlugpostAuth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/QueryListRuleBySlugDataResolverFn/QueryListRuleBySlugDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListRuleBySlugDataResolverFnQueryListRuleBySlugDataResolverFnAppSyncFunctionE060C638"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListRuleBySlugDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/queryListRuleBySlugResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistRuleBySlugResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listRuleBySlug"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/ProjectRuleOwnerDataResolverFn/ProjectRuleOwnerDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProjectRuleOwnerDataResolverFnProjectRuleOwnerDataResolverFnAppSyncFunctionEDC1BE51"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "ProjectRuleOwnerDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/projectRuleOwnerResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "projectRuleownerResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "projectRule.owner"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource00205F5FOutputs.amplifypromptzrilesandboxe67c59884cdatapromptzAmplifyTableManagerTableManagerCustomProviderframeworkonEvent425C1FDDArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource00205F5FOutputsamplifypromptzrilesandboxe67c59884cdatapromptzAmplifyTableManagerTableManagerCustomProviderframework5081A752"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPI27DC099CApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPI27DC099CApiId"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPINONEDS989B1A07Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPINONEDS989B1A07Name"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthauthenticatedUserRoleD988E60BRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthauthenticatedUserRoleD988E60BRef"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthunauthenticatedUserRole01B6BAE3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthunauthenticatedUserRole01B6BAE3Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthIdentityPool68DA95B0Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthIdentityPool68DA95B0Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/amplifypromptzrilesandboxe67c59884cdatapromptzprojectRuleprojectRuleDataSource392A9D69Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cdatapromptzprojectRuleprojectRuleDataSource392A9D69Name"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule/amplifypromptzrilesandboxe67c59884cdatapromptzprojectRuleprojectRuleTableF25C6E29TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cdatapromptzprojectRuleprojectRuleTableF25C6E29TableArn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/projectRule.NestedStack/projectRule.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptzprojectRuleNestedStackprojectRuleNestedStackResource51E91E81"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/userpromptsauth0Function/userpromptsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userpromptsauth0Functionuserpromptsauth0FunctionAppSyncFunction835251EF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "userpromptsauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/UserPromptsDataResolverFn/UserPromptsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserPromptsDataResolverFnUserPromptsDataResolverFnAppSyncFunction7C477CB1"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserPromptsDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/userPromptsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userpromptsResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "user.prompts"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/userprojectRulesauth0Function/userprojectRulesauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userprojectRulesauth0FunctionuserprojectRulesauth0FunctionAppSyncFunctionEC6F3DAB"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "userprojectRulesauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/UserProjectRulesDataResolverFn/UserProjectRulesDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserProjectRulesDataResolverFnUserProjectRulesDataResolverFnAppSyncFunction6AB9A46D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserProjectRulesDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/userProjectRulesResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userprojectRulesResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "user.projectRules"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/promptauthorauth0Function/promptauthorauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptauthorauth0Functionpromptauthorauth0FunctionAppSyncFunctionAF6285DC"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "promptauthorauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/PromptAuthorDataResolverFn/PromptAuthorDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PromptAuthorDataResolverFnPromptAuthorDataResolverFnAppSyncFunction5DE72129"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "PromptAuthorDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/promptAuthorResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptauthorResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "prompt.author"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/projectRuleauthorauth0Function/projectRuleauthorauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "projectRuleauthorauth0FunctionprojectRuleauthorauth0FunctionAppSyncFunctionC6528794"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "projectRuleauthorauth0Function"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/ProjectRuleAuthorDataResolverFn/ProjectRuleAuthorDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProjectRuleAuthorDataResolverFnProjectRuleAuthorDataResolverFnAppSyncFunction0EB7AE00"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "ProjectRuleAuthorDataResolverFn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/projectRuleAuthorResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "projectRuleauthorResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "projectRule.author"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPI27DC099CApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPI27DC099CApiId"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPINONEDS989B1A07Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPINONEDS989B1A07Name"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzpromptNestedStackpromptNestedStackResource0C5B49C3Outputs.amplifypromptzrilesandboxe67c59884cdatapromptzpromptpromptDataSourceF87F4228Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzpromptNestedStackpromptNestedStackResource0C5B49C3Outputsamplifypromptzrilesandboxe67c59884cdatapromptzpromptpromptDataSourceF87F4228Name"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzpromptNestedStackpromptNestedStackResource0C5B49C3Outputs.amplifypromptzrilesandboxe67c59884cdatapromptzpromptpromptTable15DD5A66TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzpromptNestedStackpromptNestedStackResource0C5B49C3Outputsamplifypromptzrilesandboxe67c59884cdatapromptzpromptpromptTable15DD5A66TableArn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthauthenticatedUserRoleD988E60BRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthauthenticatedUserRoleD988E60BRef"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthunauthenticatedUserRole01B6BAE3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthunauthenticatedUserRole01B6BAE3Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthIdentityPool68DA95B0Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthIdentityPool68DA95B0Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzprojectRuleNestedStackprojectRuleNestedStackResource7C31B5C9Outputs.amplifypromptzrilesandboxe67c59884cdatapromptzprojectRuleprojectRuleDataSource392A9D69Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzprojectRuleNestedStackprojectRuleNestedStackResource7C31B5C9Outputsamplifypromptzrilesandboxe67c59884cdatapromptzprojectRuleprojectRuleDataSource392A9D69Name"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzprojectRuleNestedStackprojectRuleNestedStackResource7C31B5C9Outputs.amplifypromptzrilesandboxe67c59884cdatapromptzprojectRuleprojectRuleTableF25C6E29TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzprojectRuleNestedStackprojectRuleNestedStackResource7C31B5C9Outputsamplifypromptzrilesandboxe67c59884cdatapromptzprojectRuleprojectRuleTableF25C6E29TableArn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzuserNestedStackuserNestedStackResource7D186B99Outputs.amplifypromptzrilesandboxe67c59884cdatapromptzuseruserDataSource252D81DDName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzuserNestedStackuserNestedStackResource7D186B99Outputsamplifypromptzrilesandboxe67c59884cdatapromptzuseruserDataSource252D81DDName"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack/reference-to-amplifypromptzrilesandboxe67c59884cdatapromptzuserNestedStackuserNestedStackResource7D186B99Outputs.amplifypromptzrilesandboxe67c59884cdatapromptzuseruserTableF318FC51TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cdatapromptzuserNestedStackuserNestedStackResource7D186B99Outputsamplifypromptzrilesandboxe67c59884cdatapromptzuseruserTableF318FC51TableArn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/ConnectionStack.NestedStack/ConnectionStack.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptzConnectionStackNestedStackConnectionStackNestedStackResourceC975DCF6"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptzAmplifyCodegenAssetsAmplifyCodegenAssetsBucket9A1B9561"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptzAmplifyCodegenAssetsAmplifyCodegenAssetsBucketPolicyC7D56980"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptzAmplifyCodegenAssetsAmplifyCodegenAssetsBucketAutoDeleteObjectsCustomResource4F022CCE"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyCodegenAssets/AmplifyCodegenAssetsDeployment/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptzAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentAwsCliLayer156153F6"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/promptz/AmplifyCodegenAssets/AmplifyCodegenAssetsDeployment/CustomResource-1536MiB/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "promptzAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB6DC104D3"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/LatestNodeRuntimeMap": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LatestNodeRuntimeMap"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Custom::S3AutoDeleteObjectsCustomResourceProvider": [
+          {
+            "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
+            "data": true
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB": [
+          {
+            "type": "aws:cdk:is-custom-resource-handler-singleton",
+            "data": true
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-runtime-family",
+            "data": 2
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-singleton",
+            "data": true
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-runtime-family",
+            "data": 2
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBServiceRoleA41FC8C2"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBServiceRoleDefaultPolicyFF1C635B"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBC5D8AB21"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/modelIntrospectionSchemaBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketF566B665"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/modelIntrospectionSchemaBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketPolicy4DAB0D15"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/modelIntrospectionSchemaBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketAutoDeleteObjectsCustomResourceFE57309F"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/modelIntrospectionSchemaBucketDeployment/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketDeploymentAwsCliLayer13C432F7"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/modelIntrospectionSchemaBucketDeployment/CustomResource-1536MiB/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketDeploymentCustomResource1536MiB104B97EC"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Fn_Mutation_savePrompt_1": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FnMutationsavePrompt1"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Resolver_Mutation_savePrompt": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ResolverMutationsavePrompt"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Fn_Mutation_copyPrompt_1": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FnMutationcopyPrompt1"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Resolver_Mutation_copyPrompt": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ResolverMutationcopyPrompt"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Fn_Query_searchPrompts_1": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FnQuerysearchPrompts1"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Resolver_Query_searchPrompts": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ResolverQuerysearchPrompts"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Fn_Mutation_saveProjectRule_1": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FnMutationsaveProjectRule1"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Resolver_Mutation_saveProjectRule": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ResolverMutationsaveProjectRule"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Fn_Mutation_copyProjectRule_1": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FnMutationcopyProjectRule1"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Resolver_Mutation_copyProjectRule": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ResolverMutationcopyProjectRule"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Fn_Mutation_downloadProjectRule_1": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FnMutationdownloadProjectRule1"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Resolver_Mutation_downloadProjectRule": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ResolverMutationdownloadProjectRule"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Fn_Query_searchProjectRules_1": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FnQuerysearchProjectRules1"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/Resolver_Query_searchProjectRules": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ResolverQuerysearchProjectRules"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/AMPLIFY_DATAPROMPTZ_GRAPHQL_ENDPOINTParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAPROMPTZGRAPHQLENDPOINTParameter2DCF16DB"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/AMPLIFY_DATAPROMPTZ_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAMEParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAPROMPTZMODELINTROSPECTIONSCHEMABUCKETNAMEParameter32E29891"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/AMPLIFY_DATAPROMPTZ_MODEL_INTROSPECTION_SCHEMA_KEYParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAPROMPTZMODELINTROSPECTIONSCHEMAKEYParameterF7EBF438"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/AMPLIFY_DATA_DEFAULT_NAMEParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATADEFAULTNAMEParameterE7C23CC4"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/PROMPTZ_GRAPHQL_ENDPOINTParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PROMPTZGRAPHQLENDPOINTParameter5E11939C"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/GraphqlAccessPolicy1/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GraphqlAccessPolicy11EF5618C"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthUserPool790868D7Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthUserPool790868D7Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthauthenticatedUserRoleD988E60BRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthauthenticatedUserRoleD988E60BRef"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthunauthenticatedUserRole01B6BAE3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthunauthenticatedUserRole01B6BAE3Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/reference-to-amplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputs.amplifypromptzrilesandboxe67c59884cauthamplifyAuthIdentityPool68DA95B0Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cauthNestedStackauthNestedStackResource6F4AB00FOutputsamplifypromptzrilesandboxe67c59884cauthamplifyAuthIdentityPool68DA95B0Ref"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/reference-to-amplifypromptzrilesandboxe67c59884cfunctionNestedStackfunctionNestedStackResourceA66C969AOutputs.amplifypromptzrilesandboxe67c59884cfunctionpostauthenticationlambdaServiceRoleF6D5FDEDRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifypromptzrilesandboxe67c59884cfunctionNestedStackfunctionNestedStackResourceA66C969AOutputsamplifypromptzrilesandboxe67c59884cfunctionpostauthenticationlambdaServiceRoleF6D5FDEDRef"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPI27DC099CApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPI27DC099CApiId"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPI27DC099CGraphQLUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPI27DC099CGraphQLUrl"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/amplifypromptzrilesandboxe67c59884cdatapromptzAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB9EF985F0DestinationBucketArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cdatapromptzAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB9EF985F0DestinationBucketArn"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data/amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPIDefaultApiKeyD846E6B0ApiKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifypromptzrilesandboxe67c59884cdatapromptzGraphQLAPIDefaultApiKeyD846E6B0ApiKey"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/data.NestedStack/data.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "data7552DF31"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/awsAppsyncApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncApiId"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/awsAppsyncApiEndpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncApiEndpoint"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/awsAppsyncAuthenticationType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncAuthenticationType"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/awsAppsyncRegion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncRegion"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/amplifyApiModelSchemaS3Uri": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyApiModelSchemaS3Uri"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/awsAppsyncApiKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncApiKey"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/awsAppsyncAdditionalAuthenticationTypes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncAdditionalAuthenticationTypes"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/amplify-promptz-rile-sandbox-e67c59884c/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "amplify-promptz-rile-sandbox-e67c59884c"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  },
+  "minimumCliVersion": "2.1005.0"
+}

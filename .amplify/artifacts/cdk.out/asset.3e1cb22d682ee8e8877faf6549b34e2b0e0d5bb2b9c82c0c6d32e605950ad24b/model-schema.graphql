@@ -1,0 +1,139 @@
+type user
+  @model(subscriptions: null, mutations: { delete: null, update: null })
+  @auth(rules: [{ allow: owner, operations: [read], ownerField: "owner" }]) {
+  id: ID!
+    @primaryKey
+    @auth(
+      rules: [
+        { allow: public, provider: apiKey, operations: [read] }
+        { allow: owner, operations: [read], ownerField: "owner" }
+      ]
+    )
+  username: String
+  email: String
+  displayName: String
+    @auth(
+      rules: [
+        { allow: public, provider: apiKey, operations: [read] }
+        { allow: owner, operations: [read], ownerField: "owner" }
+      ]
+    )
+  owner: String
+  prompts: [prompt]
+    @hasMany(references: ["owner"])
+    @auth(rules: [{ allow: owner, operations: [read], ownerField: "owner" }])
+  projectRules: [projectRule]
+    @hasMany(references: ["owner"])
+    @auth(rules: [{ allow: owner, operations: [read], ownerField: "owner" }])
+}
+
+type prompt
+  @model(
+    subscriptions: null
+    mutations: { create: null, update: null }
+    queries: { list: null }
+  )
+  @auth(
+    rules: [
+      { allow: public, provider: apiKey, operations: [read] }
+      { allow: private, operations: [read] }
+      { allow: owner, operations: [delete], ownerField: "owner" }
+    ]
+  ) {
+  id: ID! @primaryKey
+  name: String! @index(name: "nameIndex", queryField: "listByName")
+  slug: String @index(name: "slugIndex", queryField: "listBySlug")
+  description: String!
+  tags: [String]
+  instruction: String!
+  sourceURL: String
+  howto: String
+  public: Boolean
+  owner: String!
+  author: user
+    @belongsTo(references: ["owner"])
+    @auth(rules: [{ allow: public, provider: apiKey, operations: [read] }])
+  copyCount: Int @default(value: "0")
+}
+
+type projectRule
+  @model(
+    subscriptions: null
+    mutations: { create: null, update: null }
+    queries: { list: null }
+  )
+  @auth(
+    rules: [
+      { allow: public, provider: apiKey, operations: [read] }
+      { allow: private, operations: [read] }
+      { allow: owner, operations: [delete], ownerField: "owner" }
+    ]
+  ) {
+  id: ID! @primaryKey
+  name: String! @index(name: "nameIndex", queryField: "listRuleByName")
+  slug: String! @index(name: "slugIndex", queryField: "listRuleBySlug")
+  description: String
+  content: String!
+  tags: [String]
+  public: Boolean
+  sourceURL: String
+  owner: String!
+  author: user
+    @belongsTo(references: ["owner"])
+    @auth(rules: [{ allow: public, provider: apiKey, operations: [read] }])
+  copyCount: Int @default(value: "0")
+  downloadCount: Int @default(value: "0")
+}
+
+type searchResult @aws_api_key {
+  id: ID
+  name: String
+  tags: [String]
+  slug: String
+  description: String
+  createdAt: String
+  updatedAt: String
+}
+
+type paginatedSearchResult @aws_api_key {
+  results: [searchResult]
+  nextToken: String
+}
+
+type Mutation {
+  savePrompt(
+    id: ID
+    name: String!
+    description: String!
+    howto: String
+    instruction: String!
+    tags: [String]
+    public: Boolean
+    sourceURL: String
+  ): prompt @aws_cognito_user_pools
+  copyPrompt(id: ID): prompt @aws_api_key
+  saveProjectRule(
+    id: ID
+    name: String!
+    description: String!
+    content: String!
+    tags: [String]
+    public: Boolean
+    sourceURL: String
+  ): projectRule @aws_cognito_user_pools
+  copyProjectRule(id: ID): projectRule @aws_api_key
+  downloadProjectRule(id: ID): projectRule @aws_api_key
+}
+
+type Query {
+  searchPrompts(
+    query: String
+    tags: [String]
+    nextToken: String
+  ): paginatedSearchResult @aws_api_key
+  searchProjectRules(
+    query: String
+    tags: [String]
+    nextToken: String
+  ): paginatedSearchResult @aws_api_key
+}

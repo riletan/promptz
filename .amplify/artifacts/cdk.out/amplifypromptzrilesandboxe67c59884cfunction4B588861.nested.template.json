@@ -1,0 +1,528 @@
+{
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"AmplifySandbox\",\"createdWith\":\"1.14.0\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Resources": {
+    "postauthenticationlambdaServiceRole8CBBB139": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "amplify:deployment-type",
+            "Value": "sandbox"
+          },
+          {
+            "Key": "amplify:friendly-name",
+            "Value": "post-authentication"
+          },
+          {
+            "Key": "created-by",
+            "Value": "amplify"
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "amplify-promptz-rile-sandbox-e67c59884c/function/post-authentication-lambda/ServiceRole/Resource"
+      }
+    },
+    "postauthenticationlambdaServiceRoleDefaultPolicyF0890095": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "ssm:GetParameters",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":ssm:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":parameter/amplify/resource_reference/promptz/rile-sandbox-e67c59884c/AMPLIFY_DATAPROMPTZ_GRAPHQL_ENDPOINT"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":ssm:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":parameter/amplify/resource_reference/promptz/rile-sandbox-e67c59884c/AMPLIFY_DATAPROMPTZ_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":ssm:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":parameter/amplify/resource_reference/promptz/rile-sandbox-e67c59884c/AMPLIFY_DATAPROMPTZ_MODEL_INTROSPECTION_SCHEMA_KEY"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":ssm:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":parameter/amplify/resource_reference/promptz/rile-sandbox-e67c59884c/AMPLIFY_DATA_DEFAULT_NAME"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":ssm:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":parameter/amplify/resource_reference/promptz/rile-sandbox-e67c59884c/PROMPTZ_GRAPHQL_ENDPOINT"
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "postauthenticationlambdaServiceRoleDefaultPolicyF0890095",
+        "Roles": [
+          {
+            "Ref": "postauthenticationlambdaServiceRole8CBBB139"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "amplify-promptz-rile-sandbox-e67c59884c/function/post-authentication-lambda/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "postauthenticationlambda66305D34": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Architectures": ["arm64"],
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+          },
+          "S3Key": "ae92671a7dc79a43ff7b0cb074cc339b90b494909d50e7ff03ea469841d65620.zip"
+        },
+        "Environment": {
+          "Variables": {
+            "AMPLIFY_SSM_ENV_CONFIG": "{\"AMPLIFY_DATAPROMPTZ_GRAPHQL_ENDPOINT\":{\"path\":\"/amplify/resource_reference/promptz/rile-sandbox-e67c59884c/AMPLIFY_DATAPROMPTZ_GRAPHQL_ENDPOINT\"},\"AMPLIFY_DATAPROMPTZ_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME\":{\"path\":\"/amplify/resource_reference/promptz/rile-sandbox-e67c59884c/AMPLIFY_DATAPROMPTZ_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME\"},\"AMPLIFY_DATAPROMPTZ_MODEL_INTROSPECTION_SCHEMA_KEY\":{\"path\":\"/amplify/resource_reference/promptz/rile-sandbox-e67c59884c/AMPLIFY_DATAPROMPTZ_MODEL_INTROSPECTION_SCHEMA_KEY\"},\"AMPLIFY_DATA_DEFAULT_NAME\":{\"path\":\"/amplify/resource_reference/promptz/rile-sandbox-e67c59884c/AMPLIFY_DATA_DEFAULT_NAME\"},\"PROMPTZ_GRAPHQL_ENDPOINT\":{\"path\":\"/amplify/resource_reference/promptz/rile-sandbox-e67c59884c/PROMPTZ_GRAPHQL_ENDPOINT\"}}",
+            "AMPLIFY_DATAPROMPTZ_GRAPHQL_ENDPOINT": "<value will be resolved during runtime>",
+            "AMPLIFY_DATAPROMPTZ_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME": "<value will be resolved during runtime>",
+            "AMPLIFY_DATAPROMPTZ_MODEL_INTROSPECTION_SCHEMA_KEY": "<value will be resolved during runtime>",
+            "AMPLIFY_DATA_DEFAULT_NAME": "<value will be resolved during runtime>",
+            "PROMPTZ_GRAPHQL_ENDPOINT": "<value will be resolved during runtime>"
+          }
+        },
+        "EphemeralStorage": {
+          "Size": 512
+        },
+        "Handler": "index.handler",
+        "MemorySize": 1024,
+        "Role": {
+          "Fn::GetAtt": ["postauthenticationlambdaServiceRole8CBBB139", "Arn"]
+        },
+        "Runtime": "nodejs20.x",
+        "Tags": [
+          {
+            "Key": "amplify:deployment-type",
+            "Value": "sandbox"
+          },
+          {
+            "Key": "amplify:friendly-name",
+            "Value": "post-authentication"
+          },
+          {
+            "Key": "created-by",
+            "Value": "amplify"
+          }
+        ],
+        "Timeout": 30
+      },
+      "DependsOn": ["postauthenticationlambdaServiceRole8CBBB139"],
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "amplify-promptz-rile-sandbox-e67c59884c/function/post-authentication-lambda/Resource",
+        "aws:asset:path": "asset.ae92671a7dc79a43ff7b0cb074cc339b90b494909d50e7ff03ea469841d65620",
+        "aws:asset:is-bundled": true,
+        "aws:asset:property": "Code"
+      }
+    },
+    "CDKMetadata": {
+      "Type": "AWS::CDK::Metadata",
+      "Properties": {
+        "Analytics": "v2:deflate64:H4sIAAAAAAAA/zXNOw6DMBBF0bXQDxMCaSgDUkoKWAAa7AGZjy0xdigQe48ApTrVuy/FZ/7CJKJNYqWneDYd7hWLZ914UhPQJu0+09Jpaq3TPApWF59glTfOgqEF99rNDGVvTw+QrCUR9oLvE5AMi6Am9gUJw13Dsrf/xgE1iwurYrgGjafB2OGA8xFHeXzTBJ85JtEoxsRrsN4sjPXtD5PTU8jEAAAA"
+      },
+      "Metadata": {
+        "aws:cdk:path": "amplify-promptz-rile-sandbox-e67c59884c/function/CDKMetadata/Default"
+      },
+      "Condition": "CDKMetadataAvailable"
+    }
+  },
+  "Conditions": {
+    "CDKMetadataAvailable": {
+      "Fn::Or": [
+        {
+          "Fn::Or": [
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "af-south-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-east-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-northeast-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-northeast-2"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-northeast-3"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-south-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-south-2"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-southeast-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-southeast-2"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-southeast-3"
+              ]
+            }
+          ]
+        },
+        {
+          "Fn::Or": [
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ap-southeast-4"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ca-central-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "ca-west-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "cn-north-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "cn-northwest-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "eu-central-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "eu-central-2"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "eu-north-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "eu-south-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "eu-south-2"
+              ]
+            }
+          ]
+        },
+        {
+          "Fn::Or": [
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "eu-west-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "eu-west-2"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "eu-west-3"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "il-central-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "me-central-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "me-south-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "sa-east-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "us-east-1"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "us-east-2"
+              ]
+            },
+            {
+              "Fn::Equals": [
+                {
+                  "Ref": "AWS::Region"
+                },
+                "us-west-1"
+              ]
+            }
+          ]
+        },
+        {
+          "Fn::Equals": [
+            {
+              "Ref": "AWS::Region"
+            },
+            "us-west-2"
+          ]
+        }
+      ]
+    }
+  },
+  "Outputs": {
+    "amplifypromptzrilesandboxe67c59884cfunctionpostauthenticationlambda927A89B1Arn": {
+      "Value": {
+        "Fn::GetAtt": ["postauthenticationlambda66305D34", "Arn"]
+      }
+    },
+    "amplifypromptzrilesandboxe67c59884cfunctionpostauthenticationlambda927A89B1Ref": {
+      "Value": {
+        "Ref": "postauthenticationlambda66305D34"
+      }
+    },
+    "amplifypromptzrilesandboxe67c59884cfunctionpostauthenticationlambdaServiceRoleF6D5FDEDRef": {
+      "Value": {
+        "Ref": "postauthenticationlambdaServiceRole8CBBB139"
+      }
+    }
+  }
+}
